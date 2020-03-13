@@ -20,8 +20,6 @@ int jogar(ESTADO *e, COORDENADA c) {
 			if (e -> tab[d][a] == BRANCA)
 				e -> tab[d][a] = PRETA;
 	}
-
-
 	e -> tab[c.linha][c.coluna] = BRANCA;
 
 	printf("Jogar para linha %d coluna %d:\n", c.linha, c.coluna);
@@ -52,8 +50,6 @@ int main () {
 	teste.coluna = 6;
 	
 	jogar(e, teste);
-
-
 	return 0;
 
 } */
