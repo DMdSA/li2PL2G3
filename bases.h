@@ -1,5 +1,5 @@
-#ifndef HEADER_FILE
-#define HEADER_FILE
+#ifndef BASES_FILE
+#define BASES_FILE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -1,5 +1,5 @@
-#ifndef HEADER_FILE
-#define HEADER_FILE
+#ifndef DADOS_FILE
+#define DADOS_FILE
 
 ESTADO *inicializar_estado();
 

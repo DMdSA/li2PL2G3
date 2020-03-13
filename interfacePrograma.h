@@ -1,4 +1,6 @@
-#ifndef HEADER_FILE
-#define HEADER_FILE
+#ifndef INTERFACE_FILE
+#define INTERFACE_FILE
+
 void mostrar_tabuleiro(ESTADO *e);
+
 #endif

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bases.h"
-#include "camadaDados.c"
+#include "camadaDados.h"
 #include "interfacePrograma.h"
 
 
@@ -63,10 +63,11 @@ void mostrar_tabuleiro(ESTADO *e) {
 //------------------------------------------------------------------------------------------------------------------------------
 
 
-int main () {
+/*int main () {
 
 	ESTADO *e = inicializar_estado();
 	mostrar_tabuleiro(e);
 
 	return 0;
 }
+*/
