@@ -13,4 +13,6 @@ int obter_Coluna_Atual (ESTADO *e);
 
 int obter_Linha_Atual (ESTADO *e);
 
+COORDENADA criar_Coordenada (int linha, int coluna);
+
 #endif
