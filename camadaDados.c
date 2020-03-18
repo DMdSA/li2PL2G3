@@ -6,7 +6,6 @@
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-
 ESTADO *inicializar_estado() {
 
 	ESTADO *e = (ESTADO *) malloc(sizeof(ESTADO));
@@ -20,7 +19,7 @@ ESTADO *inicializar_estado() {
 	for (int i = 0; i < 8; i++) { //Por cada linha
 
 		for (int d = 0; d < 8; d++)	//Verifica o elemento de cada coluna
-			e -> tab[i][d] = VAZIO;	//Atribuindo o valor VAZIO a todos
+			e -> tab[i][d] = VAZIA;	//Atribuindo o valor VAZIA a todos
 	}
 
 	e -> tab[0][7] = '2';	//Peça Inicial
@@ -28,7 +27,7 @@ ESTADO *inicializar_estado() {
 	e -> tab[3][4] = BRANCA;	//A posição inicial começa nesta posição com uma peça '*'.
 
 	return e;
-} // -> Cria um estado vazio (com o tabuleiro inicializado).
+} // -> Cria um estado vazia (com o tabuleiro inicializado).
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -79,4 +78,16 @@ int obter_Linha_Atual (ESTADO *e) {
 	return e -> ultima_jogada.linha;
 
 } // -> Devolve a linha em que a peça está.
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+COORDENADA criar_Coordenada (int linha, int coluna) {
+
+	COORDENADA c;
+	c.linha = linha;
+	c.coluna = coluna;
+	return c;
+}
 //------------------------------------------------------------------------------------------------------------------------------
