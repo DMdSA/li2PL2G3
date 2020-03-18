@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef enum {VAZIO, BRANCA, PRETA} CASA;
+typedef enum {VAZIA = '.', BRANCA = '*', PRETA = '#', UM = '1', DOIS = '2'} CASA;
 
 
 typedef struct {
