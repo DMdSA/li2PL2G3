@@ -4,7 +4,8 @@
 #include "bases.h"
 #include "camadaDados.h"
 #include "interfacePrograma.h"
-
+//#include "logicaPrograma.c"
+//#define BUF_SIZE = 255;
 
 //------------------------------------------------------------------------------------------------------------------------------
 void mostrar_tabuleiro(ESTADO *e) { 
@@ -13,36 +14,69 @@ void mostrar_tabuleiro(ESTADO *e) {
 
 			for (int d = 0; d < 8; d++) {
 
-				if (e -> tab[i][d] == VAZIO)
-					printf(". ");
+				if (e -> tab[i][d] == VAZIA)
+					printf("%c ", VAZIA);
 				
 				else
 					if (e -> tab[i][d] == BRANCA)
-						printf("* ");
+						printf("%c ", BRANCA);
 				
 					else
 						if (e -> tab[i][d] == PRETA)
-							printf("# ");
+							printf("%c ", PRETA);
 				
 						else
-							if (e -> tab[i][d] == '1')
-								printf("1 ");
+							if (e -> tab[i][d] == UM)
+								printf("%c ", UM);
 				
 							else
-								printf("2 ");
+								printf("%c ", DOIS);
 			}
 			printf("\n");
 		}
 }
-
-//Apenas constrói mediante as informações do ESTADO
-//Vazia, Antiga, Atual, Inicial.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-/* int interpretador(ESTADO *e) {
+void gr (ESTADO *e) {
+
+	FILE *game;
+
+	game = fopen ("game.txt", "a");
+
+	for (int d = 0; d < 8; d++) {
+
+		for (int a = 0; a < 8; a++)
+			fprintf(game, "%c ", obter_estado_casa(e, criar_Coordenada (d, a)) );
+
+		fprintf(game, "\n");
+	}
+
+	fprintf(game, "\n");
+	fclose(game);
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+void ler (ESTADO *e) {
+
+	FILE *game;
+
+	game = fopen("game.txt", "r");
+
+	fclose(game);
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+/*
+//------------------------------------------------------------------------------------------------------------------------------
+int interpretador(ESTADO *e) {
 	
 	char linha[BUF_SIZE];
 	char col[2], lin[2];
@@ -59,14 +93,18 @@ void mostrar_tabuleiro(ESTADO *e) {
 	}
 	
 	return 1;
-} */
+} 
 //------------------------------------------------------------------------------------------------------------------------------
+*/
 
 
-/*int main () {
+
+/*
+int main () {
 
 	ESTADO *e = inicializar_estado();
 	mostrar_tabuleiro(e);
+	gr(e);
 
 	return 0;
 }
