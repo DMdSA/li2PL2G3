@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bases.h"
-//#include "camadaDados.h"
-#include "camadaDados.c"
+#include "camadaDados.h"
+//#include "camadaDados.c"
 //#include "interfacePrograma.h"
-#include "interfacePrograma.c"
+//#include "interfacePrograma.c"
 #include "logicaPrograma.h"
 
 
@@ -47,11 +47,11 @@ int verifica_CASA (ESTADO *e, COORDENADA c) { //Verifica se a casa, para onde se
 
 	if (verifica_Posicao_Jogada(e, c)) {
 
-		if (e -> tab[c.linha][c.coluna] == PRETA) //Se for preta, devolve 0.
+		if (obter_estado_casa(e, c) == PRETA) //Se for preta, devolve 0.
 			return 0;
 		
 		else
-			if (e -> tab[c.linha][c.coluna] == VAZIO || e -> tab[c.linha][c.coluna] == '1' || e -> tab[c.linha][c.coluna] == '2') //Se for VAZIA, '1' ou '2', devolve1.
+			if (obter_estado_casa(e, c) == VAZIA || obter_estado_casa(e ,c) == UM || obter_estado_casa(e, c) == DOIS) //Se for VAZIA, '1' ou '2', devolve1.
 				return 1;
 			
 //			else {
@@ -92,40 +92,98 @@ int verifica_PERDEU (ESTADO *e, COORDENADA c) { //Verifica se TODAS as peças vi
 
 
 //------------------------------------------------------------------------------------------------------------------------------
+int verifica_GANHOU (ESTADO *e, COORDENADA c) { 
+
+	int coluna_jogada, linha_jogada;
+	coluna_jogada = obter_Coluna_Atual (e);
+	linha_jogada = obter_Linha_Atual (e);
+
+	if (obter_estado_casa (e, c) == UM || obter_estado_casa (e ,c) == DOIS) //Se a casa da coordenada C for '1' ou '2', o jogador atual ganhou o jogo!
+		return 1; //retorna VDD
+	else
+		return 0; //retorna F
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+void jogada_Intermedia (ESTADO *e, COORDENADA c) {
+
+	for (int d = 0; d < 8; d++) {
+			for (int a = 0; a < 8; a++)
+				if (obter_estado_casa (e, criar_Coordenada(d, a)) == BRANCA) //Procura a peça BRANCA atual no jogo
+					e -> tab[d][a] = PRETA;	//E substitui a mesma por uma peça PRETA.
+	}
+
+	e -> tab[c.linha][c.coluna] = BRANCA; //Atualiza a coordenada para onde se jogou com uma peça BRANCA.
+
+	//Aqui já se considera que a jogada foi efetuada, tornando-se apenas de 'atualizações' ao estado.
+
+	obter_jogador_atual(e) == 1 ? (e -> jogador_atual = 2) : (e -> jogador_atual = 1); //Se o jogador inicial for o 1, atualiza para 2, e vice-versa.
+	e -> ultima_jogada = c; // Atualiza, dentro de ESTADO, as coordenadas da ULTIMA_JOGADA.
+	
+	if (obter_jogador_atual(e) == 2) //Se o jogador final for o 2, atualiza o ESTADO para a jogada + 1 (cada jogada é determinada pelo movimento de 2 jogadores*)
+		e -> num_jogadas += 1;
+		
+	
+//	printf("Jogar para linha %d coluna %d:\n", c.linha, c.coluna);
+//	mostrar_tabuleiro(e);
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+void jogada_Vencedora(ESTADO *e, COORDENADA c) {
+
+	for (int d = 0; d < 8; d++) {
+			for (int a = 0; a < 8; a++)
+				if (obter_estado_casa (e, criar_Coordenada(d, a)) == BRANCA) //Procura a peça BRANCA atual no jogo
+					e -> tab[d][a] = PRETA;	//E substitui a mesma por uma peça PRETA.
+	}
+
+	
+	e -> tab[c.linha][c.coluna] = BRANCA; //Atualiza a coordenada para onde se jogou com uma peça BRANCA.
+
+
+//Aqui já se considera que a jogada foi efetuada, tornando-se apenas de 'atualizações' ao estado.
+
+	e -> ultima_jogada = c; // Atualiza, dentro de ESTADO, as coordenadas da ULTIMA_JOGADA.
+	
+	if (obter_jogador_atual(e) == 2) //Se o jogador final for o 2, atualiza o ESTADO para a jogada + 1 (cada jogada é determinada pelo movimento de 2 jogadores*)
+		e -> num_jogadas += 1;
+
+	printf("O Jogador %d ganhou!!! Parabéns!\n", obter_jogador_atual(e));
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
 int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 	
 	
-	printf("\nAntes da Jogada: Linha %d, Coluna %d\n", e -> ultima_jogada.linha, e -> ultima_jogada.coluna);
-	mostrar_tabuleiro(e); //Mostra a configuração inicial do jogo.
+//	printf("\nAntes da Jogada: Linha %d, Coluna %d\n", e -> ultima_jogada.linha, e -> ultima_jogada.coluna);
+//	mostrar_tabuleiro(e); //Mostra a configuração inicial do jogo.
 	printf("\n");
 
 	
 	if (verifica_Posicao_Jogada(e, c) && verifica_PERDEU(e, c)) //Se a coordenada da peça seguinte for vizinha, SE todas as peças à volta forem PRETAS, o jogo acaba! ("Se 1 e 1, ent VDD")
-		printf("O jogo acabou para ti, Jogador [%d]. Boa sorte para a próxima!\n", e -> jogador_atual);
+		
+		printf("O jogo acabou para ti, Jogador [%d]. Boa sorte para a próxima!\n", obter_jogador_atual(e));
+
+	
+	if (verifica_Posicao_Jogada (e, c) && verifica_CASA (e, c) && verifica_GANHOU (e ,c)) //Se a jogada for possivel nas direções possiveis, a coordenada que se pretende estiver VAZIA e esta ser '1' ou '2', então ganhou!
+		
+		jogada_Vencedora(e, c); //Atualizações necessárias ao ESTADO e parabenização.
 
 
-
+	
 	if (verifica_Posicao_Jogada(e, c) && verifica_CASA(e, c))  { //Se a coordenada dada for vizinha e a casa estiver VAZIA, a jogada é possível.
 		
-		for (int d = 0; d < 8; d++) {
-			for (int a = 0; a < 8; a++)
-				if (e -> tab[d][a] == BRANCA) //Procura a peça BRANCA atual no jogo
-					e -> tab[d][a] = PRETA;	//E substitui a mesma por uma peça PRETA.
-		}
-
-	
-		obter_jogador_atual(e) == 1 ? (e -> jogador_atual = 2) : (e -> jogador_atual = 1); //Se o jogador inicial for o 1, atualiza para 2, e vice-versa.
-		
-		e -> tab[c.linha][c.coluna] = BRANCA; //Atualiza a coordenada para onde se jogou com uma peça BRANCA.
-		e -> ultima_jogada = c; // Atualiza, dentro de ESTADO, as coordenadas da ULTIMA_JOGADA.
-		
-	
-		if (obter_jogador_atual(e) == 2) //Se o jogador final for o 2, atualiza o ESTADO para a jogada + 1 (cada jogada é determinada pelo movimento de 2 jogadores*)
-			e -> num_jogadas += 1;
-		
-	
-		printf("Jogar para linha %d coluna %d:\n", c.linha, c.coluna);
-		mostrar_tabuleiro(e); //imprime o tabuleiro atualizado.
+		jogada_Intermedia(e ,c); //Atualizações necessárias ao estado.
 		return 1;
 	}
 
@@ -133,7 +191,7 @@ int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 	else {
 		
 		printf("A jogada que tentaste efetuar (linha %d, coluna %d) nao e possivel!!\n\n", c.linha, c.coluna);
-		mostrar_tabuleiro(e);
+	//	mostrar_tabuleiro(e);
 		return 0;
 	}
 }
@@ -167,10 +225,6 @@ int main () {
 
 	jogar (e, teste3);
 
-
 	return 0;
 } 
 */
-
-//FALTA
-//Parabenizar quem ganha
