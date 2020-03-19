@@ -4,8 +4,8 @@
 #include "bases.h"
 #include "camadaDados.h"
 
-
 //------------------------------------------------------------------------------------------------------------------------------
+
 ESTADO *inicializar_estado() {
 
 	ESTADO *e = (ESTADO *) malloc(sizeof(ESTADO));
@@ -22,8 +22,8 @@ ESTADO *inicializar_estado() {
 			e -> tab[i][d] = VAZIA;	//Atribuindo o valor VAZIA a todos
 	}
 
-	e -> tab[0][7] = '2';	//Peça Inicial
-	e -> tab[7][0] = '1';	//Peça Inicial
+	e -> tab[0][7] = DOIS;	//Peça Inicial
+	e -> tab[7][0] = UM;	//Peça Inicial
 	e -> tab[3][4] = BRANCA;	//A posição inicial começa nesta posição com uma peça '*'.
 
 	return e;
@@ -83,11 +83,82 @@ int obter_Linha_Atual (ESTADO *e) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
+COORDENADA obter_Ultima_Jogada (ESTADO *e) {
+
+	return e -> ultima_jogada;
+} // -> Devolve as coordenadas da última jogada registado no ESTADO.
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
 COORDENADA criar_Coordenada (int linha, int coluna) {
 
 	COORDENADA c;
 	c.linha = linha;
 	c.coluna = coluna;
-	return c;
+	return c; 
+} // -> Dados dois inteiros, cria uma COORDENADA com esses dados.
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+ESTADO* atualiza_Casas (ESTADO *e, COORDENADA c, CASA qqer) {
+
+	e -> tab[c.linha][c.coluna] = qqer;
+	return e;
+} // -> Dado um ESTADO, uma coordenada específica e um dado do tipo CASA, atualiza ,no ESTADO, a CASA dessa coordenada para 'qqer' 
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+ESTADO *atualiza_Ultima_Jogada (ESTADO *e, COORDENADA atualizada) {
+
+	e -> ultima_jogada = atualizada;
+	return e;
+} // -> Devolve um ESTADO com as COORDENADAS da última jogada efetuada devidamente atualizada.
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+ESTADO *atualiza_Jogador (ESTADO *e) {
+
+	if (obter_jogador_atual(e) == 1)
+		e -> jogador_atual = 2;
+	else
+		e -> jogador_atual = 1;
+
+	return e;
+} // -> Devolve um ESTADO onde, casa tenha sido o jogador[1] a jogar, atualiza para o jogador[2], e vice-versa.
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+ESTADO *atualiza_Num_Jogadas (ESTADO *e) {
+
+	if (obter_jogador_atual(e) == 1 || obter_numero_de_jogadas(e) == 0) //Por alguma razão, se o obterjogador fosse 2 dava erro.
+		e -> num_jogadas += 1;
+
+	return e;
+} // -> Devolve um ESTADO com o número de jogadas atualizado, i.e., caso tenha sido o jogador[2] o último a jogar, adiciona 1 ao num_jogadas.
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+int verifica_Inicio_Jogo (ESTADO *e) {
+
+	if (obter_estado_casa(e, criar_Coordenada(3, 4)) == BRANCA)
+		return 1;
+	else
+		return 0;
 }
 //------------------------------------------------------------------------------------------------------------------------------
+
+
+//QUESTÃO
+//Qual a necessidade de as funções que devolvem ESTADO terem um '*' antes do seu nome??????????
