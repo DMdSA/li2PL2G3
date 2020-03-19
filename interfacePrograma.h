@@ -1,6 +1,8 @@
 #ifndef INTERFACE_FILE
 #define INTERFACE_FILE
 
+void prompt_INFO (ESTADO *e)
+
 void mostrar_tabuleiro(ESTADO *e);
 
 void gr (ESTADO *e);
