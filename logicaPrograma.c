@@ -8,17 +8,15 @@
 //#include "interfacePrograma.c"
 #include "logicaPrograma.h"
 
-
-
 //------------------------------------------------------------------------------------------------------------------------------
 int verifica_Posicao_Jogada (ESTADO *e, COORDENADA c) { //Verifica se a jogada Horizonta, Vertical ou Obliqua é possivel (ou seja, vizinha).
 
-	COORDENADA inicial = e -> ultima_jogada; //coordenada inicial da peça branca
+	COORDENADA inicial = obter_Ultima_Jogada(e); //coordenada inicial da peça branca
 
 	int esq, dir;
 	
-	esq = e -> ultima_jogada.coluna - 1; //coordenada da coluna à esquerda da peça branca (== para todas as linhas!)
-	dir = e -> ultima_jogada.coluna + 1; //coordenada da coluna à direita da peça branca (== para todas as linhas!)
+	esq = inicial.coluna - 1; //coordenada da coluna à esquerda da peça branca (== para todas as linhas!)
+	dir = inicial.coluna + 1; //coordenada da coluna à direita da peça branca (== para todas as linhas!)
 
 
 	if (inicial.linha == c.linha) { //Se ambas as coordenadas (inicial e a que se pretende jogar) coincidirem com a mesma linha,
@@ -70,17 +68,17 @@ int verifica_PERDEU (ESTADO *e, COORDENADA c) { //Verifica se TODAS as peças vi
 
 	CASA cima, baixo, dir, esq, esqCima, esqBaixo, dirCima, dirBaixo;
 
-	cima = e -> tab[c.linha - 1][c.coluna];
-	baixo = e -> tab[c.linha + 1][c.coluna];
+	cima = obter_estado_casa (e, criar_Coordenada(c.linha - 1, c.coluna));
+	baixo = obter_estado_casa (e, criar_Coordenada(c.linha + 1, c.coluna));
 
-	esq = e -> tab[c.linha][c.coluna - 1];
-	dir = e -> tab[c.linha][c.coluna + 1];
+	esq = obter_estado_casa (e, criar_Coordenada(c.linha, c.coluna - 1));
+	dir = obter_estado_casa (e, criar_Coordenada(c.linha, c.coluna + 1));
 
-	esqBaixo = e -> tab[c.linha + 1][c.coluna - 1];
-	esqCima = e -> tab [c.linha - 1][c.coluna - 1];
+	esqBaixo = obter_estado_casa (e, criar_Coordenada(c.linha + 1, c.coluna - 1));
+	esqCima = obter_estado_casa (e, criar_Coordenada(c.linha - 1, c.coluna - 1));
 
-	dirBaixo = e -> tab[c.linha + 1][c.coluna + 1];
-	dirCima = e -> tab[c.linha - 1][c.coluna + 1];
+	dirBaixo = obter_estado_casa (e, criar_Coordenada(c.linha + 1, c.coluna + 1));
+	dirCima = obter_estado_casa (e, criar_Coordenada(c.linha - 1, c.coluna + 1));
 
 	if (cima == baixo && esq == dir && esqBaixo == esqCima && dirBaixo == dirCima && cima == esq) //Se todas forem iguais ..
 		return 1;
@@ -113,22 +111,15 @@ void jogada_Intermedia (ESTADO *e, COORDENADA c) {
 	for (int d = 0; d < 8; d++) {
 			for (int a = 0; a < 8; a++)
 				if (obter_estado_casa (e, criar_Coordenada(d, a)) == BRANCA) //Procura a peça BRANCA atual no jogo
-					e -> tab[d][a] = PRETA;	//E substitui a mesma por uma peça PRETA.
+					atualiza_Casas (e, criar_Coordenada(d, a), PRETA);;	//E substitui a mesma por uma peça PRETA.
 	}
 
-	e -> tab[c.linha][c.coluna] = BRANCA; //Atualiza a coordenada para onde se jogou com uma peça BRANCA.
+	atualiza_Casas (e, c, BRANCA); //Atualiza a coordenada para onde se jogou com uma peça BRANCA.
 
 	//Aqui já se considera que a jogada foi efetuada, tornando-se apenas de 'atualizações' ao estado.
 
-	obter_jogador_atual(e) == 1 ? (e -> jogador_atual = 2) : (e -> jogador_atual = 1); //Se o jogador inicial for o 1, atualiza para 2, e vice-versa.
-	e -> ultima_jogada = c; // Atualiza, dentro de ESTADO, as coordenadas da ULTIMA_JOGADA.
-	
-	if (obter_jogador_atual(e) == 2) //Se o jogador final for o 2, atualiza o ESTADO para a jogada + 1 (cada jogada é determinada pelo movimento de 2 jogadores*)
-		e -> num_jogadas += 1;
-		
-	
-//	printf("Jogar para linha %d coluna %d:\n", c.linha, c.coluna);
-//	mostrar_tabuleiro(e);
+	atualiza_Ultima_Jogada(e, c); // Atualiza, dentro de ESTADO, as coordenadas da ULTIMA_JOGADA.
+	atualiza_Num_Jogadas (e);
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
@@ -140,19 +131,17 @@ void jogada_Vencedora(ESTADO *e, COORDENADA c) {
 	for (int d = 0; d < 8; d++) {
 			for (int a = 0; a < 8; a++)
 				if (obter_estado_casa (e, criar_Coordenada(d, a)) == BRANCA) //Procura a peça BRANCA atual no jogo
-					e -> tab[d][a] = PRETA;	//E substitui a mesma por uma peça PRETA.
+					atualiza_Casas (e, criar_Coordenada(d, a), PRETA);	//E substitui a mesma por uma peça PRETA.
 	}
 
 	
-	e -> tab[c.linha][c.coluna] = BRANCA; //Atualiza a coordenada para onde se jogou com uma peça BRANCA.
-
+	atualiza_Casas(e, c, BRANCA); //Atualiza a coordenada para onde se jogou com uma peça BRANCA.
 
 //Aqui já se considera que a jogada foi efetuada, tornando-se apenas de 'atualizações' ao estado.
 
-	e -> ultima_jogada = c; // Atualiza, dentro de ESTADO, as coordenadas da ULTIMA_JOGADA.
+	atualiza_Ultima_Jogada(e, c); // Atualiza, dentro de ESTADO, as coordenadas da ULTIMA_JOGADA.
 	
-	if (obter_jogador_atual(e) == 2) //Se o jogador final for o 2, atualiza o ESTADO para a jogada + 1 (cada jogada é determinada pelo movimento de 2 jogadores*)
-		e -> num_jogadas += 1;
+	atualiza_Num_Jogadas(e); // Atualiza, dentro de ESTADO, o número de jogadas efetuadas.
 
 	printf("O Jogador %d ganhou!!! Parabéns!\n", obter_jogador_atual(e));
 }
@@ -160,37 +149,51 @@ void jogada_Vencedora(ESTADO *e, COORDENADA c) {
 
 
 
+//------------------------------------------------------------------------------------------------------------------------------
+int antecipa_Possibilidade_Jogada (ESTADO *e, COORDENADA c) {
+
+	if (verifica_Posicao_Jogada(e, c) == 0 || verifica_CASA(e, c) == 0) //Se a jogada com estes dados for possivel, devolve VDD (1)
+		return 0;
+	else
+		return 1;
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
 
 //------------------------------------------------------------------------------------------------------------------------------
 int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 	
-	
-//	printf("\nAntes da Jogada: Linha %d, Coluna %d\n", e -> ultima_jogada.linha, e -> ultima_jogada.coluna);
-//	mostrar_tabuleiro(e); //Mostra a configuração inicial do jogo.
 	printf("\n");
 
-	
-	if (verifica_Posicao_Jogada(e, c) && verifica_PERDEU(e, c)) //Se a coordenada da peça seguinte for vizinha, SE todas as peças à volta forem PRETAS, o jogo acaba! ("Se 1 e 1, ent VDD")
+	if (verifica_Posicao_Jogada(e, c) && verifica_PERDEU(e, c)) { //Se a coordenada da peça seguinte for vizinha, SE todas as peças à volta forem PRETAS, o jogo acaba! ("Se 1 e 1, ent VDD")
 		
 		printf("O jogo acabou para ti, Jogador [%d]. Boa sorte para a próxima!\n", obter_jogador_atual(e));
+		return 0; // Tecnicamente não pode jogar, logo deverá devolver 0 (?).
+	}
 
 	
-	if (verifica_Posicao_Jogada (e, c) && verifica_CASA (e, c) && verifica_GANHOU (e ,c)) //Se a jogada for possivel nas direções possiveis, a coordenada que se pretende estiver VAZIA e esta ser '1' ou '2', então ganhou!
+	if (verifica_Posicao_Jogada (e, c) && verifica_CASA (e, c) && verifica_GANHOU (e ,c)) { //Se a jogada for possivel nas direções possiveis, a coordenada que se pretende estiver VAZIA e esta ser '1' ou '2', então ganhou!
 		
 		jogada_Vencedora(e, c); //Atualizações necessárias ao ESTADO e parabenização.
-
+		return 1;
+	}
 
 	
 	if (verifica_Posicao_Jogada(e, c) && verifica_CASA(e, c))  { //Se a coordenada dada for vizinha e a casa estiver VAZIA, a jogada é possível.
 		
+		if (!verifica_Inicio_Jogo(e)) //Se a jogada não for imediatamente a seguir à posição inicial do jogo,
+			atualiza_Jogador(e); //Se o jogador inicial for o 1, atualiza para 2, e vice-versa.
+		
 		jogada_Intermedia(e ,c); //Atualizações necessárias ao estado.
+
 		return 1;
 	}
 
 
 	else {
 		
-		printf("A jogada que tentaste efetuar (linha %d, coluna %d) nao e possivel!!\n\n", c.linha, c.coluna);
+		printf("A jogada que tentaste efetuar (linha %d, coluna %d) nao e possivel!!\n\n", c.linha + 1, c.coluna + 1);
 	//	mostrar_tabuleiro(e);
 		return 0;
 	}
@@ -199,7 +202,6 @@ int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 //Devolve VDD (!= 0) se for possível jogar.
 //Devolve F (== 0) caso não seja possível.
 //------------------------------------------------------------------------------------------------------------------------------
-
 
 
 //TESTE
@@ -224,6 +226,7 @@ int main () {
 	jogar (e, teste2);
 
 	jogar (e, teste3);
+
 
 	return 0;
 } 
