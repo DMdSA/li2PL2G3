@@ -160,5 +160,46 @@ int verifica_Inicio_Jogo (ESTADO *e) {
 //------------------------------------------------------------------------------------------------------------------------------
 
 
+//------------------------------------------------------------------------------------------------------------------------------
+void perdeste(int x) {
+
+	if (x == 1)
+		printf("A jogada que tentaste fazer e impossivel.\n");
+	else
+		if (x == 2)
+			printf("Esta jogada fez com que perdesses o jogo :c\n");
+		}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+int letra_Numero(char x) {
+
+	int final;
+	switch (x) {
+
+		case 'a' : final = 1;
+		break;
+		case 'b' : final = 2;
+		break;
+		case 'c' : final = 3;
+		break;
+		case 'd' : final = 4;
+		break;
+		case 'e' : final = 5;
+		break;
+		case 'f' : final = 6;
+		break;
+		case 'g' : final = 7;
+		break;
+		case 'h' : final = 8;
+		break;
+	}
+	return final;
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
 //QUESTÃO
 //Qual a necessidade de as funções que devolvem ESTADO terem um '*' antes do seu nome??????????
