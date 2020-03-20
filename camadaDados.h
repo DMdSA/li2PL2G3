@@ -95,4 +95,17 @@ ESTADO *atualiza_Num_Jogadas (ESTADO *e);
 @returns Verdade (1), se o jogo estiver no seu início, ou Falso (0), caso contrário
 */
 int verifica_Inicio_Jogo (ESTADO *e);
+
+/**
+\brief Informa o jogador de que perdeu o jogo
+*/
+void perdeste(int x);
+
+/**
+\brief Transforma um char num int
+@param x Letra da coordenada para a qual se pretende jogar
+@returns Inteiro correspondente à letra
+*/
+int letra_Numero(char x);
+
 #endif
