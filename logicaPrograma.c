@@ -8,6 +8,7 @@
 //#include "interfacePrograma.c"
 #include "logicaPrograma.h"
 
+
 //------------------------------------------------------------------------------------------------------------------------------
 int verifica_Posicao_Jogada (ESTADO *e, COORDENADA c) { //Verifica se a jogada Horizonta, Vertical ou Obliqua é possivel (ou seja, vizinha).
 
@@ -168,7 +169,8 @@ int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 
 	if (verifica_Posicao_Jogada(e, c) && verifica_PERDEU(e, c)) { //Se a coordenada da peça seguinte for vizinha, SE todas as peças à volta forem PRETAS, o jogo acaba! ("Se 1 e 1, ent VDD")
 		
-		printf("O jogo acabou para ti, Jogador [%d]. Boa sorte para a próxima!\n", obter_jogador_atual(e));
+		perdeste(2);
+		printf("O jogador [%d] é o grande vencedor!!\n", obter_jogador_atual(e));
 		return 0; // Tecnicamente não pode jogar, logo deverá devolver 0 (?).
 	}
 
@@ -193,7 +195,7 @@ int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 
 	else {
 		
-		printf("A jogada que tentaste efetuar (linha %d, coluna %d) nao e possivel!!\n\n", c.linha + 1, c.coluna + 1);
+		perdeste(1);
 	//	mostrar_tabuleiro(e);
 		return 0;
 	}
