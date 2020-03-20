@@ -2,20 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bases.h"
-#include "camadaDados.c"
+#include "camadaDados.h"
 #include "interfacePrograma.h"
-#include "logicaPrograma.c"
-//#define BUF_SIZE = 255;
+#include "logicaPrograma.h"
 
 
 //------------------------------------------------------------------------------------------------------------------------------
 void prompt_INFO (ESTADO *e) {
-
-	if (obter_estado_casa(e, criar_Coordenada(3, 4)) == BRANCA) //Se o jogo estiver no seu inicio,
-		printf("[Inicio Jogo] | Jogador[%d] > Posicionamento na casa [L.%d, C.%d]\n\n", obter_jogador_atual(e), obter_Linha_Atual(e) + 1, obter_Coluna_Atual(e) + 1);
-	else //Caso contrário,
-		printf("[Jogada %d] | Jogador[%d] > movimento para a casa [L.%d, C.%d]\n\n", obter_numero_de_jogadas(e), obter_jogador_atual(e), obter_Linha_Atual(e) + 1, obter_Coluna_Atual(e) + 1);
-
+	if (verifica_Inicio_Jogo(e))
+		atualiza_Num_Jogadas(e);
+	printf("#[%d], Jog[%d] > ", obter_numero_de_jogadas(e), obter_jogador_atual(e));
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
@@ -33,14 +29,32 @@ void mostrar_tabuleiro(ESTADO *e) {
 			}
 			printf("\n");
 		}
-		prompt_INFO(e);
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-void gr (ESTADO *e) {
+void gr (FILE *jogadaAtual, ESTADO *e) {
+
+	jogadaAtual = fopen("jogadaAtual.txt", "w");
+
+	for (int i = 0; i < 8; i++) {
+
+		for (int a = 0; a < 8; a++)
+			fprintf(jogadaAtual, "%c ", obter_estado_casa(e, criar_Coordenada(i, a)));
+		
+		fprintf(jogadaAtual, "\n");
+	}
+
+	fclose(jogadaAtual); 
+}	// -> Grava apenas a última jogada no ficheiro jogadaAtual.txt
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+/*void grTUDO (ESTADO *e) { // -> Grava todas as jogadas efetuadas por jogo.
 
 	FILE *game;
 
@@ -56,30 +70,35 @@ void gr (ESTADO *e) {
 
 	fprintf(game, "\n");
 	fclose(game);
-}
+} */
 //------------------------------------------------------------------------------------------------------------------------------
 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-void ler (ESTADO *e) {
+void ler (FILE *ficheiro) {
 
-	FILE *game;
+	char linha[15];
+	ficheiro = fopen("jogadaAtual.txt", "r");
 
-	game = fopen("game.txt", "r");
+	while ( fgets(linha, sizeof(linha), ficheiro) )
+		printf("%s", linha);
 
-	fclose(game);
-}
+	fclose(ficheiro);
+}	// -> Lê o ficheiro que contém a última jogada efetuada.
 //------------------------------------------------------------------------------------------------------------------------------
-
 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
 int interpretador(ESTADO *e) {
 	
+	FILE *ficheiro;
+	int BUF_SIZE = 255;
 	char linha[BUF_SIZE];
 	char col[2], lin[2];
+	
+	prompt_INFO(e);
 	
 	if (fgets(linha, BUF_SIZE, stdin) == NULL)
 	
@@ -87,22 +106,25 @@ int interpretador(ESTADO *e) {
 	
 	if (strlen(linha) == 3 && sscanf(linha, "%[a-h]%[1-8]", col, lin) == 2) {
 	
-		COORDENADA coord = {*col - 'a', *lin - '1'};
-		jogar(e, coord);
-		mostrar_tabuleiro(e);
+		COORDENADA coord = criar_Coordenada(lin[0], letra_Numero(col[1]));
+		if (jogar(e, coord)) {
+			mostrar_tabuleiro(e);
+			gr(ficheiro, e);
+		}
 	}
 	
 	return 1;
-} 
+}
 //------------------------------------------------------------------------------------------------------------------------------
 
 
 /*
 int main () {
 
+	FILE *atual;
 	ESTADO *e = inicializar_estado();
 	mostrar_tabuleiro(e);
-	gr(e);
+	gr(atual, e);
 
 	COORDENADA teste, teste2, teste3;
 
@@ -118,19 +140,28 @@ int main () {
 	jogar(e, teste);
 		
 		mostrar_tabuleiro(e);
-		gr(e);
-
+		gr(atual, e);
 
 	jogar (e, teste2);
 
 		mostrar_tabuleiro(e);
-		gr(e);
-
+		gr(atual, e);
 
 	jogar (e, teste3);
 
 		mostrar_tabuleiro(e);
-		gr(e);
+		gr(atual, e);
+
+	return 0;
+}
+*/
+
+/*
+int main () {
+
+	FILE *qqercoisa;
+	//ESTADO *e = inicializar_estado();
+	ler(qqercoisa);
 
 	return 0;
 }
