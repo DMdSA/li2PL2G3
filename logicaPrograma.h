@@ -13,7 +13,7 @@ void jogada_Intermedia (ESTADO *e, COORDENADA c);
 
 void jogada_Vencedora(ESTADO *e, COORDENADA c);
 
-int antecipa_Possibilidade_Jogada (ESTADO *e, COORDENADA c)
+int antecipa_Possibilidade_Jogada (ESTADO *e, COORDENADA c);
 
 int jogar (ESTADO *e, COORDENADA c);
 
