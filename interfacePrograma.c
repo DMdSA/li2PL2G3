@@ -35,6 +35,16 @@ void mostrar_tabuleiro(ESTADO *e) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
+void Q (){
+	printf("A sair do programa...\n");
+	exit(0);
+	// Função que fecha o programa.
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
 void gr (FILE *jogadaAtual, ESTADO *e) {
 
 	jogadaAtual = fopen("jogadaAtual.txt", "w");
@@ -55,19 +65,13 @@ void gr (FILE *jogadaAtual, ESTADO *e) {
 
 //------------------------------------------------------------------------------------------------------------------------------
 /*void grTUDO (ESTADO *e) { // -> Grava todas as jogadas efetuadas por jogo.
-
 	FILE *game;
-
 	game = fopen ("game.txt", "a");
-
 	for (int d = 0; d < 8; d++) {
-
 		for (int a = 0; a < 8; a++)
 			fprintf(game, "%c ", obter_estado_casa(e, criar_Coordenada (d, a)) );
-
 		fprintf(game, "\n");
 	}
-
 	fprintf(game, "\n");
 	fclose(game);
 } */
@@ -97,6 +101,7 @@ int interpretador(ESTADO *e) {
 	int BUF_SIZE = 255;
 	char linha[BUF_SIZE];
 	char col[2], lin[2];
+	char quit;
 	
 	prompt_INFO(e);
 	
@@ -104,6 +109,7 @@ int interpretador(ESTADO *e) {
 	
 		return 0;
 	
+
 	if (strlen(linha) == 3 && sscanf(linha, "%[a-h]%[1-8]", col, lin) == 2) {
 	
 		COORDENADA coord = criar_Coordenada(lin[0], letra_Numero(col[1]));
@@ -111,6 +117,10 @@ int interpretador(ESTADO *e) {
 			mostrar_tabuleiro(e);
 			gr(ficheiro, e);
 		}
+	}
+	else if (scanf(" %c",&quit)=='Q' || 'q')
+	{
+		Q();
 	}
 	
 	return 1;
@@ -120,20 +130,15 @@ int interpretador(ESTADO *e) {
 
 /*
 int main () {
-
 	FILE *atual;
 	ESTADO *e = inicializar_estado();
 	mostrar_tabuleiro(e);
 	gr(atual, e);
-
 	COORDENADA teste, teste2, teste3;
-
 	teste.linha = 2;
 	teste.coluna = 3;
-
 	teste2.linha = 2;
 	teste2.coluna = 4;
-
 	teste3.linha = 1;
 	teste3.coluna = 5;
 	
@@ -141,28 +146,21 @@ int main () {
 		
 		mostrar_tabuleiro(e);
 		gr(atual, e);
-
 	jogar (e, teste2);
-
 		mostrar_tabuleiro(e);
 		gr(atual, e);
-
 	jogar (e, teste3);
-
 		mostrar_tabuleiro(e);
 		gr(atual, e);
-
 	return 0;
 }
 */
 
 /*
 int main () {
-
 	FILE *qqercoisa;
 	//ESTADO *e = inicializar_estado();
 	ler(qqercoisa);
-
 	return 0;
 }
 */
