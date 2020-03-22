@@ -1,0 +1,138 @@
+\hypertarget{logicaPrograma_8h}{}\section{Referência ao ficheiro logica\+Programa.\+h}
+\label{logicaPrograma_8h}\index{logica\+Programa.\+h@{logica\+Programa.\+h}}
+\subsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{logicaPrograma_8h_a6169396bede24747c8bd74141cf1e606}{verifica\+\_\+\+Posicao\+\_\+\+Jogada} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
+\begin{DoxyCompactList}\small\item\em Verifica se posição onde se pretende jogar é valida. \end{DoxyCompactList}\item 
+int \hyperlink{logicaPrograma_8h_a3ce81cb71b8c83c612a45031aff80b30}{verifica\+\_\+\+C\+A\+SA} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
+\begin{DoxyCompactList}\small\item\em Verifica se a casa para onde se pretende mover ja tem peça preta. \end{DoxyCompactList}\item 
+int \hyperlink{logicaPrograma_8h_a9483a3bd0778f067771a4e62af2cce8d}{verifica\+\_\+\+P\+E\+R\+D\+EU} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
+\begin{DoxyCompactList}\small\item\em Verifica se é possivel continuar a jogar. Se todas as casas a sua volta são Pretas. \end{DoxyCompactList}\item 
+int \hyperlink{logicaPrograma_8h_abaef7937ec567d297655312be67e4e6f}{verifica\+\_\+\+G\+A\+N\+H\+OU} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
+\begin{DoxyCompactList}\small\item\em Verifica se as coordenadas sao igual a casa \char`\"{}1\char`\"{} ou \char`\"{}2\char`\"{} e se o jogador ganhou. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{logicaPrograma_8h_a2c0e7f4b070b426a1371bf87c252f434}\label{logicaPrograma_8h_a2c0e7f4b070b426a1371bf87c252f434}} 
+void \hyperlink{logicaPrograma_8h_a2c0e7f4b070b426a1371bf87c252f434}{jogada\+\_\+\+Intermedia} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
+\begin{DoxyCompactList}\small\item\em Substitui a casa da peça branca por peça preta depois da jogada ser validada. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{logicaPrograma_8h_aec4efd0d32feeb137bdcb3fbfdb5ffc2}\label{logicaPrograma_8h_aec4efd0d32feeb137bdcb3fbfdb5ffc2}} 
+void \hyperlink{logicaPrograma_8h_aec4efd0d32feeb137bdcb3fbfdb5ffc2}{jogada\+\_\+\+Vencedora} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c)
+\begin{DoxyCompactList}\small\item\em Informar que jogador ganhou. \end{DoxyCompactList}\item 
+int \hyperlink{logicaPrograma_8h_adc388e0911e376ae7dd1e952032454a4}{antecipa\+\_\+\+Possibilidade\+\_\+\+Jogada} (\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e, \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} c) int jogar(\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$e
+\begin{DoxyCompactList}\small\item\em Verifica se jogada é possivel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variáveis}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{logicaPrograma_8h_ae0dabe2af0dc4e4b7bf8aecbf7db0044}\label{logicaPrograma_8h_ae0dabe2af0dc4e4b7bf8aecbf7db0044}} 
+int \hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA} {\bfseries c}
+\end{DoxyCompactItemize}
+
+
+\subsection{Documentação das funções}
+\mbox{\Hypertarget{logicaPrograma_8h_adc388e0911e376ae7dd1e952032454a4}\label{logicaPrograma_8h_adc388e0911e376ae7dd1e952032454a4}} 
+\index{logica\+Programa.\+h@{logica\+Programa.\+h}!antecipa\+\_\+\+Possibilidade\+\_\+\+Jogada@{antecipa\+\_\+\+Possibilidade\+\_\+\+Jogada}}
+\index{antecipa\+\_\+\+Possibilidade\+\_\+\+Jogada@{antecipa\+\_\+\+Possibilidade\+\_\+\+Jogada}!logica\+Programa.\+h@{logica\+Programa.\+h}}
+\subsubsection{\texorpdfstring{antecipa\+\_\+\+Possibilidade\+\_\+\+Jogada()}{antecipa\_Possibilidade\_Jogada()}}
+{\footnotesize\ttfamily int antecipa\+\_\+\+Possibilidade\+\_\+\+Jogada (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA}}]{c }\end{DoxyParamCaption})}
+
+
+
+Verifica se jogada é possivel. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em e} & apontador para o estado \\
+\hline
+{\em c} & Coordenada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Verdade ou Falso Função para efetuar a jogada. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parâmetros}
+{\em e} & apontador para o estado \\
+\hline
+{\em c} & Coordenada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Verdade se for possivel jogar Falso se nao for possivel. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{logicaPrograma_8h_a3ce81cb71b8c83c612a45031aff80b30}\label{logicaPrograma_8h_a3ce81cb71b8c83c612a45031aff80b30}} 
+\index{logica\+Programa.\+h@{logica\+Programa.\+h}!verifica\+\_\+\+C\+A\+SA@{verifica\+\_\+\+C\+A\+SA}}
+\index{verifica\+\_\+\+C\+A\+SA@{verifica\+\_\+\+C\+A\+SA}!logica\+Programa.\+h@{logica\+Programa.\+h}}
+\subsubsection{\texorpdfstring{verifica\+\_\+\+C\+A\+S\+A()}{verifica\_CASA()}}
+{\footnotesize\ttfamily int verifica\+\_\+\+C\+A\+SA (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA}}]{c }\end{DoxyParamCaption})}
+
+
+
+Verifica se a casa para onde se pretende mover ja tem peça preta. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em e} & Apontador para o Estado \\
+\hline
+{\em c} & Coordenada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Verdade ou Falso 
+\end{DoxyReturn}
+\mbox{\Hypertarget{logicaPrograma_8h_abaef7937ec567d297655312be67e4e6f}\label{logicaPrograma_8h_abaef7937ec567d297655312be67e4e6f}} 
+\index{logica\+Programa.\+h@{logica\+Programa.\+h}!verifica\+\_\+\+G\+A\+N\+H\+OU@{verifica\+\_\+\+G\+A\+N\+H\+OU}}
+\index{verifica\+\_\+\+G\+A\+N\+H\+OU@{verifica\+\_\+\+G\+A\+N\+H\+OU}!logica\+Programa.\+h@{logica\+Programa.\+h}}
+\subsubsection{\texorpdfstring{verifica\+\_\+\+G\+A\+N\+H\+O\+U()}{verifica\_GANHOU()}}
+{\footnotesize\ttfamily int verifica\+\_\+\+G\+A\+N\+H\+OU (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA}}]{c }\end{DoxyParamCaption})}
+
+
+
+Verifica se as coordenadas sao igual a casa \char`\"{}1\char`\"{} ou \char`\"{}2\char`\"{} e se o jogador ganhou. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em e} & Apontador para o Estado \\
+\hline
+{\em c} & Coordenada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Verdade ou Falso 
+\end{DoxyReturn}
+\mbox{\Hypertarget{logicaPrograma_8h_a9483a3bd0778f067771a4e62af2cce8d}\label{logicaPrograma_8h_a9483a3bd0778f067771a4e62af2cce8d}} 
+\index{logica\+Programa.\+h@{logica\+Programa.\+h}!verifica\+\_\+\+P\+E\+R\+D\+EU@{verifica\+\_\+\+P\+E\+R\+D\+EU}}
+\index{verifica\+\_\+\+P\+E\+R\+D\+EU@{verifica\+\_\+\+P\+E\+R\+D\+EU}!logica\+Programa.\+h@{logica\+Programa.\+h}}
+\subsubsection{\texorpdfstring{verifica\+\_\+\+P\+E\+R\+D\+E\+U()}{verifica\_PERDEU()}}
+{\footnotesize\ttfamily int verifica\+\_\+\+P\+E\+R\+D\+EU (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA}}]{c }\end{DoxyParamCaption})}
+
+
+
+Verifica se é possivel continuar a jogar. Se todas as casas a sua volta são Pretas. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em e} & Apontador para o Estado \\
+\hline
+{\em c} & Coordenada \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Verdade ou Falso 
+\end{DoxyReturn}
+\mbox{\Hypertarget{logicaPrograma_8h_a6169396bede24747c8bd74141cf1e606}\label{logicaPrograma_8h_a6169396bede24747c8bd74141cf1e606}} 
+\index{logica\+Programa.\+h@{logica\+Programa.\+h}!verifica\+\_\+\+Posicao\+\_\+\+Jogada@{verifica\+\_\+\+Posicao\+\_\+\+Jogada}}
+\index{verifica\+\_\+\+Posicao\+\_\+\+Jogada@{verifica\+\_\+\+Posicao\+\_\+\+Jogada}!logica\+Programa.\+h@{logica\+Programa.\+h}}
+\subsubsection{\texorpdfstring{verifica\+\_\+\+Posicao\+\_\+\+Jogada()}{verifica\_Posicao\_Jogada()}}
+{\footnotesize\ttfamily int verifica\+\_\+\+Posicao\+\_\+\+Jogada (\begin{DoxyParamCaption}\item[{\hyperlink{structESTADO}{E\+S\+T\+A\+DO} $\ast$}]{e,  }\item[{\hyperlink{structCOORDENADA}{C\+O\+O\+R\+D\+E\+N\+A\+DA}}]{c }\end{DoxyParamCaption})}
+
+
+
+Verifica se posição onde se pretende jogar é valida. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em c} & Coordenada  e Apontador para o estado \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Verdade ou Falso 
+\end{DoxyReturn}
