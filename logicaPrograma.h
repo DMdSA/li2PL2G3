@@ -56,7 +56,7 @@ void jogada_Vencedora(ESTADO *e, COORDENADA c);
 @param c Coordenada
 @return Verdade ou Falso
 */
-int antecipa_Possibilidade_Jogada (ESTADO *e, COORDENADA c)
+int antecipa_Possibilidade_Jogada (ESTADO *e, COORDENADA c);
 
 
 /** 
