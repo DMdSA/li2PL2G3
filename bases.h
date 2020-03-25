@@ -7,6 +7,7 @@ Definição dos tipos de dados para posterior utilização no projeto
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define BUF_SIZE 1024
 
 /**
 \brief Tipo de dados para a casa.
