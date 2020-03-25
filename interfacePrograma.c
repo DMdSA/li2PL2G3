@@ -98,10 +98,10 @@ void ler (FILE *ficheiro) {
 int interpretador(ESTADO *e) {
 	
 	FILE *ficheiro;
-	int BUF_SIZE = 255;
 	char linha[BUF_SIZE];
 	char col[2], lin[2];
 	char quit;
+	char sair[4];
 	
 	prompt_INFO(e);
 	
@@ -109,20 +109,20 @@ int interpretador(ESTADO *e) {
 	
 		return 0;
 	
-
 	if (strlen(linha) == 3 && sscanf(linha, "%[a-h]%[1-8]", col, lin) == 2) {
-	
-		COORDENADA coord = criar_Coordenada(lin[0], letra_Numero(col[1]));
-		if (jogar(e, coord)) {
+
+		printf("COLUNA %d, LINHA %d\n", *col - 'a', 1 + (*lin - '1')); // -> Alterações necessárias face à nossa interpretação da matriz, presente em RASCUNHOS.Ht
+		
+		COORDENADA coord = {1 + (*lin - '1'), *col - 'a'};
+		
+		if (jogar(e, coord)) { // -> O facto de a própria jogada ser argumento do if, não faz com que ele "funcione", em vez de só o verificar??
 			mostrar_tabuleiro(e);
-			gr(ficheiro, e);
+//			gr(ficheiro, e); -> Só deve gravar quando se dá o respetivo comando.
 		}
 	}
-	else if (scanf(" %c",&quit)=='Q' || 'q')
-	{
-		Q();
-	}
 	
+
+
 	return 1;
 }
 //------------------------------------------------------------------------------------------------------------------------------
