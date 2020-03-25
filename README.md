@@ -8,4 +8,4 @@ Projeto envolto na unidade curricular **Laboratórios de Informática 2, UMINHO*
 - Joel Costa Araújo (76603)
 
 - [x] *Guião 5;*
-- [ ] *Guião 6;*
+- [x] *Guião 6;*
