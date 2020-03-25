@@ -6,7 +6,6 @@
 #include "interfacePrograma.h"
 #include "logicaPrograma.h"
 
-
 //------------------------------------------------------------------------------------------------------------------------------
 void prompt_INFO (ESTADO *e) {
 	if (verifica_Inicio_Jogo(e))
@@ -100,15 +99,12 @@ int interpretador(ESTADO *e) {
 	FILE *ficheiro;
 	char linha[BUF_SIZE];
 	char col[2], lin[2];
-	char quit;
-	char sair[4];
-	
 	prompt_INFO(e);
+
 	
 	if (fgets(linha, BUF_SIZE, stdin) == NULL)
-	
 		return 0;
-	
+
 	if (strlen(linha) == 3 && sscanf(linha, "%[a-h]%[1-8]", col, lin) == 2) {
 
 		printf("COLUNA %d, LINHA %d\n", *col - 'a', 1 + (*lin - '1')); // -> Alterações necessárias face à nossa interpretação da matriz, presente em RASCUNHOS.Ht
@@ -117,11 +113,24 @@ int interpretador(ESTADO *e) {
 		
 		if (jogar(e, coord)) { // -> O facto de a própria jogada ser argumento do if, não faz com que ele "funcione", em vez de só o verificar??
 			mostrar_tabuleiro(e);
-//			gr(ficheiro, e); -> Só deve gravar quando se dá o respetivo comando.
+//		gr(ficheiro, e); -> Só deve gravar quando se dá o respetivo comando.
 		}
 	}
 	
+	else
+		if (strlen(linha) == 5 && strcmp(linha, "sair\n") == 0)
+			Q();
+	
+		else
+			if (strlen(linha) == 7 && strcmp(linha, "gravar\n") == 0)
+				gr(ficheiro, e);
 
+			else
+				if (strlen(linha) == 4 && strcmp(linha, "ler\n") == 0)
+					ler(ficheiro);
+
+				else
+					printf("COMANDO INVALIDO!\n\n");
 
 	return 1;
 }
