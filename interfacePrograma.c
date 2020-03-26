@@ -61,7 +61,6 @@ void gr (FILE *jogadaAtual, ESTADO *e) {
 //------------------------------------------------------------------------------------------------------------------------------
 
 
-
 //------------------------------------------------------------------------------------------------------------------------------
 /*void grTUDO (ESTADO *e) { // -> Grava todas as jogadas efetuadas por jogo.
 	FILE *game;
@@ -99,9 +98,12 @@ int interpretador(ESTADO *e) {
 	FILE *ficheiro;
 	char linha[BUF_SIZE];
 	char col[2], lin[2];
+	COORDENADA coord;
+
+	do{
+
 	prompt_INFO(e);
 
-	
 	if (fgets(linha, BUF_SIZE, stdin) == NULL)
 		return 0;
 
@@ -131,6 +133,8 @@ int interpretador(ESTADO *e) {
 
 				else
 					printf("COMANDO INVALIDO!\n\n");
+		}
+		while(verifica_GANHOU(e, coord) == 0 && verifica_PERDEU(e, coord) == 0);
 
 	return 1;
 }
