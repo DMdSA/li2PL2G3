@@ -75,6 +75,32 @@ void gr (FILE *jogadaAtual, ESTADO *e) {
 } */
 //------------------------------------------------------------------------------------------------------------------------------
 
+void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number){
+	int i;
+
+	if(number%2 != 0){
+		for (i = 1; i < obter_numero_de_jogadas(e); i ++){
+			printf("[%d]: ",i);
+			imprime(jog1[i]);
+			printf(" ");
+			imprime(jog2[i]);
+			printf("\n");
+		}
+		printf("[%d]: ",i);
+		imprime(jog1[i]);
+		printf("\n");
+	}
+	else{
+		for (int f = 1; f < obter_numero_de_jogadas(e); f++){
+			printf("[%d]: ",f);
+			imprime(jog1[f]);
+			printf(" ");
+			imprime(jog2[f]);
+			printf("\n");
+		}
+	}
+	
+}
 
 
 //------------------------------------------------------------------------------------------------------------------------------
@@ -99,6 +125,9 @@ int interpretador(ESTADO *e) {
 	char linha[BUF_SIZE];
 	char col[2], lin[2];
 	COORDENADA coord2;
+	COORDENADA jog1 [65];
+	COORDENADA jog2 [65];
+	int number = 0;
 
 	do{
 
@@ -114,6 +143,14 @@ int interpretador(ESTADO *e) {
 		COORDENADA coord = {*col - 'a', 7 - (*lin - '1') };
 		
 		coord2 = coord;
+		number++;
+
+		if (obter_jogador_atual(e) == 1){
+			jog1 [obter_numero_de_jogadas(e)] = coord2;
+		}
+		else{
+			jog2 [obter_numero_de_jogadas(e)] = coord2;
+		}
 		
 		if (jogar(e, coord)) { // -> O facto de a própria jogada ser argumento do if, não faz com que ele "funcione", em vez de só o verificar??
 			mostrar_tabuleiro(e);
@@ -134,7 +171,12 @@ int interpretador(ESTADO *e) {
 					ler(ficheiro);
 
 				else
-					printf("COMANDO INVALIDO!\n\n");
+					if (strlen(linha) == 5 && strcmp(linha, "movs\n") == 0)
+					{
+						movs(e, jog1, jog2, number);
+					}
+					else
+						printf("COMANDO INVALIDO!\n\n");
 		}
 		while(verifica_GANHOU(e, coord2) == 0 && verifica_PERDEU(e, coord2) == 0);
 

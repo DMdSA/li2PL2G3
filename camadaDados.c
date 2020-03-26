@@ -171,32 +171,39 @@ void perdeste(int x) {
 		}
 //------------------------------------------------------------------------------------------------------------------------------
 
+void imprime (COORDENADA c) {
+
+    char colunaLetra = numero_Letra(c.coluna);
+
+    printf("%c%d", colunaLetra, (8 - c.linha));
+
+}
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-int letra_Numero(char x) {
+char numero_Letra(int x) {
 
-	int final;
-	switch (x) {
+    char final;
+    switch (x) {
 
-		case 'a' : final = 1;
-		break;
-		case 'b' : final = 2;
-		break;
-		case 'c' : final = 3;
-		break;
-		case 'd' : final = 4;
-		break;
-		case 'e' : final = 5;
-		break;
-		case 'f' : final = 6;
-		break;
-		case 'g' : final = 7;
-		break;
-		case 'h' : final = 8;
-		break;
-	}
-	return final;
+        case 0 : final = 'a';
+        break;
+        case 1 : final = 'b';
+        break;
+        case 2 : final = 'c';
+        break;
+        case 3 : final = 'd';
+        break;
+        case 4 : final = 'e';
+        break;
+        case 5 : final = 'f';
+        break;
+        case 6 : final = 'g';
+        break;
+        case 7 : final = 'h';
+        break;
+    }
+    return final;
 }
 //------------------------------------------------------------------------------------------------------------------------------
 

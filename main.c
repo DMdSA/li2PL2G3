@@ -7,12 +7,15 @@
 #include "interfacePrograma.h"
 
 int main() {
+    FILE *jogo;
+    ESTADO *e = inicializar_estado();
+    gr(jogo, e);
 
-	ESTADO *e = inicializar_estado();
-	mostrar_tabuleiro(e);
-	printf("\n");
-	
-	interpretador(e);
-	
-	return 0;
+
+    mostrar_tabuleiro(e);
+    printf("\n");
+
+   	interpretador(e);
+
+    return 0;
 }
