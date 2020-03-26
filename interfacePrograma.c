@@ -98,7 +98,7 @@ int interpretador(ESTADO *e) {
 	FILE *ficheiro;
 	char linha[BUF_SIZE];
 	char col[2], lin[2];
-	COORDENADA coord;
+	COORDENADA coord2;
 
 	do{
 
@@ -109,9 +109,11 @@ int interpretador(ESTADO *e) {
 
 	if (strlen(linha) == 3 && sscanf(linha, "%[a-h]%[1-8]", col, lin) == 2) {
 
-		printf("COLUNA %d, LINHA %d\n", *col - 'a', 1 + (*lin - '1')); // -> Alterações necessárias face à nossa interpretação da matriz, presente em RASCUNHOS.Ht
+		//printf("COLUNA %d, LINHA %d\n", *col - 'a', (*lin - '1'));// -> Alterações necessárias face à nossa interpretação da matriz, presente em RASCUNHOS.Ht
 		
-		COORDENADA coord = {1 + (*lin - '1'), *col - 'a'};
+		COORDENADA coord = {*col - 'a', 7 - (*lin - '1') };
+		
+		coord2 = coord;
 		
 		if (jogar(e, coord)) { // -> O facto de a própria jogada ser argumento do if, não faz com que ele "funcione", em vez de só o verificar??
 			mostrar_tabuleiro(e);
@@ -134,7 +136,7 @@ int interpretador(ESTADO *e) {
 				else
 					printf("COMANDO INVALIDO!\n\n");
 		}
-		while(verifica_GANHOU(e, coord) == 0 && verifica_PERDEU(e, coord) == 0);
+		while(verifica_GANHOU(e, coord2) == 0 && verifica_PERDEU(e, coord2) == 0);
 
 	return 1;
 }
