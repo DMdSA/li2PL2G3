@@ -1,3 +1,4 @@
+  
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -153,18 +154,19 @@ void jogada_Vencedora(ESTADO *e, COORDENADA c) {
 //------------------------------------------------------------------------------------------------------------------------------
 int antecipa_Possibilidade_Jogada (ESTADO *e, COORDENADA c) {
 
-	if (verifica_Posicao_Jogada(e, c) == 0 || verifica_CASA(e, c) == 0) //Se a jogada com estes dados for possivel, devolve VDD (1)
-		return 0;
-	else
-		return 1;
+    if (verifica_Posicao_Jogada(e, c) && verifica_CASA(e, c)) //Se a jogada com estes dados for possivel, devolve VDD (1)
+        return 1;
+    else
+        return 0;
 }
+
 //------------------------------------------------------------------------------------------------------------------------------
 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
 int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
-	
+
 	printf("\n");
 
 	if (verifica_Posicao_Jogada(e, c) && verifica_PERDEU(e, c)) { //Se a coordenada da peça seguinte for vizinha, SE todas as peças à volta forem PRETAS, o jogo acaba! ("Se 1 e 1, ent VDD")
@@ -209,27 +211,18 @@ int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 //TESTE
 /*
 int main () {
-
 	ESTADO *e = inicializar_estado();
-
 	COORDENADA teste, teste2, teste3;
-
 	teste.linha = 2;
 	teste.coluna = 3;
-
 	teste2.linha = 2;
 	teste2.coluna = 4;
-
 	teste3.linha = 2;
 	teste3.coluna = 3;
 	
 	jogar(e, teste);
-
 	jogar (e, teste2);
-
 	jogar (e, teste3);
-
-
 	return 0;
 } 
 */
