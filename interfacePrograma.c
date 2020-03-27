@@ -89,7 +89,7 @@ void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number){
 		}
 		printf("[%d]: ",i);
 		imprime(jog1[i]);
-		printf("\n");
+		printf("\n\n");
 	}
 	else{
 		for (int f = 1; f < obter_numero_de_jogadas(e); f++){
@@ -99,6 +99,7 @@ void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number){
 			imprime(jog2[f]);
 			printf("\n");
 		}
+		printf("\n");
 	}
 	
 }
@@ -160,11 +161,11 @@ int interpretador(ESTADO *e) {
 	}
 	
 	else
-		if (strlen(linha) == 5 && strcmp(linha, "sair\n") == 0)
+		if (strlen(linha) == 5 && strcmp(linha, "Q\n") == 0)
 			Q();
 	
 		else
-			if (strlen(linha) == 7 && strcmp(linha, "gravar\n") == 0)
+			if (strlen(linha) == 7 && strcmp(linha, "gr\n") == 0)
 				gr(ficheiro, e);
 
 			else
