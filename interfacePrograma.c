@@ -44,19 +44,25 @@ void Q (){
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-void gr (FILE *jogadaAtual, ESTADO *e) {
+void gr (ESTADO *e, char *ficheiro) {
+	
+	strcat(ficheiro, ".txt");
 
-	jogadaAtual = fopen("jogadaAtual.txt", "w");
+	FILE *jogo; 
+
+	jogo = fopen (ficheiro, "w");
+
+	//jogadaAtual = fopen("jogadaAtual.txt", "w");
 
 	for (int i = 0; i < 8; i++) {
 
 		for (int a = 0; a < 8; a++)
-			fprintf(jogadaAtual, "%c ", obter_estado_casa(e, criar_Coordenada(i, a)));
+			fprintf(jogo, "%c ", obter_estado_casa(e, criar_Coordenada(i, a)));
 		
-		fprintf(jogadaAtual, "\n");
+		fprintf(jogo, "\n");
 	}
 
-	fclose(jogadaAtual); 
+	fclose(jogo); 
 }	// -> Grava apenas a última jogada no ficheiro jogadaAtual.txt
 //------------------------------------------------------------------------------------------------------------------------------
 
@@ -125,7 +131,7 @@ int interpretador(ESTADO *e) {
 	
 	FILE *ficheiro;
 	char linha[BUF_SIZE];
-	char col[2], lin[2];
+	char col[2], lin[2], file[BUF_SIZE], gravar[4];
 	COORDENADA coord2;
 	COORDENADA jog1 [65];
 	COORDENADA jog2 [65];
@@ -161,12 +167,26 @@ int interpretador(ESTADO *e) {
 	}
 	
 	else
-		if (strlen(linha) == 5 && strcmp(linha, "Q\n") == 0)
+		if (strlen(linha) == 2 && strcmp(linha, "Q\n") == 0)
 			Q();
 	
-		else
-			if (strlen(linha) == 7 && strcmp(linha, "gr\n") == 0)
-				gr(ficheiro, e);
+		else{
+				for (int a = 0; a < 3; a++)
+				gravar[a] = linha[a];
+
+				gravar[3] = '\0';
+			}			
+					if (strcmp(gravar, "gr ") == 0){
+						printf("%d", strcmp(gravar, "gr "));
+						int i = 3; // Contador inicializar a 3 espaços "gr " <- ignora
+						for (int d = 0; linha[i]; d++){
+							file[d] = linha[i];
+							i++;
+						}
+				
+						gr(e, file);
+					}
+
 
 			else
 				if (strlen(linha) == 4 && strcmp(linha, "ler\n") == 0)
@@ -180,6 +200,7 @@ int interpretador(ESTADO *e) {
 					else
 						printf("COMANDO INVALIDO!\n\n");
 		}
+
 		while(verifica_GANHOU(e, coord2) == 0 && verifica_PERDEU(e, coord2) == 0);
 
 	return 1;
