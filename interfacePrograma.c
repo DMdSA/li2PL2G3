@@ -177,7 +177,6 @@ int interpretador(ESTADO *e) {
 				gravar[3] = '\0';
 			}			
 					if (strcmp(gravar, "gr ") == 0){
-						printf("%d", strcmp(gravar, "gr "));
 						int i = 3; // Contador inicializar a 3 espaços "gr " <- ignora
 						for (int d = 0; linha[i]; d++){
 							file[d] = linha[i];
