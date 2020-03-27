@@ -115,7 +115,7 @@ void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number){
 void ler (FILE *ficheiro) {
 
 	char linha[15];
-	ficheiro = fopen("jogadaAtual.txt", "r");
+	ficheiro = fopen(ficheiro, "r");
 
 	while ( fgets(linha, sizeof(linha), ficheiro) )
 		printf("%s", linha);
@@ -130,8 +130,8 @@ void ler (FILE *ficheiro) {
 int interpretador(ESTADO *e) {
 	
 	FILE *ficheiro;
-	char linha[BUF_SIZE];
-	char col[2], lin[2], file[BUF_SIZE], gravar[4];
+	char file[BUF_SIZE], linha[BUF_SIZE];
+	char col[2], lin[2], gravar[4], read[5];
 	COORDENADA coord2;
 	COORDENADA jog1 [65];
 	COORDENADA jog2 [65];
@@ -171,33 +171,40 @@ int interpretador(ESTADO *e) {
 			Q();
 	
 		else{
-				for (int a = 0; a < 3; a++)
+			for (int a = 0; a < 3; a++)
 				gravar[a] = linha[a];
-
 				gravar[3] = '\0';
-			}			
-					if (strcmp(gravar, "gr ") == 0){
-						int i = 3; // Contador inicializar a 3 espaços "gr " <- ignora
-						for (int d = 0; linha[i]; d++){
-							file[d] = linha[i];
-							i++;
-						}
-				
-						gr(e, file);
-					}
+		}			
+		if (strcmp(gravar, "gr ") == 0){
+			int i = 3; // Contador inicializar a 3 espaços "gr " <- ignora
+			for (int d = 0; linha[i]; d++){
+				file[d] = linha[i];
+				i++;
+			}
 
+			gr(e, file);
+		}
 
+		else{
+			for (int a = 0; a < 4; a++)
+				read[a] = linha[a];
+				read[4] = '\0';
+		}
+		if (strcmp(read, "ler ") == 0){
+			int i = 4; 
+			for (int d = 0; linha[i]; d++){
+				file[d] = linha[i];
+				i++;
+			}
+			ler(file); // ERRO 
+		}
+		else
+			if (strlen(linha) == 5 && strcmp(linha, "movs\n") == 0)
+			{
+				movs(e, jog1, jog2, number);
+			}
 			else
-				if (strlen(linha) == 4 && strcmp(linha, "ler\n") == 0)
-					ler(ficheiro);
-
-				else
-					if (strlen(linha) == 5 && strcmp(linha, "movs\n") == 0)
-					{
-						movs(e, jog1, jog2, number);
-					}
-					else
-						printf("COMANDO INVALIDO!\n\n");
+				printf("COMANDO INVALIDO!\n\n");
 		}
 
 		while(verifica_GANHOU(e, coord2) == 0 && verifica_PERDEU(e, coord2) == 0);
