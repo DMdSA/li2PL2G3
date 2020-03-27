@@ -78,6 +78,7 @@ void gr (FILE *jogadaAtual, ESTADO *e) {
 void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number){
 	int i;
 
+	printf("\n");
 	if(number%2 != 0){
 		for (i = 1; i < obter_numero_de_jogadas(e); i ++){
 			printf("[%d]: ",i);
