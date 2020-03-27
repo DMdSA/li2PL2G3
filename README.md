@@ -9,3 +9,5 @@ Projeto envolto na unidade curricular **Laboratórios de Informática 2, UMINHO*
 
 - [x] *Guião 5;*
 - [x] *Guião 6;*
+- [ ] *Guião 7;*
+- [ ] *Guião 8;*
