@@ -13,7 +13,6 @@ int main() {
 
 
     mostrar_tabuleiro(e);
-    printf("\n");
 
    	interpretador(e);
 
