@@ -9,8 +9,6 @@
 int main() {
     FILE *jogo;
     ESTADO *e = inicializar_estado();
-    gr(jogo, e);
-
 
     mostrar_tabuleiro(e);
 

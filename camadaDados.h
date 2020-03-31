@@ -101,7 +101,7 @@ int verifica_Inicio_Jogo (ESTADO *e);
 */
 void perdeste(int x);
 
-void imprime(COORDENADA c);
+char letra_Coordenada(COORDENADA c);
 /**
 \brief Transforma um char num int
 @param x Letra da coordenada para a qual se pretende jogar

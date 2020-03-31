@@ -171,12 +171,12 @@ void perdeste(int x) {
 		}
 //------------------------------------------------------------------------------------------------------------------------------
 
-void imprime (COORDENADA c) {
+char letra_Coordenada (COORDENADA c) {
 
     char colunaLetra = numero_Letra(c.coluna);
 
-    printf("%c%d", colunaLetra, (8 - c.linha));
-
+    //printf("%c%d", colunaLetra, (8 - c.linha));
+    return colunaLetra;
 }
 
 
