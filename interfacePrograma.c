@@ -45,6 +45,7 @@ void Q (){
 
 //------------------------------------------------------------------------------------------------------------------------------
 void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number, char *file){
+	
 	int i;
 
 	FILE *gravaMovimentos;
@@ -53,8 +54,8 @@ void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number, char 
 	
 	fprintf(gravaMovimentos, "\n");
 
-	if(number%2 != 0){
-		for (i = 1; i < obter_numero_de_jogadas(e); i ++){
+	if(number % 2 != 0){
+		for (i = 1; i < obter_numero_de_jogadas(e); i++){
 			
 			fprintf(gravaMovimentos, "[%d]: ",i);
 			fprintf(gravaMovimentos, "%c%d", letra_Coordenada(jog1[i]), (8 - jog1[i].linha));
@@ -187,15 +188,16 @@ int interpretador(ESTADO *e) {
 	
 	//FILE *ficheiro;
 	char linha[BUF_SIZE];
-	char col[2], lin[2], *file, gravar[4];
+	char col[2], lin[2], *file, gravar[7];
 	COORDENADA coord2;
 	COORDENADA jog1 [65];
 	COORDENADA jog2 [65];
 	int number = 0;
-	file = (char *) malloc(2);
+
 
 	do {
-
+		file = (char *) malloc(2);
+		
 		prompt_INFO(e);
 	
 		if (fgets(linha, BUF_SIZE, stdin) == NULL)
@@ -207,20 +209,27 @@ int interpretador(ESTADO *e) {
 		
 			COORDENADA coord = {*col - 'a', 7 - (*lin - '1') };
 		
-			coord2 = coord;
-			number++;
-
-			if (obter_jogador_atual(e) == 1)
-				jog1 [obter_numero_de_jogadas(e)] = coord2;
-			
-			else
-				jog2 [obter_numero_de_jogadas(e)] = coord2;
-			
+			coord2 = coord;			
 		
+			if (verifica_Posicao_Jogada(e, coord2) && verifica_CASA(e, coord2)) {
+
+				if (obter_jogador_atual(e) == 1)
+					jog1 [obter_numero_de_jogadas(e)] = coord2;
+			
+				else
+					jog2 [obter_numero_de_jogadas(e)] = coord2;
+			
+				number++;
+			}
+
+
+
 			if (jogar(e, coord)) { // -> O facto de a própria jogada ser argumento do if, não faz com que ele "funcione", em vez de só o verificar??
 				mostrar_tabuleiro(e);
 //			gr(ficheiro, e); -> Só deve gravar quando se dá o respetivo comando.
 			}
+
+			//number++;
 		}
 	
 		else
@@ -229,20 +238,21 @@ int interpretador(ESTADO *e) {
 	
 			else {
 					for (int a = 0; a < 5; a++)
-					gravar[a] = linha[a];
+						gravar[a] = linha[a];
 					gravar[6] = '\0'; // -> Grava a instrução "gr ", "ler " ou "movs "
 				
 					if (gravar[0] == 'g' && gravar[1] == 'r' && gravar[2] == ' ') { // SE O COMANDO FOR GRAVAR
 						int i = 3; // Contador inicializar a 3 espaços "gr " <- ignora
-			
 
-						int d;
-						for (d = 0; ((linha[i] >= 'a' && linha[i] <= 'z') || (linha[i] >= 'A' && linha[i] <= 'Z')); d++) {  
+						int d = 0;
+
+						for (d; (linha[i] >= 'a' && linha[i] <= 'z'); d++) { //|| (linha[i] >= 'A' && linha[i] <= 'Z')); d++) {  
 			
 							if (file[d]) {
 					
 								file[d] = linha[i];
 								i++;
+								printf("%c\n", file[d]);
 							}
 				
 							else { 
@@ -250,16 +260,23 @@ int interpretador(ESTADO *e) {
 								file = (char *) realloc(file, d+1);
 								file[d] = linha[i];
 								i++;
+								printf("%c\n", file[d]);
 							}
-						}			
-	
+						}
+
+						printf("string aqui %s\n", file);
+
 						file[d] = '\0'; //-> Recebe o nome do ficheiro onde é suposto ser guardado o jogo
-						//printf("%s wow tamanho %d\n", file, strlen(file));
+						
+						printf("%s wow tamanho %d\n", file, strlen(file));
+							printf("%s\n", file);
 						
 						gr(e, file); // Não tentar gravar à primeira, porque o jogo nem inicializou! É só uma "visualizacao" do tabuleiro.
+						
 						movs(e, jog1, jog2, number, file);
-
-						free(file);			
+						
+						free(file);
+						
 					}
 
 					/*else
@@ -276,8 +293,10 @@ int interpretador(ESTADO *e) {
 								nome_Ficheiro(linha, file, i);
 								movs(e, jog1, jog2, number, file);
 							}*/
-						else
+						else {
 							printf("COMANDO INVALIDO!\n\n");
+							//return 0;
+						}
 			}
 
 
