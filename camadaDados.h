@@ -109,4 +109,8 @@ char letra_Coordenada(COORDENADA c);
 */
 char numero_Letra(int x);
 
+
+char imprime (COORDENADA c);
+
+
 #endif

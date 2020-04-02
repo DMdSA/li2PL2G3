@@ -18,6 +18,38 @@ void prompt_INFO (ESTADO *e) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
+void movs_Consola(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number){
+	int i;
+
+	printf("\n");
+	if(number%2 != 0){
+		for (i = 1; i < obter_numero_de_jogadas(e); i ++){
+			printf("[%d]: ",i);
+			imprime(jog1[i]);
+			printf(" ");
+			imprime(jog2[i]);
+			printf("\n");
+		}
+		printf("[%d]: ",i);
+		imprime(jog1[i]);
+		printf("\n\n");
+	}
+	else{
+		for (int f = 1; f < obter_numero_de_jogadas(e); f++){
+			printf("[%d]: ",f);
+			imprime(jog1[f]);
+			printf(" ");
+			imprime(jog2[f]);
+			printf("\n");
+		}
+		printf("\n");
+	}
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
 void mostrar_tabuleiro(ESTADO *e) { 
 
 		printf("\n");
@@ -95,7 +127,7 @@ void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number, char 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-/*har* nome_Ficheiro (char linha[], char *file, int i) {
+char* nome_Ficheiro (char linha[], char *file, int i) {
 
 	int d;
 	for (d = 0; ((linha[i] >= 'a' && linha[i] <= 'z') || (linha[i] >= 'A' && linha[i] <= 'Z')); d++) {  
@@ -117,7 +149,7 @@ void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number, char 
 	file[d] = '\0';
 
 	return file;
-}*/
+}
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -168,15 +200,15 @@ void gr (ESTADO *e, char *file) {
 void ler (char *file) {
 
 	FILE *jogo;
+	
 	char linha[15];
+	
 	strcat(file, ".txt\0");
 	
 	jogo = fopen(file, "r");
 
 	while ( fgets(linha, sizeof(linha), jogo) )
 		printf("%s", linha);
-
-	free (file);
 
 	fclose(jogo);
 }	// -> Lê o ficheiro que contém a última jogada efetuada.
@@ -264,12 +296,12 @@ int interpretador(ESTADO *e) {
 							}
 						}
 
-						printf("string aqui %s\n", file);
+						//printf("string aqui %s\n", file);
 
 						file[d] = '\0'; //-> Recebe o nome do ficheiro onde é suposto ser guardado o jogo
 						
-						printf("%s wow tamanho %d\n", file, strlen(file));
-							printf("%s\n", file);
+						//printf("%s wow tamanho %d\n", file, strlen(file));
+						//	printf("%s\n", file);
 						
 						gr(e, file); // Não tentar gravar à primeira, porque o jogo nem inicializou! É só uma "visualizacao" do tabuleiro.
 						
@@ -279,20 +311,20 @@ int interpretador(ESTADO *e) {
 						
 					}
 
-					/*else
+					else
 						if (gravar[0] == 'l' && gravar[1] == 'e' && gravar[2] == 'r' && gravar[3] == ' ') { // -> SE O COMANDO FOR LER
 							int i = 4;
 							nome_Ficheiro(linha, file, i);
-							ler(file);	
-						}*/
+							ler(file);
 
-						/*else
-							if (gravar[0] == 'm' && gravar[1] == 'o' && gravar[2] == 'v' && gravar[3] == 's' && gravar[4] == ' ')
+							free(file);
+						}
+
+						else
+							if (gravar[0] == 'm' && gravar[1] == 'o' && gravar[2] == 'v' && gravar[3] == 's')
 							{
-								int i = 5;
-								nome_Ficheiro(linha, file, i);
-								movs(e, jog1, jog2, number, file);
-							}*/
+								movs_Consola(e, jog1, jog2, number);
+							}
 						else {
 							printf("COMANDO INVALIDO!\n\n");
 							//return 0;
