@@ -7,12 +7,12 @@
 #include "interfacePrograma.h"
 
 int main() {
-    FILE *jogo;
+    
     ESTADO *e = inicializar_estado();
 
     mostrar_tabuleiro(e);
 
-   	interpretador(e);
+	interpretador(e);
 
     return 0;
 }

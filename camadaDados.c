@@ -140,7 +140,7 @@ ESTADO *atualiza_Jogador (ESTADO *e) {
 //------------------------------------------------------------------------------------------------------------------------------
 ESTADO *atualiza_Num_Jogadas (ESTADO *e) {
 
-	if (obter_jogador_atual(e) == 1 || obter_numero_de_jogadas(e) == 0) //Por alguma razão, se o obterjogador fosse 2 dava erro.
+	if (obter_jogador_atual(e) == 1)// || obter_numero_de_jogadas(e) == 0) //Por alguma razão, se o obterjogador fosse 2 dava erro.
 		e -> num_jogadas += 1;
 
 	return e;

@@ -10,6 +10,7 @@
 void prompt_INFO (ESTADO *e) {
 	if (verifica_Inicio_Jogo(e))
 		atualiza_Num_Jogadas(e);
+	
 	printf("#[%d], Jog[%d] > ", obter_numero_de_jogadas(e), obter_jogador_atual(e));
 }
 //------------------------------------------------------------------------------------------------------------------------------
@@ -186,7 +187,6 @@ void ler (char *file) {
 //------------------------------------------------------------------------------------------------------------------------------
 int interpretador(ESTADO *e) {
 	
-	//FILE *ficheiro;
 	char linha[BUF_SIZE];
 	char col[2], lin[2], *file, gravar[7];
 	COORDENADA coord2;
