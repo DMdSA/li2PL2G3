@@ -82,7 +82,7 @@ int verifica_PERDEU (ESTADO *e, COORDENADA c) { //Verifica se TODAS as peças vi
 	dirBaixo = obter_estado_casa (e, criar_Coordenada(c.linha + 1, c.coluna + 1));
 	dirCima = obter_estado_casa (e, criar_Coordenada(c.linha - 1, c.coluna + 1));
 
-	if (cima == baixo && esq == dir && esqBaixo == esqCima && dirBaixo == dirCima && cima == esq) //Se todas forem iguais ..
+	if (cima == PRETA && cima == baixo && esq == dir && esqBaixo == esqCima && dirBaixo == dirCima && cima == esq) //Se todas forem iguais ..
 		return 1;
 
 	return 0;
@@ -205,23 +205,3 @@ int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 //Devolve VDD (!= 0) se for possível jogar.
 //Devolve F (== 0) caso não seja possível.
 //------------------------------------------------------------------------------------------------------------------------------
-
-
-//TESTE
-/*
-int main () {
-	ESTADO *e = inicializar_estado();
-	COORDENADA teste, teste2, teste3;
-	teste.linha = 2;
-	teste.coluna = 3;
-	teste2.linha = 2;
-	teste2.coluna = 4;
-	teste3.linha = 2;
-	teste3.coluna = 3;
-	
-	jogar(e, teste);
-	jogar (e, teste2);
-	jogar (e, teste3);
-	return 0;
-} 
-*/

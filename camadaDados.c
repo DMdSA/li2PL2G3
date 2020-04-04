@@ -9,18 +9,28 @@
 ESTADO *inicializar_estado() {
 
 	ESTADO *e = (ESTADO *) malloc(sizeof(ESTADO));
+	char NUM[] = {'8','7','6','5','4','3','2','1',' '};
+    char LTR[] = {'A','B','C','D','E','F','G','H',' '};
 	
 	e -> jogador_atual = 1;
 	e -> num_jogadas = 0;
 	e -> jogadas[32]; // ou 0, e vai, no máximo, até 32 (?).
 	e -> ultima_jogada.coluna = 4;
 	e -> ultima_jogada.linha = 3;
-	
-	for (int i = 0; i < 8; i++) { //Por cada linha
 
-		for (int d = 0; d < 8; d++)	//Verifica o elemento de cada coluna
-			e -> tab[i][d] = VAZIA;	//Atribuindo o valor VAZIA a todos
-	}
+		for (int i = 0; i < 9; i++) { //Por cada linha
+
+        for (int d = 0; d < 9; d++){     //Verifica o elemento de cada coluna
+            if (d == 8){
+                e -> tab [i][d] = NUM[i];
+            }
+            else if ( i == 8){
+                e -> tab [i][d] = LTR[d];
+            }
+            else
+            e -> tab[i][d] = VAZIA;    //Atribuindo o valor VAZIA a todos
+        }
+    }
 
 	e -> tab[0][7] = DOIS;	//Peça Inicial
 	e -> tab[7][0] = UM;	//Peça Inicial
@@ -223,6 +233,55 @@ char numero_Letra(int x) {
     return final;
 }
 //------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+int letra_Numero(char x) {
+
+    int final;
+    switch (x) {
+
+        case 'a' : final = 0;
+        break;
+        case 'b' : final = 1;
+        break;
+        case 'c' : final = 2;
+        break;
+        case 'd' : final = 3;
+        break;
+        case 'e' : final = 4;
+        break;
+        case 'f' : final = 5;
+        break;
+        case 'g' : final = 6;
+        break;
+        case 'h' : final = 7;
+        break;
+    }
+    return final;
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+int array_To_Int(int posAnterior[]) {
+
+	int x = posAnterior[0];
+	int y = posAnterior[1];
+	int final;
+	
+	if (posAnterior[0] >= 0 && posAnterior[1] <= 9 && posAnterior[1] >= 0)
+		final = x * 10 + y;
+	else
+		final = x;
+
+	return x;
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
 
 
 //QUESTÃO

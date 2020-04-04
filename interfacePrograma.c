@@ -18,7 +18,7 @@ void prompt_INFO (ESTADO *e) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-void movs_Consola(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number){
+void movs_Consola(ESTADO *e, COORDENADA jog1[], COORDENADA jog2[], int number){
 	int i;
 
 	printf("\n");
@@ -199,44 +199,105 @@ void gr (ESTADO *e, char *file) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-void coords_para_array (FILE *jogo, int jogadas, char jog1_4chars[], char jog2_4chars[]){
+int confirmaImpar (FILE *jogo) { //-> Confirma se, na ultima jogada, tem 1 jogada ou 2
+	
+	int confirma = 1;
+    
+    fseek(jogo, -5, SEEK_END);
+   	char duvida = fgetc(jogo);
+   	
+    
+    fseek(jogo, -8, SEEK_END);
+    char duvida2 = fgetc(jogo);
+
+    if (duvida2 >= '1' && duvida2 <= '8') 
+    	confirma = 0;
+
+    return confirma;
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+/* void coords_para_array (FILE *jogo, int jogadasTotais, char jog1_4chars[], char jog2_4chars[]){ // jogadas totais
+
+	size_t len = 0;
+	char * line = NULL;
+	ssize_t read;
+   char mystring [100];
+if ( fgets (mystring , 100 , jogo) != NULL )
+       puts (mystring);
+     fclose (jogo);
+
+} */
+
+//------------------------------------------------------------------------------------------------------------------------------
+ void coords_para_array (FILE *jogo, int jogadasTotais, char jog1_4chars[], char jog2_4chars[]){ // jogadas totais
 
 	char line [25];
     int contador = 152; //-> ignora o desenho do tabuleiro e comeca na primeira coordenada!
-
-    fseek(jogo, contador, SEEK_SET);
-        //fgets(line, sizeof line, jogo);
-        //fputs(line, stdout);
+    int d = 0, e = 0, ajuda1 = 2, ajuda2 = 2;
     
-        for (int a = 1; a <= jogadas; a++) { //-> Em vez do 'a' será o número do turno em que estas!
 
-            if (a %2 != 0) {
-                for (int d = 0; d < 2; d++){
-                    jog1_4chars[d] = fgetc(jogo);
-                printf("%c\n",jog1_4chars[d]);
+
+    	fseek(jogo, contador, SEEK_SET);    
+        for (int a = 1; a <= jogadasTotais; a++) { //-> Em vez do 'a' será o número do turno em que estas!
+
+            if (a % 2 != 0) {
+                for (d; d < ajuda1; d++){
+                  
+                	jog1_4chars[d] = fgetc(jogo);
+               		
                 }
+                ajuda1 += 2;
+                
                 contador += 3; //-> ignorar o espaco entre as coorenadas do jog1 e do jog2!
                 fseek(jogo, contador , SEEK_SET);
             }
 
             else{
-                for (int d = 0; d < 2; d++){
-                    jog2_4chars[d] = fgetc(jogo);
-                printf("%c\n",jog2_4chars[d]);
-                }
-                contador += 10; //-> numero de espacos para mudar de linha!
-            fseek(jogo, contador, SEEK_SET);
-            }            
-        }
-        coords_de_ficheiro(jogo ,jog1_4chars, jog2_4chars)
+
+            	if (a != jogadasTotais+1 || confirmaImpar(jogo) == 0) {
+
+                    for (e; e < ajuda2; e++) {
+                	   	jog2_4chars[e] = fgetc(jogo);
+                		
+               		}
+                	ajuda2 += 2;
+                
+                	contador += 10; //-> numero de espacos para mudar de linha!
+           			fseek(jogo, contador, SEEK_SET);
+           		}
+           	}	
+
+                    
+    	}
+		char new_jog1_4chars[jogadasTotais];
+		for(int i=0; i<jogadasTotais;i++) {
+			new_jog1_4chars[i] = jog1_4chars[i];
+		}
+		for(int i=0; i<128;i++) {
+			jog1_4chars[i] = '\0';
+		}
+		for(int i=0; i<jogadasTotais;i++) {
+			jog1_4chars[i] = new_jog1_4chars[i];
+		}
+		// int c = 0;
+		// char sub[] = jog1_4chars[];
+		// jog1_4chars="";
+		// while (c < jogadasTotais) {
+      	// 	jog1_4chars[c] = sub[0+c];
+      	// 	c++;
+  		//  }
+       // printf("%s STRING 1\n", jog1_4chars);
+       // printf("%s STRING 2 \n", jog2_4chars);
 
 }
-//------------------------------------------------------------------------------------------------------------------------------
+ //------------------------------------------------------------------------------------------------------------------------------
 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-int ultima_jogada_ficheiro (FILE *jogo){
+/*int ultima_jogada_ficheiro (FILE *jogo){
 	 int nJogadas;
      int nJogadas2;
      int nFinal;
@@ -256,71 +317,92 @@ int ultima_jogada_ficheiro (FILE *jogo){
             nFinal = nJogadas;
 
         return nFinal;
+}*/
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+void ajuda (ESTADO *e, FILE *jogo, COORDENADA *jog1, COORDENADA *jog2, int jogadastotais) {
+
+	if (verifica_Inicio_Jogo(e))
+		atualiza_Num_Jogadas(e);
+
+	if (confirmaImpar(jogo) == 0) {
+		
+		for (int a = 1; a < jogadastotais+1; a++) {
+
+			jogar(e, jog1[a]);
+				
+			jogar(e, jog2[a]);
+				
+		}
+	}
+
+	else {
+		int z = 1;
+		for (z; z <= jogadastotais-1; z++) {
+			jogar(e, jog1[z]);
+				
+			jogar(e, jog2[z]);
+				
+		}
+
+		jogar(e, jog1[z]);
+	
+	}
+	//pos(jogadastotais, jog1, jog2, e);
 }
+
+
+
+
+
+
+
 //------------------------------------------------------------------------------------------------------------------------------
+ESTADO *coords_de_ficheiro_jog (ESTADO *e, FILE *jogo, char jog1_4chars[], char jog2_4chars[], COORDENADA *jog1, COORDENADA *jog2, int jogadastotais) {
 
+	//printf("%s this\n", jog1_4chars);
 
+    int i = 1;
+	for (int a = 0; a < jogadastotais*2; a += 2) { // -> O primeiro 2 é o numero de jogadas que há
+           
+		    int letra = letra_Numero(jog1_4chars[a]);
 
-//------------------------------------------------------------------------------------------------------------------------------
-char *coords_de_ficheiro_jog1 (FILE *jogo, char jog1_4chars[]){
-	int ultima_jogada = ultima_jogada_ficheiro(jogo);
-	char jog1[64];
-
-	for (int a = 0; a <= ultima_jogada; a += 2) { // -> O primeiro 2 é o numero de jogadas que há
-            int i = 0;
-            int letra = letra_Numero(jog1_4chars[a]) + 1;
-            int numero = jog1_4chars[a + 1] - '0';
-            printf("letra %d numero %d\n", letra, numero);
+            //printf("%c <- char \n", jog1_4chars[a]);
+            
+            int numero = 8-(jog1_4chars[a + 1] - '0');
+            
+           // printf("letra %d numero %d\n", letra, numero);
             jog1[i] = criar_Coordenada(numero, letra);
             i++;
+	}
+
+    i = 1;
+    for (int a = 0; a < jogadastotais*2; a += 2) { // -> O primeiro 2 é o numero de jogadas que há
+
+        int letra = letra_Numero(jog2_4chars[a]);
+
+        //printf("%s this\n", jog2_4chars);
+        int numero = 8-(jog2_4chars[a + 1] - '0');
+        //printf("letra %d numero %d\n", letra, numero);
+        jog2[i] = criar_Coordenada(numero, letra);
+        i++;
+        
         }
-        return jog1;
-    }
 
 
-char *coords_de_ficheiro_jog2 (FILE *jogo, char jog2_4chars[]){
-	int ultima_jogada = ultima_jogada_ficheiro(jogo);
-	char jog2[64];
+    ajuda(e, jogo, jog1, jog2, jogadastotais);
 
-        for (int a = 0; a <= ultima_jogada; a += 2) { // -> O primeiro 2 é o numero de jogadas que há
-            int i = 0;
-            int letra = letra_Numero(jog1_4chars[a]) + 1;
-            int numero = jog2_4chars[a + 1] - '0';
-            printf("letra %d numero %d\n", letra, numero);
-            jog2[i] = criar_Coordenada(numero, letra);
-            i++;
-        }
-        return jog2;
 }
-//------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------
 
 
 
-//------------------------------------------------------------------------------------------------------------------------------
-void ler (char *file) {
-	
-	char linha[40];
-	int jogadastotais;
-	char jog1_4chars[128];
-    char jog2_4chars [128];
-	
-	strcat(file, ".txt\0");
 
-	FILE *jogo;
-	
-	jogo = fopen(file, "r");
-
-	while ( fgets(linha, sizeof(linha), jogo) )
-		printf("%s", linha);
-
-	jogadastotais = ultima_jogada_ficheiro(jogo)*2;
-	coords_para_array(jogo, jogadastotais);
-	coords_de_ficheiro_jog1(jogo, jog1_4chars);
-	coords_de_ficheiro_jog2(jogo, jog2_4chars);
-
-	fclose(jogo);
-}	// -> Lê o ficheiro que contém a última jogada efetuada.
-//------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -333,6 +415,7 @@ void pos(int jogada, COORDENADA jog1[], COORDENADA jog2[], ESTADO *e) {
 	if (verifica_Inicio_Jogo(e))
 		atualiza_Num_Jogadas(e);
 	//jogada += 1;
+
 	if (jogada != 0) {
 
 		for (int d = 1; d <= jogada; d++) {
@@ -345,6 +428,54 @@ void pos(int jogada, COORDENADA jog1[], COORDENADA jog2[], ESTADO *e) {
 		mostrar_tabuleiro(e);
 	}
 }
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+int ler (char *file, ESTADO *e, COORDENADA *jog1, COORDENADA *jog2) {
+	
+	char linha[40];
+	int jogadastotais = 0;
+	char jog1_4chars[128];
+    char jog2_4chars [128];
+    int number=0;
+
+	strcat(file, ".txt\0");
+
+	FILE *jogo;
+	
+	jogo = fopen(file, "r");
+
+	while ( fgets(linha, sizeof(linha), jogo) ) {
+		jogadastotais++;
+		printf("%s", linha);
+	}
+	
+	jogadastotais -= 10;
+	if (confirmaImpar == 0){
+		number = jogadastotais*2;
+	}
+	else{
+		number = jogadastotais*2 -1;
+	}
+
+	coords_para_array(jogo, jogadastotais*2, jog1_4chars, jog2_4chars);
+
+	//coords_de_ficheiro_jog1(jogo, jog1_4chars, jog1, jogadastotais);
+	//coords_de_ficheiro_jog2(jogo, jog2_4chars, jog2, jogadastotais);
+	coords_de_ficheiro_jog(e, jogo, jog1_4chars, jog2_4chars, jog1, jog2, jogadastotais);
+
+	//imprime(jog2[]);
+	//printf("primeiro elemtno ^\n");
+
+	
+	mostrar_tabuleiro(e);
+
+	fclose(jogo);
+
+	return number;
+}	// -> Lê o ficheiro que contém a última jogada efetuada.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -476,7 +607,8 @@ int interpretador(ESTADO *e) {
 							int i = 4;
 							nome_Ficheiro(linha, file, i);
 							e = inicializar_estado();
-							ler(file);
+							number = 0;
+							number = ler(file,e,jog1,jog2);
 
 							free(file);
 
@@ -492,6 +624,7 @@ int interpretador(ESTADO *e) {
 						else
 							if (gravar[0] == 'm' && gravar[1] == 'o' && gravar[2] == 'v' && gravar[3] == 's')
 							{
+								
 								movs_Consola(e, jog1, jog2, number);
 								if(obter_numero_de_jogadas(e) == 1){
 									coord2 = criar_Coordenada(3,4);

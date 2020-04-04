@@ -44,7 +44,7 @@ typedef JOGADA JOGADAS[32];
 */
 typedef struct {
 	/** O tabuleiro */
-	CASA tab[8][8]; //tab armazena informação sobre o tabuleiro.
+	CASA tab[9][9]; //tab armazena informação sobre o tabuleiro.
 
 	/** A coordenada da última jogada */
 	COORDENADA ultima_jogada; //ultima_jogada -> coordenada da última jogada.
