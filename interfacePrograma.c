@@ -92,7 +92,7 @@ void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number, char 
 	if(number % 2 != 0){
 		for (i = 1; i < obter_numero_de_jogadas(e); i++){
 			
-			fprintf(gravaMovimentos, "[%02d]: ",i);
+			fprintf(gravaMovimentos, "%02d: ",i);
 			fprintf(gravaMovimentos, "%c%d", letra_Coordenada(jog1[i]), (8 - jog1[i].linha));
 			fprintf(gravaMovimentos, " ");
 
@@ -100,7 +100,7 @@ void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number, char 
 			
 			fprintf(gravaMovimentos, "\n");
 		}
-		fprintf(gravaMovimentos, "[%02d]: ",i);
+		fprintf(gravaMovimentos, "%02d: ",i);
 
 		fprintf(gravaMovimentos, "%c%d", letra_Coordenada(jog1[i]), (8 - jog1[i].linha));
 		
@@ -110,7 +110,7 @@ void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number, char 
 
 		for (int f = 1; f < obter_numero_de_jogadas(e); f++){
 			
-			fprintf(gravaMovimentos, "[%02d]: ",f);
+			fprintf(gravaMovimentos, "%02d: ",f);
 			fprintf(gravaMovimentos, "%c%d", letra_Coordenada(jog1[f]), (8 - jog1[f].linha));
 
 			fprintf(gravaMovimentos, " ");
@@ -202,6 +202,7 @@ void gr (ESTADO *e, char *file) {
 int confirmaImpar (FILE *jogo) { //-> Confirma se, na ultima jogada, tem 1 jogada ou 2
 	
 	int confirma = 1;
+	int char2;
     
     fseek(jogo, -5, SEEK_END);
    	char duvida = fgetc(jogo);
@@ -210,7 +211,9 @@ int confirmaImpar (FILE *jogo) { //-> Confirma se, na ultima jogada, tem 1 jogad
     fseek(jogo, -8, SEEK_END);
     char duvida2 = fgetc(jogo);
 
-    if (duvida2 >= '1' && duvida2 <= '8') 
+    char2 = duvida2 - '0';
+
+    if (char2 >= 1 && char2 <= 8) 
     	confirma = 0;
 
     return confirma;
@@ -234,7 +237,7 @@ if ( fgets (mystring , 100 , jogo) != NULL )
  void coords_para_array (FILE *jogo, int jogadasTotais, char jog1_4chars[], char jog2_4chars[]){ // jogadas totais
 
 	char line [25];
-    int contador = 152; //-> ignora o desenho do tabuleiro e comeca na primeira coordenada!
+    int contador = 150; //-> ignora o desenho do tabuleiro e comeca na primeira coordenada!
     int d = 0, e = 0, ajuda1 = 2, ajuda2 = 2;
     
 
@@ -264,7 +267,7 @@ if ( fgets (mystring , 100 , jogo) != NULL )
                		}
                 	ajuda2 += 2;
                 
-                	contador += 10; //-> numero de espacos para mudar de linha!
+                	contador += 8; //-> numero de espacos para mudar de linha!
            			fseek(jogo, contador, SEEK_SET);
            		}
            	}	
@@ -453,11 +456,12 @@ int ler (char *file, ESTADO *e, COORDENADA *jog1, COORDENADA *jog2) {
 	}
 	
 	jogadastotais -= 10;
-	if (confirmaImpar == 0){
+	printf("%d\n", jogadastotais );
+	if (confirmaImpar(jogo) == 0){
 		number = jogadastotais*2;
 	}
 	else{
-		number = jogadastotais*2 -1;
+		number = jogadastotais*2+1;
 	}
 
 	coords_para_array(jogo, jogadastotais*2, jog1_4chars, jog2_4chars);
@@ -624,7 +628,7 @@ int interpretador(ESTADO *e) {
 						else
 							if (gravar[0] == 'm' && gravar[1] == 'o' && gravar[2] == 'v' && gravar[3] == 's')
 							{
-								
+								printf("%d\n",number );
 								movs_Consola(e, jog1, jog2, number);
 								if(obter_numero_de_jogadas(e) == 1){
 									coord2 = criar_Coordenada(3,4);
