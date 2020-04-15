@@ -519,6 +519,7 @@ int interpretador(ESTADO *e) {
 	COORDENADA jog2 [65];
 	int number = 0;
 	posicao_Lida[2] = '\0';
+	int guardarJogadaPos =  0;
 
 	do {
 		file = (char *) malloc(2);
@@ -551,6 +552,7 @@ int interpretador(ESTADO *e) {
 
 			if (jogar(e, coord)) { // -> O facto de a própria jogada ser argumento do if, não faz com que ele "funcione", em vez de só o verificar??
 				mostrar_tabuleiro(e);
+				guardarJogadaPos = 0;
 //			gr(ficheiro, e); -> Só deve gravar quando se dá o respetivo comando.
 			}
 
@@ -634,8 +636,7 @@ int interpretador(ESTADO *e) {
 									coord2 = criar_Coordenada(3,4);
 								}
 							}
-
-							else
+							else{
 								if (gravar[0] == 'p' && gravar[1] == 'o' && gravar[2] == 's' && gravar[3] == ' ') {
 
 									if (linha[4] >= '0' && linha[4] <= '9')
@@ -644,8 +645,11 @@ int interpretador(ESTADO *e) {
 										posicao_Lida[1] = linha[5];
 
 									int posicao = atoi(posicao_Lida);
+									if(guardarJogadaPos < obter_numero_de_jogadas(e)){
+										guardarJogadaPos = obter_numero_de_jogadas(e);
+									}
 
-									if (posicao > 0 && posicao < obter_numero_de_jogadas(e)) {
+									if (posicao > 0 && posicao < guardarJogadaPos) {
 										e = inicializar_estado();
 										pos(posicao, jog1, jog2, e);
 										number = 0;
@@ -664,6 +668,7 @@ int interpretador(ESTADO *e) {
 									printf("COMANDO INVALIDO!\n\n");
 									
 								}
+							}
 								
 			}
 
