@@ -68,7 +68,9 @@ int verifica_CASA (ESTADO *e, COORDENADA c) { //Verifica se a casa, para onde se
 //------------------------------------------------------------------------------------------------------------------------------
 int verifica_PERDEU (ESTADO *e, COORDENADA c) { //Verifica se TODAS as peças vizinhas estão pretas, ou seja, se o jogadorAtual perdeu.
 
-	CASA cima, baixo, dir, esq, esqCima, esqBaixo, dirCima, dirBaixo;
+	CASA cima, baixo, dir, esq, esqCima, esqBaixo, dirCima, dirBaixo, atual;
+
+	atual = obter_estado_casa(e, criar_Coordenada(c.linha, c.coluna));
 
 	cima = obter_estado_casa (e, criar_Coordenada(c.linha - 1, c.coluna));
 	baixo = obter_estado_casa (e, criar_Coordenada(c.linha + 1, c.coluna));
@@ -84,6 +86,31 @@ int verifica_PERDEU (ESTADO *e, COORDENADA c) { //Verifica se TODAS as peças vi
 
 	if (cima == PRETA && cima == baixo && esq == dir && esqBaixo == esqCima && dirBaixo == dirCima && cima == esq) //Se todas forem iguais ..
 		return 1;
+
+	if (obter_Linha_Atual(e) == 0 && obter_Coluna_Atual(e) >= 1 && obter_Coluna_Atual(e) <= 6) //Se estiver na linha de cima e nas colunas não dos extremos
+		if (esq == PRETA && esq == esqBaixo && esqBaixo == baixo && baixo == dirBaixo && dirBaixo == dir)
+			return 1;
+
+	if (obter_Linha_Atual(e) == 0 && obter_Coluna_Atual(e) == 0) //Se estiver no canto superior esquerdo
+		if (baixo == PRETA && baixo == dirBaixo && dirBaixo == dir)
+			return 1;
+
+	if (obter_Linha_Atual(e) == 7 && obter_Coluna_Atual(e) >= 1 && obter_Coluna_Atual(e) <= 6) //Se estiver na linha de baixo e não nas colunas extremas
+		if (cima == PRETA && cima == esqCima && esqCima == esq && esq == dir && dir == dirCima)
+			return 1;
+
+	if (obter_Coluna_Atual(e) == 0 && obter_Linha_Atual(e) >= 1 && obter_Linha_Atual(e) <= 6) //Se estiver na primeira coluna da esquerda
+		if (dir == PRETA && dir == dirCima && dirCima == cima && cima == baixo && baixo == dirBaixo)
+			return 1;
+
+	if (obter_Coluna_Atual(e) == 7 && obter_Linha_Atual(e) >= 1 && obter_Linha_Atual(e) <= 6) //Se estiver na última coluna da direita
+		if (cima == PRETA && cima == esqCima && esqCima == esq && esq == esqBaixo && esqBaixo == baixo)
+			return 1;
+
+	if (obter_Linha_Atual(e) == 7 && obter_Coluna_Atual(e) == 7) //Se estiver no canto inferior direito
+		if (esq == PRETA && esq == esqCima && esqCima == cima)
+			return 1;
+
 
 	return 0;
 }
