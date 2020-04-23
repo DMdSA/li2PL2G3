@@ -9,8 +9,8 @@
 ESTADO *inicializar_estado() {
 
 	ESTADO *e = (ESTADO *) malloc(sizeof(ESTADO));
-	char NUM[] = {'8','7','6','5','4','3','2','1',' '};
-    char LTR[] = {'A','B','C','D','E','F','G','H',' '};
+	char NUM[] = {'8','7','6','5','4','3','2','1', ' '};
+    char LTR[] = {'A','B','C','D','E','F','G','H', ' '};
 	
 	e -> jogador_atual = 1;
 	e -> num_jogadas = 0;
@@ -34,7 +34,7 @@ ESTADO *inicializar_estado() {
 
 	e -> tab[0][7] = DOIS;	//Peça Inicial
 	e -> tab[7][0] = UM;	//Peça Inicial
-	e -> tab[3][4] = BRANCA;	//A posição inicial começa nesta posição com uma peça '*'.
+	e -> tab[3][4] = BRANCA;   //A posição inicial começa nesta posição com uma peça '*'.
 
 	return e;
 } // -> Cria um estado vazia (com o tabuleiro inicializado).
@@ -204,12 +204,6 @@ void imprime (COORDENADA c) {
 
 }
 
-
-
-
-
-
-
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -285,6 +279,23 @@ int array_To_Int(int posAnterior[]) {
 		final = x;
 
 	return x;
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+int verifica_Coordenada (COORDENADA c) {
+
+    char colunaLetra = numero_Letra(c.coluna);
+    int linha = 8 - c.linha;
+
+    if (colunaLetra >= 'a' && colunaLetra <= 'h') {
+        if (linha >= 1 && linha <= 8)
+            return 1;
+    }
+    else
+        return 0;
 }
 //------------------------------------------------------------------------------------------------------------------------------
 

@@ -576,11 +576,16 @@ int interpretador(ESTADO *e) {
 									if (gravar[0] == 'j' && gravar[1] == 'o' && gravar[2] == 'g'){
 
 										COORDENADA *jogadasPossiveis = listaJogadasPossiveis(e);
-										COORDENADA proxJogada = escolha_jogada(jogadasPossiveis, escolher_aleatorio(qts_Espacos_Vazios(jogadasPossiveis)));
-										coord2 = proxJogada;
-										printf("\n");
-										imprime(proxJogada);
-										printf("\n");
+										COORDENADA proxJogada;
+										do {
+											proxJogada = escolha_jogada(jogadasPossiveis, escolher_aleatorio(qts_Espacos_Vazios(e))); // IMPEDE DE IR PARA COORDS PÓOOO VOIDDD
+										} while (verifica_Coordenada(proxJogada) == 0);
+
+											coord2 = proxJogada;
+											printf("\nJogada para aqui: ");
+											imprime(proxJogada);
+											printf("\n");
+										
 										if (verifica_Posicao_Jogada(e, coord2) && verifica_CASA(e, coord2)) {
 											if (obter_jogador_atual(e) == 1)
 												jog1 [obter_numero_de_jogadas(e)] = coord2;
@@ -591,9 +596,16 @@ int interpretador(ESTADO *e) {
 												number++;
 										}
 										
+
+										/*for (int d = 0; d < (qts_Espacos_Vazios(e)); d++) {
+											imprime(jogadasPossiveis[d]);
+											printf(" ");
+										}*/
+
+
 										jogar(e, coord2);
 										mostrar_tabuleiro(e);
-
+										free(jogadasPossiveis);
 
 									}
 									else {
@@ -603,7 +615,7 @@ int interpretador(ESTADO *e) {
 			}
 
 	} while (verifica_GANHOU(e, coord2) == 0 && verifica_PERDEU(e, coord2) == 0);
-	printf("Acabou MLK\n");
+	printf("Acabou\n");
 	felicitar(e);
 
 

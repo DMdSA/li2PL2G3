@@ -84,7 +84,7 @@ int verifica_PERDEU (ESTADO *e, COORDENADA c) { //Verifica se TODAS as peças vi
 	dirBaixo = obter_estado_casa (e, criar_Coordenada(c.linha + 1, c.coluna + 1));
 	dirCima = obter_estado_casa (e, criar_Coordenada(c.linha - 1, c.coluna + 1));
 
-	if (cima == PRETA && cima == baixo && esq == dir && esqBaixo == esqCima && dirBaixo == dirCima && cima == esq) //Se todas forem iguais ..
+	if (cima == PRETA && cima == esq && cima == dir && cima == baixo && cima == esqBaixo && cima == esqCima && cima == dirBaixo && cima == dirCima ) //Se todas forem iguais ..
 		return 1;
 
 	if (obter_Linha_Atual(e) == 0 && obter_Coluna_Atual(e) >= 1 && obter_Coluna_Atual(e) <= 6) //Se estiver na linha de cima e nas colunas não dos extremos

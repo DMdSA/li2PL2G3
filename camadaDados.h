@@ -111,10 +111,10 @@ char numero_Letra(int x);
 
 int letra_Numero(char x);
 
-
 void imprime (COORDENADA c);
 
-void imprime_2 (COORDENADA *c);
+
+int verifica_Coordenada (COORDENADA c);
 
 
 #endif

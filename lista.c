@@ -68,11 +68,9 @@ LISTA insere_cabeca(LISTA L, void *valor) {
 		aux -> primeiro = valor;
 		aux -> proximo = L;
 		L = aux;
+		free(aux);
 		return L;
 	}
-
-
-
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
@@ -115,7 +113,6 @@ LISTA remove_cabeca(LISTA L) {
     }
     free(paraRemover);
     return L;
-
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
@@ -133,8 +130,57 @@ int lista_esta_vazia(LISTA L) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
+int qts_Espacos_Vazios(ESTADO *e) {
+
+	COORDENADA verificar[8];
+
+	COORDENADA atual = obter_Ultima_Jogada(e);
+
+	COORDENADA esq, esqC, esqB, C, B, dir, dirC, dirB;
+
+	C = criar_Coordenada(atual.linha - 1, atual.coluna);
+	verificar[0] = C;
+
+	B = criar_Coordenada(atual.linha + 1, atual.coluna);
+	verificar[1] = B;
+
+	esq = criar_Coordenada(atual.linha, atual.coluna - 1);
+	verificar[2] = esq;
+
+	dir = criar_Coordenada(atual.linha, atual.coluna + 1);
+	verificar[3] = dir;
+
+	esqB = criar_Coordenada(atual.linha + 1, atual.coluna - 1);
+	verificar[4] = esqB;
+
+	esqC = criar_Coordenada(atual.linha - 1, atual.coluna - 1);
+	verificar[5] = esqC;
+
+	dirB = criar_Coordenada(atual.linha + 1, atual.coluna + 1);
+	verificar[6] = dirB;
+
+	dirC = criar_Coordenada(atual.linha - 1, atual.coluna + 1);
+	verificar[7] = dirC;
+
+
+	int nCoords = 0;
+
+	for (int d = 0; d < 8; d++) { //Calcula quantas casas vazias há à volta do jogador em questão
+		if ((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) {
+			nCoords++;
+		}
+	}
+
+	return nCoords;
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
 COORDENADA *listaJogadasPossiveis (ESTADO *e) {
 
+	
 	COORDENADA verificar[8];
 
 	COORDENADA atual = obter_Ultima_Jogada(e);
@@ -173,8 +219,6 @@ COORDENADA *listaJogadasPossiveis (ESTADO *e) {
 			nCoords++;
 		}
 	}
-
-	printf("%d \n", nCoords);
 
 	COORDENADA* jogadasPossiveis = (COORDENADA*) malloc( nCoords * sizeof(COORDENADA)); //Cria um pointer com armazenamento suficiente para o número de coordenadas que é suposto armazenar
 
@@ -216,20 +260,11 @@ void imprimeLista(LISTA L){
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-int qts_Espacos_Vazios(COORDENADA *listaCoordenadas) {
-
-	return sizeof(listaCoordenadas);
-}
-//------------------------------------------------------------------------------------------------------------------------------
-
-
-
-//------------------------------------------------------------------------------------------------------------------------------
 int escolher_aleatorio(int max) {
 
 	srand (time (NULL));
 
-	int escolha = rand () % (max - 1);
+	int escolha = rand () % (max);
 
 	return escolha;
 }
@@ -243,35 +278,3 @@ COORDENADA escolha_jogada(COORDENADA *listaCoords, int indice) {
 	return listaCoords[indice];
 }
 //------------------------------------------------------------------------------------------------------------------------------
-
-
-/*
-
-int main () {
-
-	ESTADO *e = inicializar_estado();
-	mostrar_tabuleiro(e);
-
-	jogar(e, criar_Coordenada(2,4));
-	mostrar_tabuleiro(e);
-
-	jogar(e, criar_Coordenada(2,5));
-	mostrar_tabuleiro(e);
-
-	jogar(e, criar_Coordenada(1,6));
-	mostrar_tabuleiro(e);
-
-	jogar(e, criar_Coordenada(0,6));
-	mostrar_tabuleiro(e);
-
-	COORDENADA *lista = listaJogadasPossiveis(e);
-
-
-	return 0;
-}
-*/
-
-
-
-
-

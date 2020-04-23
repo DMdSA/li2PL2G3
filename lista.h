@@ -49,7 +49,7 @@ COORDENADA *listaJogadasPossiveis (ESTADO *e);
 void imprimeLista(LISTA L);
 
 
-int qts_Espacos_Vazios(COORDENADA *listaCoordenadas);
+int qts_Espacos_Vazios(ESTADO *e);
 
 int escolher_aleatorio(int max);
 
