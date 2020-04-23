@@ -11,35 +11,11 @@
 //------------------------------------------------------------------------------------------------------------------------------
 LISTA criar_Lista() {
 
-	LISTA inicial = malloc(sizeof(NODO));
-
+	LISTA inicial = (malloc(sizeof(NODO)));
 	inicial -> primeiro = NULL;
 	inicial -> proximo = NULL;
 	
 	return inicial;
-}
-//------------------------------------------------------------------------------------------------------------------------------
-
-
-
-//------------------------------------------------------------------------------------------------------------------------------
-LISTA insere_cabeca(LISTA L, void *valor) {
-
-	if (L == NULL) {
-		
-		L -> primeiro = valor;
-		return L;
-	}
-
-	else {
-
-		LISTA L2 = malloc(sizeof(NODO));
-
-		L2 -> primeiro = valor;
-		L2 -> proximo = L;
-		return L2;
-	}
-	//free(L);
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
@@ -64,29 +40,77 @@ LISTA proximo(LISTA L) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-LISTA remove_cabeca(LISTA L) {
+LISTA insere_cabeca(LISTA L, void *valor) {
 
+	if (L->primeiro == NULL) {
+		
+		L->primeiro = valor;
+		
+		return L;
+	} 
 
-	LISTA final = L == NULL ? NULL : L -> proximo;
+	else {
+		
+		LISTA L2 = malloc(sizeof(NODO));
+		L2->primeiro = valor;
+		L2->proximo = L;
+		L = L2;
 
-	free (L);
+		return L;
+		free (L2);
 
-	return final;
+	}
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
 
+
+//------------------------------------------------------------------------------------------------------------------------------
+LISTA remove_cabeca(LISTA L) {
+
+	struct  nodo *paraRemover;
+
+	if (L == NULL || (L->primeiro == NULL && L->proximo == NULL)){
+		printf("Lista esta vazia.\n");
+	}
+	
+	else {
+
+		paraRemover = L -> primeiro;
+		//free(L -> primeiro);
+		L -> primeiro = L -> proximo;
+		free(paraRemover);
+		
+		printf("\nCabeca removida! \n\n");
+		
+	}
+	return L;
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+int tamanhoLista (LISTA L){
+	int cont = 0; //Iniciar o contador
+	if (L -> primeiro != NULL)
+		cont ++;
+	while ( L -> proximo != NULL){
+		cont ++;
+		L -> primeiro = L -> proximo;
+	}
+	return cont;
+}
 
 //------------------------------------------------------------------------------------------------------------------------------
 int lista_esta_vazia(LISTA L) {
 
-	return (L == NULL);
+	if (L == NULL || (L->primeiro == NULL && L->proximo == NULL))
+		return 1;
+	return 0;
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
 
 
-
+//------------------------------------------------------------------------------------------------------------------------------
 COORDENADA *listaJogadasPossiveis (ESTADO *e) {
 
 	COORDENADA verificar[8];
@@ -120,29 +144,52 @@ COORDENADA *listaJogadasPossiveis (ESTADO *e) {
 	verificar[7] = dirC;
 
 
-	int nCoords = 0;
+	int nCoords = 0, aux = 0;
 
 	for (int d = 0; d < 8; d++) {
-		if (obter_estado_casa(e, verificar[d]) == VAZIA) {
+		if ((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) {
 			nCoords++;
 		}
 	}
+
 	printf("%d \n", nCoords);
+
 	COORDENADA* jogadasPossiveis = (COORDENADA*) malloc( nCoords * sizeof(COORDENADA));
 
-	for (int d = 0; d < nCoords; d++) {
+	for (int d = 0; d < 8; d++) {
 		
-		if (obter_estado_casa(e, verificar[d]) == VAZIA) {
-			
-			jogadasPossiveis[d] = verificar[d];
+		if ((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) {
+			jogadasPossiveis[aux] = verificar[d];
+			aux++;
 		}
-		else
-			printf("OH MEU DEUS\n");
 	}
-
 	return jogadasPossiveis;
 }
+//------------------------------------------------------------------------------------------------------------------------------
 
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+LISTA imprimeLista(LISTA L){
+
+	struct nodo *temp;
+
+	if (L == NULL || (L->primeiro == NULL && L->proximo == NULL)) {
+		printf("VAZIA\n");
+	}
+	else {
+		temp = (L -> primeiro);
+		while (temp != NULL){
+			printf("L: ");
+			imprime(*devolve_cabeca(temp));
+			temp = L -> proximo;
+		}
+	}
+	
+	//if (L -> proximo != NULL) imprimeLista(L -> proximo);
+}
+//------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -157,33 +204,50 @@ int main () {
 	jogar(e, criar_Coordenada(2,5));
 	mostrar_tabuleiro(e);
 
-	printf("AQUI\n");
+	jogar(e, criar_Coordenada(1,6));
+	mostrar_tabuleiro(e);
+
+	jogar(e, criar_Coordenada(0,6));
+	mostrar_tabuleiro(e);
+
 	COORDENADA *lista = listaJogadasPossiveis(e);
 
 
-	imprime(lista[0]);
+	LISTA jogadas = criar_Lista();
+
+	for (int d = 0; d < 4; d++)
+		imprime(lista[d]); 
+	printf("\n\n");
+
+
+
+	//insere_cabeca(jogadas, lista);
+	//printf("Esta vazia[2] = %d\n", lista_esta_vazia(jogadas));	
+
+	printf("\nisto é a lista ANTES da cabeca! \n");
+	imprimeLista(jogadas);
+
+	insere_cabeca(jogadas, lista);
+	printf("\nIsto é a lista DEPOIS de (1) cabeca! \n");
+	
+
+	insere_cabeca(jogadas, lista);
+
+	//remove_cabeca(jogadas);
+	printf("Tamanho %d ", tamanhoLista (jogadas));
+
+
+	printf("insere %d \n", lista_esta_vazia(jogadas));
+	remove_cabeca(jogadas);
+	printf("Tamanho %d ", lista_esta_vazia(jogadas));
+
 	printf("\n");
-	imprime(lista[1]);
-	printf("\n");
-	imprime(lista[2]);
-	printf("\n");
-	imprime(lista[3]);
-	printf("\n");
-	imprime(lista[4]);
-	printf("\n");
-	imprime(lista[5]);
-	printf("\n");
-	imprime(lista[6]);
-	printf("\n");
+	//imprimeLista(jogadas);
+	printf("\n\n");
+	//imprime(*devolve_cabeca(jogadas));
+	//printf("\n");
+
+
 
 	return 0;
-
-
 }
-
-
-
-
-
-
-
