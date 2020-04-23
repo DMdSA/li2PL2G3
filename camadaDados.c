@@ -196,13 +196,20 @@ char letra_Coordenada (COORDENADA c) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-char imprime (COORDENADA c) {
+void imprime (COORDENADA c) {
 
     char colunaLetra = numero_Letra(c.coluna);
 
     printf("%c%d", colunaLetra, (8 - c.linha));
-    return colunaLetra;
+
 }
+
+
+
+
+
+
+
 //------------------------------------------------------------------------------------------------------------------------------
 
 

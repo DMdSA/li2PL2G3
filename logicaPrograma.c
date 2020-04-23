@@ -125,13 +125,12 @@ int verifica_GANHOU (ESTADO *e, COORDENADA c) {
 	coluna_jogada = obter_Coluna_Atual (e);
 	linha_jogada = obter_Linha_Atual (e);
 
-	if (obter_estado_casa (e, c) == UM || obter_estado_casa (e ,c) == DOIS) //Se a casa da coordenada C for '1' ou '2', o jogador atual ganhou o jogo!
+	if ((coluna_jogada == 7 && linha_jogada == 0) ||(coluna_jogada == 0 && linha_jogada == 7)) //Se a casa da coordenada C for '1' ou '2', o jogador atual ganhou o jogo!
 		return 1; //retorna VDD
 	else
 		return 0; //retorna F
 }
 //------------------------------------------------------------------------------------------------------------------------------
-
 
 
 //------------------------------------------------------------------------------------------------------------------------------
@@ -171,8 +170,6 @@ void jogada_Vencedora(ESTADO *e, COORDENADA c) {
 	atualiza_Ultima_Jogada(e, c); // Atualiza, dentro de ESTADO, as coordenadas da ULTIMA_JOGADA.
 	
 	atualiza_Num_Jogadas(e); // Atualiza, dentro de ESTADO, o número de jogadas efetuadas.
-
-	printf("O Jogador %d ganhou!!! Parabéns!\n", obter_jogador_atual(e));
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
@@ -232,3 +229,31 @@ int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 //Devolve VDD (!= 0) se for possível jogar.
 //Devolve F (== 0) caso não seja possível.
 //------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+void felicitar(ESTADO *e) {
+
+	int jogador = obter_jogador_atual(e);
+	COORDENADA atual = obter_Ultima_Jogada(e);
+	int colunaF = atual.coluna;
+	int linhaF = atual.linha;
+
+	if (colunaF == 0 && linhaF == 7 && jogador == 2)
+		printf("O jogador[1] ganhou o jogo, parabens!\n");
+	else
+		if (colunaF == 0 && linhaF == 7 && jogador == 1)
+			printf("Casa errada jogador[2], ganhou o jogador[1]!!\n");
+		else
+			if (colunaF == 7 && linhaF == 0 && jogador == 2)
+				printf("Casa errada jogador[1], ganhou o jogador[2]!!\n");
+			else
+				if (colunaF == 7 && linhaF == 0 && jogador == 1)
+					printf("O jogador[2] ganhou o jogo, parabens!\n");
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+

@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,7 +7,7 @@
 #include "interfacePrograma.h"
 
 int main() {
-    
+
     ESTADO *e = inicializar_estado();
 
     mostrar_tabuleiro(e);

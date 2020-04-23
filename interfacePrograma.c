@@ -5,6 +5,7 @@
 #include "camadaDados.h"
 #include "interfacePrograma.h"
 #include "logicaPrograma.h"
+#include "lista.h"
 
 //------------------------------------------------------------------------------------------------------------------------------
 void prompt_INFO (ESTADO *e) {
@@ -165,7 +166,6 @@ void gr (ESTADO *e, char *file) {
 
 	jogo = fopen (file, "w");
 
-	//jogadaAtual = fopen("jogadaAtual.txt", "w");
 	printf("A gravar...\n");
 
 	for (int i = 0; i < 8; i++) {
@@ -177,23 +177,7 @@ void gr (ESTADO *e, char *file) {
 	}
 
 	fclose(jogo);
-	//free (file);
 }	// -> Grava apenas a última jogada no ficheiro jogadaAtual.txt
-//------------------------------------------------------------------------------------------------------------------------------
-
-
-//------------------------------------------------------------------------------------------------------------------------------
-/*void grTUDO (ESTADO *e) { // -> Grava todas as jogadas efetuadas por jogo.
-	FILE *game;
-	game = fopen ("game.txt", "a");
-	for (int d = 0; d < 8; d++) {
-		for (int a = 0; a < 8; a++)
-			fprintf(game, "%c ", obter_estado_casa(e, criar_Coordenada (d, a)) );
-		fprintf(game, "\n");
-	}
-	fprintf(game, "\n");
-	fclose(game);
-} */
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -221,17 +205,6 @@ int confirmaImpar (FILE *jogo) { //-> Confirma se, na ultima jogada, tem 1 jogad
 //------------------------------------------------------------------------------------------------------------------------------
 
 
-/* void coords_para_array (FILE *jogo, int jogadasTotais, char jog1_4chars[], char jog2_4chars[]){ // jogadas totais
-
-	size_t len = 0;
-	char * line = NULL;
-	ssize_t read;
-   char mystring [100];
-if ( fgets (mystring , 100 , jogo) != NULL )
-       puts (mystring);
-     fclose (jogo);
-
-} */
 
 //------------------------------------------------------------------------------------------------------------------------------
  void coords_para_array (FILE *jogo, int jogadasTotais, char jog1_4chars[], char jog2_4chars[]){ // jogadas totais
@@ -284,15 +257,7 @@ if ( fgets (mystring , 100 , jogo) != NULL )
 		for(int i=0; i<jogadasTotais;i++) {
 			jog1_4chars[i] = new_jog1_4chars[i];
 		}
-		// int c = 0;
-		// char sub[] = jog1_4chars[];
-		// jog1_4chars="";
-		// while (c < jogadasTotais) {
-      	// 	jog1_4chars[c] = sub[0+c];
-      	// 	c++;
-  		//  }
-       // printf("%s STRING 1\n", jog1_4chars);
-       // printf("%s STRING 2 \n", jog2_4chars);
+
 
 }
  //------------------------------------------------------------------------------------------------------------------------------
@@ -300,34 +265,6 @@ if ( fgets (mystring , 100 , jogo) != NULL )
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-/*int ultima_jogada_ficheiro (FILE *jogo){
-	 int nJogadas;
-     int nJogadas2;
-     int nFinal;
-
-
-	 fseek(jogo, -10, SEEK_END);//-> Posição onde esta o ultimo algarismo da ultima jogada
-        //fgets(line, sizeof line, jogo);
-        //fputs(line, stdout);
-        nJogadas = fgetc(jogo) - '0';
-        
-        fseek(jogo, -11, SEEK_END);//-> Posicao onde esta o primeiro algarismo da ultima jogada
-        nJogadas2 = fgetc(jogo) - '0';
-    
-        if (nJogadas2 > 0 && nJogadas2 <= 9)
-            nFinal = 10 * nJogadas2 + nJogadas;
-        else
-            nFinal = nJogadas;
-
-        return nFinal;
-}*/
-//------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
 void ajuda (ESTADO *e, FILE *jogo, COORDENADA *jog1, COORDENADA *jog2, int jogadastotais) {
 
 	if (verifica_Inicio_Jogo(e))
@@ -356,10 +293,8 @@ void ajuda (ESTADO *e, FILE *jogo, COORDENADA *jog1, COORDENADA *jog2, int jogad
 		jogar(e, jog1[z]);
 	
 	}
-	//pos(jogadastotais, jog1, jog2, e);
 }
-
-
+//------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -485,31 +420,6 @@ int ler (char *file, ESTADO *e, COORDENADA *jog1, COORDENADA *jog2) {
 
 }	// -> Lê o ficheiro que contém a última jogada efetuada.
 //------------------------------------------------------------------------------------------------------------------------------
-
-
-/*COORDENADA* jog1_Atualizado (COORDENADA jog1[], int jogada) {
-
-	COORDENADA jog1_Novo[jogada + 1];
-
-	for (int d = 0; d < jogada + 1; d++) {
-		jog1_Novo[d] = jog1[d];
-	}
-
-	return jog1_Novo;
-}
-*/
-
-
-
-
-//------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
 
 
 
@@ -661,54 +571,42 @@ int interpretador(ESTADO *e) {
 									coord2 = criar_Coordenada(3,4);
 									}
 								}
-							
-								else {
-									printf("COMANDO INVALIDO!\n\n");
-								}
-							}							
+								
+								else
+									if (gravar[0] == 'j' && gravar[1] == 'o' && gravar[2] == 'g'){
+
+										COORDENADA *jogadasPossiveis = listaJogadasPossiveis(e);
+										COORDENADA proxJogada = escolha_jogada(jogadasPossiveis, escolher_aleatorio(qts_Espacos_Vazios(jogadasPossiveis)));
+										coord2 = proxJogada;
+										printf("\n");
+										imprime(proxJogada);
+										printf("\n");
+										if (verifica_Posicao_Jogada(e, coord2) && verifica_CASA(e, coord2)) {
+											if (obter_jogador_atual(e) == 1)
+												jog1 [obter_numero_de_jogadas(e)] = coord2;
+			
+											else
+												jog2 [obter_numero_de_jogadas(e)] = coord2;
+			
+												number++;
+										}
+										
+										jogar(e, coord2);
+										mostrar_tabuleiro(e);
+
+
+									}
+									else {
+										printf("COMANDO INVALIDO!\n\n");
+									}
+							}
 			}
 
 	} while (verifica_GANHOU(e, coord2) == 0 && verifica_PERDEU(e, coord2) == 0);
-	printf("Acabou\n");
+	printf("Acabou MLK\n");
+	felicitar(e);
+
 
 	return 1;
 }
 //------------------------------------------------------------------------------------------------------------------------------
-
-
-/*
-int main () {
-	FILE *atual;
-	ESTADO *e = inicializar_estado();
-	mostrar_tabuleiro(e);
-	gr(atual, e);
-	COORDENADA teste, teste2, teste3;
-	teste.linha = 2;
-	teste.coluna = 3;
-	teste2.linha = 2;
-	teste2.coluna = 4;
-	teste3.linha = 1;
-	teste3.coluna = 5;
-	
-	jogar(e, teste);
-		
-		mostrar_tabuleiro(e);
-		gr(atual, e);
-	jogar (e, teste2);
-		mostrar_tabuleiro(e);
-		gr(atual, e);
-	jogar (e, teste3);
-		mostrar_tabuleiro(e);
-		gr(atual, e);
-	return 0;
-}
-*/
-
-/*
-int main () {
-	FILE *qqercoisa;
-	//ESTADO *e = inicializar_estado();
-	ler(qqercoisa);
-	return 0;
-}
-*/

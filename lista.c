@@ -6,12 +6,44 @@
 #include "camadaDados.h"
 #include "interfacePrograma.h"
 #include "logicaPrograma.h"
+#include <time.h>
+
+//------------------------------------------------------------------------------------------------------------------------------
+int tamanhoLista (LISTA L){
+
+    int cont = 0;
+    LISTA novo;
+    novo = L;
+
+    if (novo -> primeiro != NULL)
+        cont ++;
+
+    while (novo -> proximo != NULL){
+        cont ++;
+        novo -> primeiro = novo -> proximo;
+    }
+    return cont;
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+void printCoordVoid(void *coordenada) {
+
+	COORDENADA c = *((COORDENADA *) coordenada);
+
+	printf("%c%d\n", numero_Letra(c.coluna), (8 - c.linha));
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
 
 
 //------------------------------------------------------------------------------------------------------------------------------
 LISTA criar_Lista() {
 
-	LISTA inicial = (malloc(sizeof(NODO)));
+	LISTA inicial = malloc(sizeof(NODO));
+
 	inicial -> primeiro = NULL;
 	inicial -> proximo = NULL;
 	
@@ -22,7 +54,32 @@ LISTA criar_Lista() {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-COORDENADA *devolve_cabeca(LISTA L) {
+LISTA insere_cabeca(LISTA L, void *valor) {
+
+	if (L == NULL || (L -> primeiro == NULL && L-> proximo == NULL)) {
+		L -> primeiro = valor;
+		L -> proximo = NULL;
+		return L;
+	}
+
+	else {
+
+		LISTA aux = malloc(sizeof(NODO));
+		aux -> primeiro = valor;
+		aux -> proximo = L;
+		L = aux;
+		return L;
+	}
+
+
+
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+void *devolve_cabeca(LISTA L) {
 
 	return L -> primeiro;
 }
@@ -40,64 +97,29 @@ LISTA proximo(LISTA L) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-LISTA insere_cabeca(LISTA L, void *valor) {
-
-	if (L->primeiro == NULL) {
-		
-		L->primeiro = valor;
-		
-		return L;
-	} 
-
-	else {
-		
-		LISTA L2 = malloc(sizeof(NODO));
-		L2->primeiro = valor;
-		L2->proximo = L;
-		L = L2;
-
-		return L;
-		free (L2);
-
-	}
-}
-//------------------------------------------------------------------------------------------------------------------------------
-
-
-
-//------------------------------------------------------------------------------------------------------------------------------
 LISTA remove_cabeca(LISTA L) {
 
-	struct  nodo *paraRemover;
+	struct nodo *paraRemover;
 
-	if (L == NULL || (L->primeiro == NULL && L->proximo == NULL)){
-		printf("Lista esta vazia.\n");
-	}
-	
-	else {
+    if (L == NULL || (L->primeiro == NULL && L->proximo == NULL)){
+        printf("Lista esta vazia.\n");
+    }
 
-		paraRemover = L -> primeiro;
-		//free(L -> primeiro);
-		L -> primeiro = L -> proximo;
-		free(paraRemover);
-		
-		printf("\nCabeca removida! \n\n");
-		
-	}
-	return L;
+    else {
+
+        paraRemover = L -> primeiro;
+        //free(L -> primeiro);
+        L -> primeiro = L -> proximo;
+
+        printf("\nCabeca removida! \n\n");
+    }
+    free(paraRemover);
+    return L;
+
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
-int tamanhoLista (LISTA L){
-	int cont = 0; //Iniciar o contador
-	if (L -> primeiro != NULL)
-		cont ++;
-	while ( L -> proximo != NULL){
-		cont ++;
-		L -> primeiro = L -> proximo;
-	}
-	return cont;
-}
+
 
 //------------------------------------------------------------------------------------------------------------------------------
 int lista_esta_vazia(LISTA L) {
@@ -146,7 +168,7 @@ COORDENADA *listaJogadasPossiveis (ESTADO *e) {
 
 	int nCoords = 0, aux = 0;
 
-	for (int d = 0; d < 8; d++) {
+	for (int d = 0; d < 8; d++) { //Calcula quantas casas vazias há à volta do jogador em questão
 		if ((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) {
 			nCoords++;
 		}
@@ -154,11 +176,11 @@ COORDENADA *listaJogadasPossiveis (ESTADO *e) {
 
 	printf("%d \n", nCoords);
 
-	COORDENADA* jogadasPossiveis = (COORDENADA*) malloc( nCoords * sizeof(COORDENADA));
+	COORDENADA* jogadasPossiveis = (COORDENADA*) malloc( nCoords * sizeof(COORDENADA)); //Cria um pointer com armazenamento suficiente para o número de coordenadas que é suposto armazenar
 
 	for (int d = 0; d < 8; d++) {
 		
-		if ((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) {
+		if ((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
 			jogadasPossiveis[aux] = verificar[d];
 			aux++;
 		}
@@ -171,24 +193,85 @@ COORDENADA *listaJogadasPossiveis (ESTADO *e) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-LISTA imprimeLista(LISTA L){
-
+void imprimeLista(LISTA L){
+	
 	struct nodo *temp;
 
-	if (L == NULL || (L->primeiro == NULL && L->proximo == NULL)) {
-		printf("VAZIA\n");
-	}
-	else {
-		temp = (L -> primeiro);
-		while (temp != NULL){
-			printf("L: ");
-			imprime(*devolve_cabeca(temp));
-			temp = L -> proximo;
-		}
-	}
-	
-	//if (L -> proximo != NULL) imprimeLista(L -> proximo);
+    if (L == NULL || (L->primeiro == NULL && L->proximo == NULL)) {
+        printf("VAZIA\n");
+    }
+   
+    else {
+        temp = (L -> primeiro);
+        while (temp != NULL){
+            printf("L: ");
+            printCoordVoid(temp);
+            temp = L -> proximo;
+        }
+    }
+
 }
 //------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+int qts_Espacos_Vazios(COORDENADA *listaCoordenadas) {
+
+	return sizeof(listaCoordenadas);
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+int escolher_aleatorio(int max) {
+
+	srand (time (NULL));
+
+	int escolha = rand () % (max - 1);
+
+	return escolha;
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+COORDENADA escolha_jogada(COORDENADA *listaCoords, int indice) {
+
+	return listaCoords[indice];
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+/*
+
+int main () {
+
+	ESTADO *e = inicializar_estado();
+	mostrar_tabuleiro(e);
+
+	jogar(e, criar_Coordenada(2,4));
+	mostrar_tabuleiro(e);
+
+	jogar(e, criar_Coordenada(2,5));
+	mostrar_tabuleiro(e);
+
+	jogar(e, criar_Coordenada(1,6));
+	mostrar_tabuleiro(e);
+
+	jogar(e, criar_Coordenada(0,6));
+	mostrar_tabuleiro(e);
+
+	COORDENADA *lista = listaJogadasPossiveis(e);
+
+
+	return 0;
+}
+*/
+
+
+
 
 
