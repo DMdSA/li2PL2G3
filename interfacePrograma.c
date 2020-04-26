@@ -380,6 +380,8 @@ int ler (char *file, ESTADO *e, COORDENADA *jog1, COORDENADA *jog2) {
 
 	strcat(file, ".txt\0");
 
+	printf("%s\n", file);
+
 	FILE *jogo;
 	
 	jogo = fopen(file, "r");
@@ -438,7 +440,7 @@ int interpretador(ESTADO *e) {
 	coord2 = criar_Coordenada(3,4);
 
 	do {
-		file = (char *) malloc(2);
+		file = (char *) malloc(8);
 
 		prompt_INFO(e);
 	
@@ -525,7 +527,7 @@ int interpretador(ESTADO *e) {
 					else
 						if (gravar[0] == 'l' && gravar[1] == 'e' && gravar[2] == 'r' && gravar[3] == ' ') { // -> SE O COMANDO FOR LER
 							int i = 4;
-							nome_Ficheiro(linha, file, i);
+							file = nome_Ficheiro(linha, file, i);
 								e = inicializar_estado();
 								number = 0;
 								number = ler(file,e,jog1,jog2);
@@ -575,16 +577,24 @@ int interpretador(ESTADO *e) {
 								else
 									if (gravar[0] == 'j' && gravar[1] == 'o' && gravar[2] == 'g'){
 
-										COORDENADA *jogadasPossiveis = listaJogadasPossiveis(e);
-										COORDENADA proxJogada;
+										//COORDENADA *jogadasPossiveis = listaJogadasPossiveis(e);
+										LISTA jogadasPossiveis = criar_lista();
+										jogadasPossiveis = listaJogadasPossiveisLista(e);
+										imprimeLista(jogadasPossiveis);
+										COORDENADA *proxJogada;
+										//printf("ESPACOS VAZIOS --> %d\n", qts_Espacos_Vazios(e));
 										do {
 											proxJogada = escolha_jogada(jogadasPossiveis, escolher_aleatorio(qts_Espacos_Vazios(e))); // IMPEDE DE IR PARA COORDS PÓOOO VOIDDD
-										} while (verifica_Coordenada(proxJogada) == 0);
+										} while (verifica_Coordenada(*proxJogada) == 0);
 
-											coord2 = proxJogada;
+											coord2 = *proxJogada;
 											printf("\nJogada para aqui: ");
-											imprime(proxJogada);
+											imprime(coord2);
 											printf("\n");
+											/*
+											printf("qts_Espacos_Vazios -> %d\n",  qts_Espacos_Vazios(e));
+											printf("tamanho_Lista -> %d\n", tamanhoLista(listaJogadasPossiveisLista(e)));
+											*/
 										
 										if (verifica_Posicao_Jogada(e, coord2) && verifica_CASA(e, coord2)) {
 											if (obter_jogador_atual(e) == 1)

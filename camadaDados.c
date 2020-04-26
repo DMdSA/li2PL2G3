@@ -104,10 +104,11 @@ COORDENADA obter_Ultima_Jogada (ESTADO *e) {
 //------------------------------------------------------------------------------------------------------------------------------
 COORDENADA criar_Coordenada (int linha, int coluna) {
 
-	COORDENADA c;
-	c.linha = linha;
-	c.coluna = coluna;
-	return c; 
+	COORDENADA *c;
+    c = malloc(sizeof(COORDENADA));
+	c->linha = linha;
+	c->coluna = coluna;
+	return *c; 
 } // -> Dados dois inteiros, cria uma COORDENADA com esses dados.
 //------------------------------------------------------------------------------------------------------------------------------
 

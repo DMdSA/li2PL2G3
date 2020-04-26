@@ -192,12 +192,12 @@ int antecipa_Possibilidade_Jogada (ESTADO *e, COORDENADA c) {
 int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 
 
-	if (verifica_Posicao_Jogada(e, c) && verifica_PERDEU(e, c)) { //Se a coordenada da peça seguinte for vizinha, SE todas as peças à volta forem PRETAS, o jogo acaba! ("Se 1 e 1, ent VDD")
+	//if (verifica_Posicao_Jogada(e, c) && verifica_PERDEU(e, c)) { //Se a coordenada da peça seguinte for vizinha, SE todas as peças à volta forem PRETAS, o jogo acaba! ("Se 1 e 1, ent VDD")
 		
-		perdeste(2);
+	//	perdeste(2);
 		//printf("O jogador [%d] é o grande vencedor!!\n", obter_jogador_atual(e));
-		return 0; // Tecnicamente não pode jogar, logo deverá devolver 0 (?).
-	}
+	//	return 0; // Tecnicamente não pode jogar, logo deverá devolver 0 (?).
+	//}
 
 	// BUGGGGGGGG -> Se o jogador 1 chegar a casa 2 ou o jog. 2 chegar a casa 1 esse jogador ganha apesar de essa não ser a sua  casa. CORRIGIR.
 	if (verifica_Posicao_Jogada (e, c) && verifica_CASA (e, c) && verifica_GANHOU (e ,c)) { //Se a jogada for possivel nas direções possiveis, a coordenada que se pretende estiver VAZIA e esta ser '1' ou '2', então ganhou!

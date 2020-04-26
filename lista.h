@@ -5,14 +5,14 @@
 
 
 typedef struct nodo {
-   void *primeiro;
+   void *valor;
    struct nodo *proximo;
 } NODO, *LISTA;
 
 
 int tamanhoLista (LISTA L);
 
-void printCoordVoid(void *coordenada);
+void printCoordVoid(COORDENADA *c);
 
 
 
@@ -42,7 +42,9 @@ LISTA remove_cabeca(LISTA L);
 
 
 // Devolve verdareiro se a lista é vazia
-int lista_esta_vazia(LISTA L);
+_Bool lista_esta_vazia(LISTA L);
+
+LISTA listaJogadasPossiveisLista (ESTADO *e);
 
 COORDENADA *listaJogadasPossiveis (ESTADO *e);
 
@@ -53,7 +55,7 @@ int qts_Espacos_Vazios(ESTADO *e);
 
 int escolher_aleatorio(int max);
 
-COORDENADA escolha_jogada(COORDENADA *listaCoords, int indice);
+COORDENADA *escolha_jogada(LISTA listaCoords, int indice);
 
 //Imprime uma lista ligada
 void imprime_lista_ligada(LISTA L);
