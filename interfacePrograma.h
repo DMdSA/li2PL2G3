@@ -30,4 +30,5 @@ int confirmaImpar (FILE *jogo);
 
 void ajuda (ESTADO *e, FILE *jogo, COORDENADA *jog1, COORDENADA *jog2, int jogadastotais);
 
+
 #endif

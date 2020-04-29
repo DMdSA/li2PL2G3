@@ -1,11 +1,9 @@
-
 #include <stdlib.h>
 #include <string.h>
 #include "bases.h"
 #include "camadaDados.h"
 
 //------------------------------------------------------------------------------------------------------------------------------
-
 ESTADO *inicializar_estado() {
 
 	ESTADO *e = (ESTADO *) malloc(sizeof(ESTADO));
@@ -31,7 +29,6 @@ ESTADO *inicializar_estado() {
             e -> tab[i][d] = VAZIA;    //Atribuindo o valor VAZIA a todos
         }
     }
-
 	e -> tab[0][7] = DOIS;	//Peça Inicial
 	e -> tab[7][0] = UM;	//Peça Inicial
 	e -> tab[3][4] = BRANCA;   //A posição inicial começa nesta posição com uma peça '*'.
@@ -167,7 +164,7 @@ int verifica_Inicio_Jogo (ESTADO *e) {
 		return 1;
 	else
 		return 0;
-}
+} // -> Verifica se o estado de um jogo se encontra na sua forma inicial.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -188,10 +185,8 @@ void perdeste(int x) {
 char letra_Coordenada (COORDENADA c) {
 
     char colunaLetra = numero_Letra(c.coluna);
-
-    //printf("%c%d", colunaLetra, (8 - c.linha));
     return colunaLetra;
-}
+} // -> Transforma o inteiro da coordenada ligado a uma coluna à respetiva letra que lhe está associada.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -200,11 +195,8 @@ char letra_Coordenada (COORDENADA c) {
 void imprime (COORDENADA c) {
 
     char colunaLetra = numero_Letra(c.coluna);
-
     printf("%c%d", colunaLetra, (8 - c.linha));
-
-}
-
+} // -> Dada uma coordenada, imprime as informações da mesma.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -268,24 +260,6 @@ int letra_Numero(char x) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-int array_To_Int(int posAnterior[]) {
-
-	int x = posAnterior[0];
-	int y = posAnterior[1];
-	int final;
-	
-	if (posAnterior[0] >= 0 && posAnterior[1] <= 9 && posAnterior[1] >= 0)
-		final = x * 10 + y;
-	else
-		final = x;
-
-	return x;
-}
-//------------------------------------------------------------------------------------------------------------------------------
-
-
-
-//------------------------------------------------------------------------------------------------------------------------------
 int verifica_Coordenada (COORDENADA c) {
 
     char colunaLetra = numero_Letra(c.coluna);
@@ -297,11 +271,16 @@ int verifica_Coordenada (COORDENADA c) {
     }
     else
         return 0;
-}
+} // -> Dado um dado do tipo COORDENADA, verifica se este verifica os requisitos para ser uma coordenada do tabuleiro criado.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
 
 
-//QUESTÃO
-//Qual a necessidade de as funções que devolvem ESTADO terem um '*' antes do seu nome??????????
+int coluna_Coord(COORDENADA c) {
+    return c.coluna;
+}
+
+int linha_Coord(COORDENADA c) {
+    return c.linha;
+}

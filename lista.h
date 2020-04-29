@@ -46,7 +46,7 @@ _Bool lista_esta_vazia(LISTA L);
 
 LISTA listaJogadasPossiveisLista (ESTADO *e);
 
-COORDENADA *listaJogadasPossiveis (ESTADO *e);
+//COORDENADA *listaJogadasPossiveis (ESTADO *e);
 
 void imprimeLista(LISTA L);
 
@@ -59,6 +59,11 @@ COORDENADA *escolha_jogada(LISTA listaCoords, int indice);
 
 //Imprime uma lista ligada
 void imprime_lista_ligada(LISTA L);
+
+
+int distancia_Coords(COORDENADA c, int jogador);
+
+COORDENADA *bot_v2(ESTADO *e);
 
 
 #endif

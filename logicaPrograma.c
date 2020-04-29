@@ -1,14 +1,9 @@
-  
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "bases.h"
 #include "camadaDados.h"
-//#include "camadaDados.c"
-//#include "interfacePrograma.h"
-//#include "interfacePrograma.c"
 #include "logicaPrograma.h"
-
 
 //------------------------------------------------------------------------------------------------------------------------------
 int verifica_Posicao_Jogada (ESTADO *e, COORDENADA c) { //Verifica se a jogada Horizonta, Vertical ou Obliqua é possivel (ou seja, vizinha).
@@ -53,11 +48,6 @@ int verifica_CASA (ESTADO *e, COORDENADA c) { //Verifica se a casa, para onde se
 		else
 			if (obter_estado_casa(e, c) == VAZIA || obter_estado_casa(e ,c) == UM || obter_estado_casa(e, c) == DOIS) //Se for VAZIA, '1' ou '2', devolve1.
 				return 1;
-			
-//			else {
-//				printf("ERRO, FORA TABULEIRO\n"); -> Not sure se se deve usar.
-//				return 0;
-//			}
 	}
 	return 0;
 }
@@ -110,7 +100,6 @@ int verifica_PERDEU (ESTADO *e, COORDENADA c) { //Verifica se TODAS as peças vi
 	if (obter_Linha_Atual(e) == 7 && obter_Coluna_Atual(e) == 7) //Se estiver no canto inferior direito
 		if (esq == PRETA && esq == esqCima && esqCima == cima)
 			return 1;
-
 
 	return 0;
 }
@@ -165,7 +154,7 @@ void jogada_Vencedora(ESTADO *e, COORDENADA c) {
 	
 	atualiza_Casas(e, c, BRANCA); //Atualiza a coordenada para onde se jogou com uma peça BRANCA.
 
-//Aqui já se considera que a jogada foi efetuada, tornando-se apenas de 'atualizações' ao estado.
+	//Aqui já se considera que a jogada foi efetuada, tornando-se apenas de 'atualizações' ao estado.
 
 	atualiza_Ultima_Jogada(e, c); // Atualiza, dentro de ESTADO, as coordenadas da ULTIMA_JOGADA.
 	
@@ -176,28 +165,7 @@ void jogada_Vencedora(ESTADO *e, COORDENADA c) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-int antecipa_Possibilidade_Jogada (ESTADO *e, COORDENADA c) {
-
-    if (verifica_Posicao_Jogada(e, c) && verifica_CASA(e, c)) //Se a jogada com estes dados for possivel, devolve VDD (1)
-        return 1;
-    else
-        return 0;
-}
-
-//------------------------------------------------------------------------------------------------------------------------------
-
-
-
-//------------------------------------------------------------------------------------------------------------------------------
 int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
-
-
-	//if (verifica_Posicao_Jogada(e, c) && verifica_PERDEU(e, c)) { //Se a coordenada da peça seguinte for vizinha, SE todas as peças à volta forem PRETAS, o jogo acaba! ("Se 1 e 1, ent VDD")
-		
-	//	perdeste(2);
-		//printf("O jogador [%d] é o grande vencedor!!\n", obter_jogador_atual(e));
-	//	return 0; // Tecnicamente não pode jogar, logo deverá devolver 0 (?).
-	//}
 
 	// BUGGGGGGGG -> Se o jogador 1 chegar a casa 2 ou o jog. 2 chegar a casa 1 esse jogador ganha apesar de essa não ser a sua  casa. CORRIGIR.
 	if (verifica_Posicao_Jogada (e, c) && verifica_CASA (e, c) && verifica_GANHOU (e ,c)) { //Se a jogada for possivel nas direções possiveis, a coordenada que se pretende estiver VAZIA e esta ser '1' ou '2', então ganhou!
@@ -205,27 +173,22 @@ int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 		jogada_Vencedora(e, c); //Atualizações necessárias ao ESTADO e parabenização.
 		return 1;
 	}
-
 	
 	if (verifica_Posicao_Jogada(e, c) && verifica_CASA(e, c))  { //Se a coordenada dada for vizinha e a casa estiver VAZIA, a jogada é possível.
-		
-		//if (!verifica_Inicio_Jogo(e)) //Se a jogada não for imediatamente a seguir à posição inicial do jogo,
-			atualiza_Jogador(e); //Se o jogador inicial for o 1, atualiza para 2, e vice-versa.
+
+		atualiza_Jogador(e); //Se o jogador inicial for o 1, atualiza para 2, e vice-versa.
 		
 		jogada_Intermedia(e ,c); //Atualizações necessárias ao estado.
 
 		return 1;
 	}
 
-
 	else {
 		
 		perdeste(1);
-	//	mostrar_tabuleiro(e);
 		return 0;
 	}
 }
-//Recebe o estadoAtual e uma coordenada -> Modifica o estado ao jogar na casa correta SE a jogada for válida.
 //Devolve VDD (!= 0) se for possível jogar.
 //Devolve F (== 0) caso não seja possível.
 //------------------------------------------------------------------------------------------------------------------------------
@@ -253,7 +216,3 @@ void felicitar(ESTADO *e) {
 					printf("O jogador[2] ganhou o jogo, parabens!\n");
 }
 //------------------------------------------------------------------------------------------------------------------------------
-
-
-
-

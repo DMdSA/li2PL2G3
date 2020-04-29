@@ -5,8 +5,11 @@
 #include "camadaDados.h"
 #include "logicaPrograma.h"
 #include "interfacePrograma.h"
+#include <time.h>
 
 int main() {
+
+	srand (time (NULL));
 
     ESTADO *e = inicializar_estado();
 

@@ -7,6 +7,7 @@
 #include "interfacePrograma.h"
 #include "logicaPrograma.h"
 #include <time.h>
+#include <math.h>
 
 //------------------------------------------------------------------------------------------------------------------------------
 int tamanhoLista (LISTA L){
@@ -44,42 +45,26 @@ LISTA criar_lista() {
 	return inicial;
 }
 //------------------------------------------------------------------------------------------------------------------------------
-/*
-COORDENADA *copia_Coordenada(COORDENADA c){
-
-	
-	COORDENADA* aux = (COORDENADA*) malloc(sizeof(COORDENADA));
-	aux = c;
-	return aux;
-
-}*/
-
 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-// Insere um valor na cabeça da lista
 LISTA insere_cabeca(LISTA L, void *valor) {
 
 		LISTA aux = malloc(sizeof(NODO));
 		aux -> proximo = L;
 		aux -> valor = valor;
 		return aux;
-	}
-
+	} // -> Insere um valor na cabeça da lista
 //------------------------------------------------------------------------------------------------------------------------------
 
 
 
-
-
-
 //------------------------------------------------------------------------------------------------------------------------------
-// Devolve a cabeça da lista
 void *devolve_cabeca(LISTA L) {
 
 	return L -> valor;
-}
+} // -> Devolve a cabeça da lista
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -94,8 +79,6 @@ LISTA proximo(LISTA L) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-// Remove a cabeça da lista (libertando o espaço ocupado) e devolve a cauda
-
 LISTA remove_cabeca(LISTA L) {
 
 	struct nodo *paraRemover;
@@ -105,16 +88,14 @@ LISTA remove_cabeca(LISTA L) {
         printf("Lista esta vazia.\n");
         return L;
     }
-
     else {
 
         aux = L -> proximo;
         free(L);
-
-       // printf("\nCabeca removida! \n\n");
         return aux;
+
     }
-}
+} // -> Remove a cabeça da lista (libertando o espaço ocupado) e devolve a cauda
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -163,25 +144,20 @@ int qts_Espacos_Vazios(ESTADO *e) {
 	dirC = criar_Coordenada(atual.linha - 1, atual.coluna + 1);
 	verificar[7] = dirC;
 
-
 	int nCoords = 0;
 
 	for (int d = 0; d < 8; d++) { //Calcula quantas casas vazias há à volta do jogador em questão
-		if ((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) {
+		if (((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) && verifica_Coordenada(verificar[d])) {
 			nCoords++;
 		}
 	}
-
 	return nCoords;
 }
 //------------------------------------------------------------------------------------------------------------------------------
-
-LISTA listaJogadasPossiveisLista (ESTADO *e){
+LISTA listaJogadasPossiveisLista (ESTADO *e){ // explicar bem
 
 	COORDENADA verificar[8];
-
 	LISTA final = criar_lista();
-
 	COORDENADA atual = obter_Ultima_Jogada(e);
 
 	COORDENADA *esq = malloc(sizeof(COORDENADA));
@@ -194,88 +170,57 @@ LISTA listaJogadasPossiveisLista (ESTADO *e){
 	COORDENADA *dirB = malloc(sizeof(COORDENADA));
 
 	*C = criar_Coordenada(atual.linha - 1, atual.coluna);
-	if ((obter_estado_casa(e, *C ) == VAZIA) || (obter_estado_casa(e, *C) == UM) || (obter_estado_casa(e, *C) == DOIS)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *C ) == VAZIA) || (obter_estado_casa(e, *C) == UM) || (obter_estado_casa(e, *C) == DOIS)) && verifica_Coordenada(*C)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
 		final = insere_cabeca(final, C);
 	}
 
 	*B = criar_Coordenada(atual.linha + 1, atual.coluna);
-	if ((obter_estado_casa(e, *B ) == VAZIA) || (obter_estado_casa(e, *B) == UM) || (obter_estado_casa(e, *B) == DOIS)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *B ) == VAZIA) || (obter_estado_casa(e, *B) == UM) || (obter_estado_casa(e, *B) == DOIS)) && verifica_Coordenada(*B)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
 		final = insere_cabeca(final, B);
 	}
 
 	*esq = criar_Coordenada(atual.linha, atual.coluna - 1);
-	if ((obter_estado_casa(e, *esq ) == VAZIA) || (obter_estado_casa(e, *esq) == UM) || (obter_estado_casa(e, *esq) == DOIS)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *esq ) == VAZIA) || (obter_estado_casa(e, *esq) == UM) || (obter_estado_casa(e, *esq) == DOIS)) && verifica_Coordenada(*esq)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
 		final = insere_cabeca(final, esq);
 	}
 
 	*dir = criar_Coordenada(atual.linha, atual.coluna + 1);
-	if ((obter_estado_casa(e, *dir ) == VAZIA) || (obter_estado_casa(e, *dir) == UM) || (obter_estado_casa(e, *dir) == DOIS)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *dir ) == VAZIA) || (obter_estado_casa(e, *dir) == UM) || (obter_estado_casa(e, *dir) == DOIS)) && verifica_Coordenada(*dir)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
 		final = insere_cabeca(final, dir);
 	}
 
 	*esqB = criar_Coordenada(atual.linha + 1, atual.coluna - 1);
-	if ((obter_estado_casa(e, *esqB ) == VAZIA) || (obter_estado_casa(e, *esqB) == UM) || (obter_estado_casa(e, *esqB) == DOIS)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *esqB ) == VAZIA) || (obter_estado_casa(e, *esqB) == UM) || (obter_estado_casa(e, *esqB) == DOIS)) && verifica_Coordenada(*esqB)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
 		final = insere_cabeca(final, esqB);
 	}
 
 	*esqC = criar_Coordenada(atual.linha - 1, atual.coluna - 1);
-	if ((obter_estado_casa(e, *esqC ) == VAZIA) || (obter_estado_casa(e, *esqC) == UM) || (obter_estado_casa(e, *esqC) == DOIS)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *esqC ) == VAZIA) || (obter_estado_casa(e, *esqC) == UM) || (obter_estado_casa(e, *esqC) == DOIS)) && verifica_Coordenada(*esqC)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
 		final = insere_cabeca(final, esqC);
 	}
 
 	*dirB = criar_Coordenada(atual.linha + 1, atual.coluna + 1);
-	if ((obter_estado_casa(e, *dirB ) == VAZIA) || (obter_estado_casa(e, *dirB) == UM) || (obter_estado_casa(e, *dirB) == DOIS)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *dirB ) == VAZIA) || (obter_estado_casa(e, *dirB) == UM) || (obter_estado_casa(e, *dirB) == DOIS)) && verifica_Coordenada(*dirB)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
 		final = insere_cabeca(final, dirB);
 	}
 
 	*dirC = criar_Coordenada(atual.linha - 1, atual.coluna + 1);
-	if ((obter_estado_casa(e, *dirC ) == VAZIA) || (obter_estado_casa(e, *dirC) == UM) || (obter_estado_casa(e, *dirC) == DOIS)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *dirC ) == VAZIA) || (obter_estado_casa(e, *dirC) == UM) || (obter_estado_casa(e, *dirC) == DOIS)) && verifica_Coordenada(*dirC)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
 		final = insere_cabeca(final, dirC);
 	}
 
-	//final = insere_cabeca(final, C);
-	//imprimeLista(final);
-	//printf("\n");
-
-	//int nCoords = 0, aux = 0;
-/*
-	for (int d = 0; d < 8; d++) { //Calcula quantas casas vazias há à volta do jogador em questão
-		if ((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) {
-			nCoords++;
-		}
-	}
-
-
-	COORDENADA* jogadasPossiveis = (COORDENADA*) malloc( nCoords * sizeof(COORDENADA)); //Cria um pointer com armazenamento suficiente para o número de coordenadas que é suposto armazenar
-*/
-/*
-	for (int d = 0; d < 8; d++) {
-		
-		if ((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
-			final = insere_cabeca(final, &verificar[d]);
-			//jogadasPossiveis[aux] = verificar[d];
-			aux++;
-		}
-	}
-*/
-	//imprimeLista(final);
 	printf("\n");
 	return final;
-
 }
+//------------------------------------------------------------------------------------------------------------------------------
 
 
-
-
-
+/*
 //------------------------------------------------------------------------------------------------------------------------------
 COORDENADA *listaJogadasPossiveis (ESTADO *e) {
 
-	
 	COORDENADA verificar[8];
-
 	COORDENADA atual = obter_Ultima_Jogada(e);
-
 	COORDENADA esq, esqC, esqB, C, B, dir, dirC, dirB;
 
 	C = criar_Coordenada(atual.linha - 1, atual.coluna);
@@ -302,7 +247,6 @@ COORDENADA *listaJogadasPossiveis (ESTADO *e) {
 	dirC = criar_Coordenada(atual.linha - 1, atual.coluna + 1);
 	verificar[7] = dirC;
 
-
 	int nCoords = 0, aux = 0;
 
 	for (int d = 0; d < 8; d++) { //Calcula quantas casas vazias há à volta do jogador em questão
@@ -323,8 +267,7 @@ COORDENADA *listaJogadasPossiveis (ESTADO *e) {
 	return jogadasPossiveis;
 }
 //------------------------------------------------------------------------------------------------------------------------------
-
-
+*/
 
 
 //------------------------------------------------------------------------------------------------------------------------------
@@ -351,10 +294,7 @@ void imprimeLista(LISTA L){
 //------------------------------------------------------------------------------------------------------------------------------
 int escolher_aleatorio(int max) {
 
-	srand (time (NULL));
-
 	int escolha = rand () % (max);
-	//printf("%d <-- escolha \n", escolha);
 
 	return escolha;
 }
@@ -365,30 +305,79 @@ int escolher_aleatorio(int max) {
 //------------------------------------------------------------------------------------------------------------------------------
 COORDENADA *escolha_jogada(LISTA listaCoords, int indice) {
 
-	for (int i = 0; i < indice; i++)
-	{
-		//printf("%d\n", indice );
+	for (int i = 0; i < indice; i++) {
+
 		listaCoords = remove_cabeca(listaCoords);
 	}
-
-	
 
 	return devolve_cabeca(listaCoords);
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
-/*
-int main(){
-
-	
-	COORDENADA linhaUm = criar_Coordenada(3,4);
-
-	LISTA ola = criar_Lista();
-
-	ola -> valor = linhaUm;
-	
-	imprimeLista(ola);
 
 
-	return 0;
-}*/
+//------------------------------------------------------------------------------------------------------------------------------
+int distancia_Coords(COORDENADA c, int jogador) {
+
+	int distancia = 0;
+	int coluna = coluna_Coord(c);
+	int linha = linha_Coord(c);
+
+	if (jogador == 1)
+		distancia = sqrt(pow(coluna - 0, 2) + pow(linha - 7, 2));
+
+	if (jogador == 2)
+		distancia = sqrt(pow(coluna - 7, 2) + pow(linha - 0, 2));
+
+	return distancia;
+}
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+COORDENADA *bot_v2(ESTADO *e) {
+
+	LISTA listaOficial = criar_lista();
+	int jogador = obter_jogador_atual(e);
+	COORDENADA atual = obter_Ultima_Jogada(e);
+	COORDENADA *final = malloc(sizeof(COORDENADA));
+	listaOficial = listaJogadasPossiveisLista(e);
+
+	imprimeLista(listaOficial);
+
+	COORDENADA listaCoordenadas[qts_Espacos_Vazios(e)];
+
+	for (int d = 0; d < qts_Espacos_Vazios(e); d++) {
+
+		listaCoordenadas[d] = *((COORDENADA *) devolve_cabeca(listaOficial));
+		imprime(listaCoordenadas[d]);
+		listaOficial = remove_cabeca(listaOficial);
+	}
+
+	printf("\n");
+
+	int distanciaMenor = distancia_Coords(listaCoordenadas[0], jogador);
+	//printf("%d DISTANCIA MENOR\n", distanciaMenor);
+
+	for (int d = 1; d < qts_Espacos_Vazios(e); d++) {
+
+		if (distancia_Coords(listaCoordenadas[d], jogador) < distanciaMenor) {
+			distanciaMenor = distancia_Coords(listaCoordenadas[d], jogador);
+			*final = listaCoordenadas[d];
+			printf("lista coordenadas ->");
+			imprime(listaCoordenadas[d]);
+			printf("\n");
+		}
+		imprime(*final);
+		printf("imprime final ^\n");
+	}
+
+
+
+	printf("%d DISTANCIA MENOR\n", distanciaMenor);
+	//free(listaOficial);
+	return final;
+}	
+//------------------------------------------------------------------------------------------------------------------------------
