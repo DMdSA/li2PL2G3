@@ -61,7 +61,7 @@ COORDENADA *escolha_jogada(LISTA listaCoords, int indice);
 void imprime_lista_ligada(LISTA L);
 
 
-int distancia_Coords(COORDENADA c, int jogador);
+double distancia_Coords(COORDENADA c, int jogador);
 
 COORDENADA *bot_v2(ESTADO *e);
 

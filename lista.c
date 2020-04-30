@@ -91,6 +91,7 @@ LISTA remove_cabeca(LISTA L) {
     else {
 
         aux = L -> proximo;
+        //printf("Cabeca removida!\n");
         free(L);
         return aux;
 
@@ -317,9 +318,9 @@ COORDENADA *escolha_jogada(LISTA listaCoords, int indice) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-int distancia_Coords(COORDENADA c, int jogador) {
+double distancia_Coords(COORDENADA c, int jogador) {
 
-	int distancia = 0;
+	double distancia = 0;
 	int coluna = coluna_Coord(c);
 	int linha = linha_Coord(c);
 
@@ -352,32 +353,26 @@ COORDENADA *bot_v2(ESTADO *e) {
 	for (int d = 0; d < qts_Espacos_Vazios(e); d++) {
 
 		listaCoordenadas[d] = *((COORDENADA *) devolve_cabeca(listaOficial));
-		imprime(listaCoordenadas[d]);
 		listaOficial = remove_cabeca(listaOficial);
 	}
 
 	printf("\n");
 
-	int distanciaMenor = distancia_Coords(listaCoordenadas[0], jogador);
-	//printf("%d DISTANCIA MENOR\n", distanciaMenor);
+	double distanciaMenor = distancia_Coords(listaCoordenadas[0], jogador);
+	*final = listaCoordenadas[0];
 
 	for (int d = 1; d < qts_Espacos_Vazios(e); d++) {
 
 		if (distancia_Coords(listaCoordenadas[d], jogador) < distanciaMenor) {
 			distanciaMenor = distancia_Coords(listaCoordenadas[d], jogador);
 			*final = listaCoordenadas[d];
-			printf("lista coordenadas ->");
-			imprime(listaCoordenadas[d]);
-			printf("\n");
 		}
-		imprime(*final);
-		printf("imprime final ^\n");
 	}
 
 
 
-	printf("%d DISTANCIA MENOR\n", distanciaMenor);
-	//free(listaOficial);
+	//printf("%d DISTANCIA MENOR\n", distanciaMenor);
+	free(listaOficial);
 	return final;
 }	
 //------------------------------------------------------------------------------------------------------------------------------
