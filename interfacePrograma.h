@@ -21,9 +21,7 @@ void pos (int jogada, COORDENADA jog1[], COORDENADA jog2[], ESTADO *e);
 
 void coords_para_array (FILE *jogo, int jogadas, char jog1_4chars[], char jog2_4chars[]);
 
-//int ultima_jogada_ficheiro (FILE *jogo);
-
-ESTADO *coords_de_ficheiro_jog (ESTADO *e, FILE *jogo, char jog1_4chars[], char jog2_4chars[], COORDENADA *jog1, COORDENADA *jog2, int jogadastotais);
+void coords_de_ficheiro_jog (ESTADO *e, FILE *jogo, char jog1_4chars[], char jog2_4chars[], COORDENADA *jog1, COORDENADA *jog2, int jogadastotais);
 
 
 int confirmaImpar (FILE *jogo);

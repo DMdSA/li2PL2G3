@@ -24,7 +24,7 @@ int verifica_PERDEU (ESTADO *e, COORDENADA c);
 
 
 
-int verifica_GANHOU (ESTADO *e, COORDENADA c);
+int verifica_GANHOU (ESTADO *e);
 
 
 

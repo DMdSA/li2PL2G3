@@ -46,8 +46,6 @@ _Bool lista_esta_vazia(LISTA L);
 
 LISTA listaJogadasPossiveisLista (ESTADO *e);
 
-//COORDENADA *listaJogadasPossiveis (ESTADO *e);
-
 void imprimeLista(LISTA L);
 
 

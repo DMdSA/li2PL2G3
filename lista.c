@@ -81,7 +81,6 @@ LISTA proximo(LISTA L) {
 //------------------------------------------------------------------------------------------------------------------------------
 LISTA remove_cabeca(LISTA L) {
 
-	struct nodo *paraRemover;
 	LISTA aux;
 
     if (L == NULL || (L->valor == NULL && L->proximo == NULL)){
@@ -157,7 +156,6 @@ int qts_Espacos_Vazios(ESTADO *e) {
 //------------------------------------------------------------------------------------------------------------------------------
 LISTA listaJogadasPossiveisLista (ESTADO *e){ // explicar bem
 
-	COORDENADA verificar[8];
 	LISTA final = criar_lista();
 	COORDENADA atual = obter_Ultima_Jogada(e);
 
@@ -216,59 +214,6 @@ LISTA listaJogadasPossiveisLista (ESTADO *e){ // explicar bem
 //------------------------------------------------------------------------------------------------------------------------------
 
 
-/*
-//------------------------------------------------------------------------------------------------------------------------------
-COORDENADA *listaJogadasPossiveis (ESTADO *e) {
-
-	COORDENADA verificar[8];
-	COORDENADA atual = obter_Ultima_Jogada(e);
-	COORDENADA esq, esqC, esqB, C, B, dir, dirC, dirB;
-
-	C = criar_Coordenada(atual.linha - 1, atual.coluna);
-	verificar[0] = C;
-
-	B = criar_Coordenada(atual.linha + 1, atual.coluna);
-	verificar[1] = B;
-
-	esq = criar_Coordenada(atual.linha, atual.coluna - 1);
-	verificar[2] = esq;
-
-	dir = criar_Coordenada(atual.linha, atual.coluna + 1);
-	verificar[3] = dir;
-
-	esqB = criar_Coordenada(atual.linha + 1, atual.coluna - 1);
-	verificar[4] = esqB;
-
-	esqC = criar_Coordenada(atual.linha - 1, atual.coluna - 1);
-	verificar[5] = esqC;
-
-	dirB = criar_Coordenada(atual.linha + 1, atual.coluna + 1);
-	verificar[6] = dirB;
-
-	dirC = criar_Coordenada(atual.linha - 1, atual.coluna + 1);
-	verificar[7] = dirC;
-
-	int nCoords = 0, aux = 0;
-
-	for (int d = 0; d < 8; d++) { //Calcula quantas casas vazias há à volta do jogador em questão
-		if ((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) {
-			nCoords++;
-		}
-	}
-
-	COORDENADA* jogadasPossiveis = (COORDENADA*) malloc( nCoords * sizeof(COORDENADA)); //Cria um pointer com armazenamento suficiente para o número de coordenadas que é suposto armazenar
-
-	for (int d = 0; d < 8; d++) {
-		
-		if ((obter_estado_casa(e, verificar[d]) == VAZIA) || (obter_estado_casa(e, verificar[d]) == UM) || (obter_estado_casa(e, verificar[d]) == DOIS)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
-			jogadasPossiveis[aux] = verificar[d];
-			aux++;
-		}
-	}
-	return jogadasPossiveis;
-}
-//------------------------------------------------------------------------------------------------------------------------------
-*/
 
 
 //------------------------------------------------------------------------------------------------------------------------------
@@ -342,7 +287,6 @@ COORDENADA *bot_v2(ESTADO *e) {
 
 	LISTA listaOficial = criar_lista();
 	int jogador = obter_jogador_atual(e);
-	COORDENADA atual = obter_Ultima_Jogada(e);
 	COORDENADA *final = malloc(sizeof(COORDENADA));
 	listaOficial = listaJogadasPossiveisLista(e);
 

@@ -58,9 +58,7 @@ int verifica_CASA (ESTADO *e, COORDENADA c) { //Verifica se a casa, para onde se
 //------------------------------------------------------------------------------------------------------------------------------
 int verifica_PERDEU (ESTADO *e, COORDENADA c) { //Verifica se TODAS as peças vizinhas estão pretas, ou seja, se o jogadorAtual perdeu.
 
-	CASA cima, baixo, dir, esq, esqCima, esqBaixo, dirCima, dirBaixo, atual;
-
-	atual = obter_estado_casa(e, criar_Coordenada(c.linha, c.coluna));
+	CASA cima, baixo, dir, esq, esqCima, esqBaixo, dirCima, dirBaixo;
 
 	cima = obter_estado_casa (e, criar_Coordenada(c.linha - 1, c.coluna));
 	baixo = obter_estado_casa (e, criar_Coordenada(c.linha + 1, c.coluna));
@@ -108,7 +106,7 @@ int verifica_PERDEU (ESTADO *e, COORDENADA c) { //Verifica se TODAS as peças vi
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-int verifica_GANHOU (ESTADO *e, COORDENADA c) { 
+int verifica_GANHOU (ESTADO *e) { 
 
 	int coluna_jogada, linha_jogada;
 	coluna_jogada = obter_Coluna_Atual (e);
@@ -168,7 +166,7 @@ void jogada_Vencedora(ESTADO *e, COORDENADA c) {
 int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 
 	// BUGGGGGGGG -> Se o jogador 1 chegar a casa 2 ou o jog. 2 chegar a casa 1 esse jogador ganha apesar de essa não ser a sua  casa. CORRIGIR.
-	if (verifica_Posicao_Jogada (e, c) && verifica_CASA (e, c) && verifica_GANHOU (e ,c)) { //Se a jogada for possivel nas direções possiveis, a coordenada que se pretende estiver VAZIA e esta ser '1' ou '2', então ganhou!
+	if (verifica_Posicao_Jogada (e, c) && verifica_CASA (e, c) && verifica_GANHOU (e)) { //Se a jogada for possivel nas direções possiveis, a coordenada que se pretende estiver VAZIA e esta ser '1' ou '2', então ganhou!
 		
 		jogada_Vencedora(e, c); //Atualizações necessárias ao ESTADO e parabenização.
 		return 1;

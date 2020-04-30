@@ -12,7 +12,6 @@ ESTADO *inicializar_estado() {
 	
 	e -> jogador_atual = 1;
 	e -> num_jogadas = 0;
-	e -> jogadas[32]; // ou 0, e vai, no máximo, até 32 (?).
 	e -> ultima_jogada.coluna = 4;
 	e -> ultima_jogada.linha = 3;
 
@@ -223,6 +222,8 @@ char numero_Letra(int x) {
         break;
         case 7 : final = 'h';
         break;
+        default : final = ' ';
+        break;
     }
     return final;
 }
@@ -252,6 +253,8 @@ int letra_Numero(char x) {
         break;
         case 'h' : final = 7;
         break;
+        default : final = ' ';
+        break;
     }
     return final;
 }
@@ -266,12 +269,16 @@ int verifica_Coordenada (COORDENADA c) {
     int linha = 8 - c.linha;
 
     if (colunaLetra >= 'a' && colunaLetra <= 'h') {
-        if (linha >= 1 && linha <= 8)
+        if (linha >= 1 && linha <= 8){
             return 1;
+        }
+        else{
+            return 0;
+        }
     }
     else
         return 0;
-} // -> Dado um dado do tipo COORDENADA, verifica se este verifica os requisitos para ser uma coordenada do tabuleiro criado.
+} 
 //------------------------------------------------------------------------------------------------------------------------------
 
 
