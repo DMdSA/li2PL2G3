@@ -6,7 +6,7 @@
 #include "logicaPrograma.h"
 
 //------------------------------------------------------------------------------------------------------------------------------
-int verifica_Posicao_Jogada (ESTADO *e, COORDENADA c) { //Verifica se a jogada Horizonta, Vertical ou Obliqua é possivel (ou seja, vizinha).
+int verifica_Posicao_Jogada (ESTADO *e, COORDENADA c) { //Verifica se a jogada Horizontal, Vertical ou Obliqua é possivel (ou seja, vizinha).
 
 	COORDENADA inicial = obter_Ultima_Jogada(e); //coordenada inicial da peça branca
 
@@ -26,8 +26,8 @@ int verifica_Posicao_Jogada (ESTADO *e, COORDENADA c) { //Verifica se a jogada H
 			return 1;
 	}
 
-	if (inicial.linha - 1 == c.linha) {
-		if (c.coluna == esq || c.coluna == dir || c.coluna == inicial.coluna)
+	if (inicial.linha - 1 == c.linha) { //Se a coordenada da linha para a qual se pretende jogar for a imediatamente acima da peça branca,
+		if (c.coluna == esq || c.coluna == dir || c.coluna == inicial.coluna) //Verifica as mesmas restrições, incluindo a própria coluna central.
 			return 1;
 	}
 
@@ -120,6 +120,7 @@ int verifica_GANHOU (ESTADO *e) {
 //------------------------------------------------------------------------------------------------------------------------------
 
 
+
 //------------------------------------------------------------------------------------------------------------------------------
 void jogada_Intermedia (ESTADO *e, COORDENADA c) {
 
@@ -134,29 +135,7 @@ void jogada_Intermedia (ESTADO *e, COORDENADA c) {
 	//Aqui já se considera que a jogada foi efetuada, tornando-se apenas de 'atualizações' ao estado.
 
 	atualiza_Ultima_Jogada(e, c); // Atualiza, dentro de ESTADO, as coordenadas da ULTIMA_JOGADA.
-	atualiza_Num_Jogadas (e);
-}
-//------------------------------------------------------------------------------------------------------------------------------
-
-
-
-//------------------------------------------------------------------------------------------------------------------------------
-void jogada_Vencedora(ESTADO *e, COORDENADA c) {
-
-	for (int d = 0; d < 8; d++) {
-			for (int a = 0; a < 8; a++)
-				if (obter_estado_casa (e, criar_Coordenada(d, a)) == BRANCA) //Procura a peça BRANCA atual no jogo
-					atualiza_Casas (e, criar_Coordenada(d, a), PRETA);	//E substitui a mesma por uma peça PRETA.
-	}
-
-	
-	atualiza_Casas(e, c, BRANCA); //Atualiza a coordenada para onde se jogou com uma peça BRANCA.
-
-	//Aqui já se considera que a jogada foi efetuada, tornando-se apenas de 'atualizações' ao estado.
-
-	atualiza_Ultima_Jogada(e, c); // Atualiza, dentro de ESTADO, as coordenadas da ULTIMA_JOGADA.
-	
-	atualiza_Num_Jogadas(e); // Atualiza, dentro de ESTADO, o número de jogadas efetuadas.
+	atualiza_Num_Jogadas (e); // Atualiza o numero de jogadas.
 }
 //------------------------------------------------------------------------------------------------------------------------------
 
@@ -165,24 +144,16 @@ void jogada_Vencedora(ESTADO *e, COORDENADA c) {
 //------------------------------------------------------------------------------------------------------------------------------
 int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 
-	// BUGGGGGGGG -> Se o jogador 1 chegar a casa 2 ou o jog. 2 chegar a casa 1 esse jogador ganha apesar de essa não ser a sua  casa. CORRIGIR.
-	if (verifica_Posicao_Jogada (e, c) && verifica_CASA (e, c) && verifica_GANHOU (e)) { //Se a jogada for possivel nas direções possiveis, a coordenada que se pretende estiver VAZIA e esta ser '1' ou '2', então ganhou!
-		
-		jogada_Vencedora(e, c); //Atualizações necessárias ao ESTADO e parabenização.
+	if (verifica_Posicao_Jogada (e, c) && verifica_CASA (e, c) && verifica_GANHOU (e)) { //Se a jogada for possivel nas direções possiveis, a coordenada que se pretende estiver VAZIA e esta ser '1' ou '2', então ganhou!		
+		jogada_Intermedia(e, c); //Atualizações necessárias ao ESTADO.
 		return 1;
 	}
-	
 	if (verifica_Posicao_Jogada(e, c) && verifica_CASA(e, c))  { //Se a coordenada dada for vizinha e a casa estiver VAZIA, a jogada é possível.
-
 		atualiza_Jogador(e); //Se o jogador inicial for o 1, atualiza para 2, e vice-versa.
-		
 		jogada_Intermedia(e ,c); //Atualizações necessárias ao estado.
-
 		return 1;
 	}
-
-	else {
-		
+	else {	
 		perdeste(1);
 		return 0;
 	}
@@ -194,7 +165,7 @@ int jogar(ESTADO *e, COORDENADA c) { //Função principal do jogo
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-void felicitar(ESTADO *e) {
+void felicitar(ESTADO *e) { // Felicita o jogador vencedor.
 
 	int jogador = obter_jogador_atual(e);
 	COORDENADA atual = obter_Ultima_Jogada(e);
