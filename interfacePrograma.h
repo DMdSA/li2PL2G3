@@ -19,7 +19,7 @@ void movs_Consola(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int numbe
 
 void pos (int jogada, COORDENADA jog1[], COORDENADA jog2[], ESTADO *e);
 
-void coords_para_array (FILE *jogo, int jogadas, char jog1_4chars[], char jog2_4chars[]);
+void coords_para_array (FILE *jogo, int jogadastotais, char jog1_4chars[], char jog2_4chars[]);
 
 void coords_de_ficheiro_jog (ESTADO *e, FILE *jogo, char jog1_4chars[], char jog2_4chars[], COORDENADA *jog1, COORDENADA *jog2, int jogadastotais);
 

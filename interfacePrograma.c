@@ -47,7 +47,7 @@ void movs_Consola(ESTADO *e, COORDENADA jog1[], COORDENADA jog2[], int number){ 
 } // -> Função que imprime os movimentos todos efetuados até então, na própria consola.
 //------------------------------------------------------------------------------------------------------------------------------
 
-COORDENADA  
+
 
 //------------------------------------------------------------------------------------------------------------------------------
 void mostrar_tabuleiro(ESTADO *e) { 
@@ -178,6 +178,7 @@ int confirmaImpar (FILE *jogo) {
 	int confirma = 1;
 	int char2;
 
+	//fseek(jogo, -5, SEEK_END);
 	//Vai a posição 8 a contar do fim do ficheiro e ve se existe um numero nessa posição
 	//fseek(jogo, -6, SEEK_END); //Para Linux
 	fseek(jogo, -8, SEEK_END); //Para Windows
@@ -195,13 +196,15 @@ int confirmaImpar (FILE *jogo) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
- void coords_para_array (FILE *jogo, int jogadasTotais, char jog1_4chars[], char jog2_4chars[]){ // é preciso explicar !!
+ void coords_para_array (FILE *jogo, int jogadastotais, char jog1_4chars[], char jog2_4chars[]){ // é preciso explicar !!
 
+ 	//int contador = 141; //-> Opção para Linux.
 	int contador = 150; //-> ignora o desenho do tabuleiro e comeca na primeira coordenada!
 	int d = 0, e = 0, ajuda1 = 2, ajuda2 = 2;
+	int numerDeJogadas = 0;
 
 		fseek(jogo, contador, SEEK_SET);    
-		for (int a = 1; a <= jogadasTotais; a++) {
+		for (int a = 1; a <= jogadastotais; a++) {
 
 			if (a % 2 != 0) {
 				for (; d < ajuda1; d++){
@@ -215,7 +218,7 @@ int confirmaImpar (FILE *jogo) {
 
 			else{
 
-				if (a != jogadasTotais+1 || confirmaImpar(jogo) == 0) {
+				if (a != jogadastotais+1 || confirmaImpar(jogo) == 0) {
 
 					for (; e < ajuda2; e++) {
 						jog2_4chars[e] = fgetc(jogo);
@@ -228,9 +231,11 @@ int confirmaImpar (FILE *jogo) {
 				}
 			}
 		}
-
-		char new_jog1_4chars[128];
-		for(int i=0; i<jogadasTotais;i++) {
+		numerDeJogadas = jogadastotais;
+		printf("%d\n", jogadastotais);
+		/*
+		char new_jog1_4chars[numerDeJogadas] = malloc(sizeof(numerDeJogadas));
+		for(int i=0; i<jogadastotais;i++) {
 			new_jog1_4chars[i] = jog1_4chars[i];
 		}
 
@@ -238,9 +243,12 @@ int confirmaImpar (FILE *jogo) {
 			jog1_4chars[i] = '\0';
 		}
 
-		for(int i=0; i<jogadasTotais;i++) {
+		for(int i=0; i<jogadastotais;i++) {
 			jog1_4chars[i] = new_jog1_4chars[i];
 		}
+		*/
+
+		
 }
  //------------------------------------------------------------------------------------------------------------------------------
 
@@ -340,8 +348,6 @@ int ler (char *file, ESTADO *e, COORDENADA *jog1, COORDENADA *jog2) { //explicar
 
 	strcat(file, ".txt\0");
 
-	printf("%s\n", file);
-
 	FILE *jogo;
 	jogo = fopen(file, "r");
 
@@ -424,7 +430,6 @@ int interpretador(ESTADO *e) { //EXPLICAR MUITO BEM
 				
 					if (gravar[0] == 'g' && gravar[1] == 'r' && gravar[2] == ' ') { // SE O COMANDO FOR GRAVAR
 						int i = 3; // Contador inicializar a 3 espaços "gr " <- ignora
-						int d = 0;
 
 						file = nome_Ficheiro(linha,file, i);						
 						gr(e, file); // Não tentar gravar à primeira, porque o jogo nem inicializou! É só uma "visualizacao" do tabuleiro.

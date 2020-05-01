@@ -290,8 +290,6 @@ COORDENADA *bot_v2(ESTADO *e) {
 	COORDENADA *final = malloc(sizeof(COORDENADA));
 	listaOficial = listaJogadasPossiveisLista(e);
 
-	imprimeLista(listaOficial);
-
 	COORDENADA listaCoordenadas[qts_Espacos_Vazios(e)];
 
 	for (int d = 0; d < qts_Espacos_Vazios(e); d++) {
