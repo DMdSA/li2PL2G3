@@ -127,7 +127,7 @@ void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number, char 
 char* nome_Ficheiro (char linha[], char *file, int i) {
 
 	int d;
-	for (d = 0; ((linha[i] >= 'a' && linha[i] <= 'z') || (linha[i] >= 'A' && linha[i] <= 'Z')); d++) {  
+	for (d = 0; ((linha[i] >= 'a' && linha[i] <= 'z') || (linha[i] >= 'A' && linha[i] <= 'Z') || (linha[i] >= '0' && linha[i] <= '9')); d++) {  
 			
 			if (file[d]) {
 
@@ -178,10 +178,10 @@ int confirmaImpar (FILE *jogo) {
 	int confirma = 1;
 	int char2;
 
-	//fseek(jogo, -5, SEEK_END);
+	
 	//Vai a posição 8 a contar do fim do ficheiro e ve se existe um numero nessa posição
-	//fseek(jogo, -6, SEEK_END); //Para Linux
-	fseek(jogo, -8, SEEK_END); //Para Windows
+	fseek(jogo, -6, SEEK_END); //Para Linux
+	//fseek(jogo, -8, SEEK_END); //Para Windows
 	char duvida = fgetc(jogo);
 
 	char2 = duvida - '0';
@@ -196,10 +196,10 @@ int confirmaImpar (FILE *jogo) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
- void coords_para_array (FILE *jogo, int jogadastotais, char jog1_4chars[], char jog2_4chars[]){ // é preciso explicar !!
+ void coords_para_array (FILE *jogo, int jogadastotais, char jog1_chars[], char jog2_chars[]){
 
- 	//int contador = 141; //-> Opção para Linux.
-	int contador = 150; //-> ignora o desenho do tabuleiro e comeca na primeira coordenada!
+ 	int contador = 141; //-> Opção para Linux.
+	//int contador = 150; //-> ignora o desenho do tabuleiro e comeca na primeira coordenada!
 	int d = 0, e = 0, ajuda1 = 2, ajuda2 = 2;
 	int numerDeJogadas = 0;
 
@@ -208,7 +208,7 @@ int confirmaImpar (FILE *jogo) {
 
 			if (a % 2 != 0) {
 				for (; d < ajuda1; d++){
-					jog1_4chars[d] = fgetc(jogo);
+					jog1_chars[d] = fgetc(jogo);
 				}
 				ajuda1 += 2;
 
@@ -221,34 +221,19 @@ int confirmaImpar (FILE *jogo) {
 				if (a != jogadastotais+1 || confirmaImpar(jogo) == 0) {
 
 					for (; e < ajuda2; e++) {
-						jog2_4chars[e] = fgetc(jogo);
+						jog2_chars[e] = fgetc(jogo);
 
 					}
 					ajuda2 += 2;
-
-					contador += 8; //-> numero de espacos para mudar de linha!
+					contador += 7 // para linux
+					//contador += 8; 
+					// ^ numero de espacos para mudar de linha!
 					fseek(jogo, contador, SEEK_SET);
 				}
 			}
 		}
 		numerDeJogadas = jogadastotais;
 		printf("%d\n", jogadastotais);
-		/*
-		char new_jog1_4chars[numerDeJogadas] = malloc(sizeof(numerDeJogadas));
-		for(int i=0; i<jogadastotais;i++) {
-			new_jog1_4chars[i] = jog1_4chars[i];
-		}
-
-		for(int i=0; i<128;i++) {
-			jog1_4chars[i] = '\0';
-		}
-
-		for(int i=0; i<jogadastotais;i++) {
-			jog1_4chars[i] = new_jog1_4chars[i];
-		}
-		*/
-
-		
 }
  //------------------------------------------------------------------------------------------------------------------------------
 
@@ -280,20 +265,20 @@ void ajuda (ESTADO *e, FILE *jogo, COORDENADA *jog1, COORDENADA *jog2, int jogad
 
 		jogar(e, jog1[z]);
 	}
-}
+} // -> Realiza todas as jogadas possíveis conforme as coordenadas guardadas nos arrays dados, até alcançar o estado pretendido
 //------------------------------------------------------------------------------------------------------------------------------
 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-void coords_de_ficheiro_jog (ESTADO *e, FILE *jogo, char jog1_4chars[], char jog2_4chars[], COORDENADA *jog1, COORDENADA *jog2, int jogadastotais) { //EXPLICAR
+void coords_de_ficheiro_jog (ESTADO *e, FILE *jogo, char jog1_chars[], char jog2_chars[], COORDENADA *jog1, COORDENADA *jog2, int jogadastotais) {
 
 	int i = 1;
 	for (int a = 0; a < jogadastotais*2; a += 2) { // -> O primeiro 2 é o numero de jogadas que há
 
-		int letra = letra_Numero(jog1_4chars[a]);
+		int letra = letra_Numero(jog1_chars[a]);
 
-		int numero = 8-(jog1_4chars[a + 1] - '0');
+		int numero = 8-(jog1_chars[a + 1] - '0');
 
 		jog1[i] = criar_Coordenada(numero, letra);
 		i++;
@@ -302,9 +287,9 @@ void coords_de_ficheiro_jog (ESTADO *e, FILE *jogo, char jog1_4chars[], char jog
 	i = 1;
 	for (int a = 0; a < jogadastotais*2; a += 2) { // -> O primeiro 2 é o numero de jogadas que há
 
-		int letra = letra_Numero(jog2_4chars[a]);
+		int letra = letra_Numero(jog2_chars[a]);
 
-		int numero = 8-(jog2_4chars[a + 1] - '0');
+		int numero = 8-(jog2_chars[a + 1] - '0');
 
 		jog2[i] = criar_Coordenada(numero, letra);
 
@@ -312,13 +297,13 @@ void coords_de_ficheiro_jog (ESTADO *e, FILE *jogo, char jog1_4chars[], char jog
 		}
 
 	ajuda(e, jogo, jog1, jog2, jogadastotais);
-}
+} // -> A partir de um array de chars com as coordenadas de cada jogador, transforma-os num array do tipo COORDENADA, para cada jogador
 //-----------------------------------------------------------------------------------------------------------------------------
 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-void pos(int jogada, COORDENADA jog1[], COORDENADA jog2[], ESTADO *e) { //explicar
+void pos(int jogada, COORDENADA jog1[], COORDENADA jog2[], ESTADO *e) {
 
 	if (verifica_Inicio_Jogo(e))
 		atualiza_Num_Jogadas(e);
@@ -333,7 +318,7 @@ void pos(int jogada, COORDENADA jog1[], COORDENADA jog2[], ESTADO *e) { //explic
 		}
 		mostrar_tabuleiro(e);
 	}
-}
+} // -> Conforme as coordenadas guardadas em cada array, efetua todas as jogadas possíveis até alcançar uma jogada anterior pretendida
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -342,9 +327,9 @@ void pos(int jogada, COORDENADA jog1[], COORDENADA jog2[], ESTADO *e) { //explic
 int ler (char *file, ESTADO *e, COORDENADA *jog1, COORDENADA *jog2) { //explicar!
 	char linha[40];
 	int jogadastotais = 0;
-	char jog1_4chars[128];
-    char jog2_4chars [128];
-    int number=0;
+	char jog1_chars[128];
+    char jog2_chars [128];
+    int contadorJogadas=0;
 
 	strcat(file, ".txt\0");
 
@@ -361,36 +346,36 @@ int ler (char *file, ESTADO *e, COORDENADA *jog1, COORDENADA *jog2) { //explicar
 			printf("%s", linha);
 		}
 		
-		jogadastotais -= 10;
+		jogadastotais -= 10; // Retira as 10 primeiras linhas, referentes à "imagem" do tabuleiro e linha em branco
 		if (confirmaImpar(jogo) == 0){
-			number = jogadastotais*2;
+			contadorJogadas = jogadastotais*2;
 		}
 		else {
-			number = jogadastotais*2+1;
+			contadorJogadas = jogadastotais*2+1;
 		}
 
-		coords_para_array(jogo, jogadastotais*2, jog1_4chars, jog2_4chars);
+		coords_para_array(jogo, jogadastotais*2, jog1_chars, jog2_chars);
 
-		coords_de_ficheiro_jog(e, jogo, jog1_4chars, jog2_4chars, jog1, jog2, jogadastotais);
+		coords_de_ficheiro_jog(e, jogo, jog1_chars, jog2_chars, jog1, jog2, jogadastotais);
 
 		mostrar_tabuleiro(e);
 		fclose(jogo);
 	}
-		return number;
+		return contadorJogadas;
 }	// -> Lê o ficheiro que contém a última jogada efetuada.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-int interpretador(ESTADO *e) { //EXPLICAR MUITO BEM
-	
+int interpretador(ESTADO *e) {
+
 	char linha[BUF_SIZE];
 	char col[2], lin[2], *file, gravar[7], posicao_Lida[3];
 	COORDENADA coord2;
 	COORDENADA jog1 [65];
 	COORDENADA jog2 [65];
-	int number = 0;   //Serve para verificar se a jogada é par ou impar (jog1 ou jog2)
+	int contadorJogadas = 0;   //Serve para verificar se a jogada é par ou impar (jog1 ou jog2)
 	posicao_Lida[2] = '\0';
 	int guardarJogadaPos =  0;
 	coord2 = criar_Coordenada(3,4);
@@ -411,7 +396,7 @@ int interpretador(ESTADO *e) { //EXPLICAR MUITO BEM
 					jog1 [obter_numero_de_jogadas(e)] = coord2;
 				else
 					jog2 [obter_numero_de_jogadas(e)] = coord2;
-				number++;
+				contadorJogadas++;
 			}
 
 			if (jogar(e, coord)) { // -> O facto de a própria jogada ser argumento do if, não faz com que ele "funcione", em vez de só o verificar??
@@ -420,7 +405,7 @@ int interpretador(ESTADO *e) { //EXPLICAR MUITO BEM
 			}
 		}
 		else
-			if (strlen(linha) == 2 && strcmp(linha, "q\n") == 0)
+			if (strlen(linha) == 2 && strcmp(linha, "q\n") == 0) // SE O COMANDO FOR SAIR
 				Q();
 
 			else {
@@ -433,7 +418,7 @@ int interpretador(ESTADO *e) { //EXPLICAR MUITO BEM
 
 						file = nome_Ficheiro(linha,file, i);						
 						gr(e, file); // Não tentar gravar à primeira, porque o jogo nem inicializou! É só uma "visualizacao" do tabuleiro.
-						movs(e, jog1, jog2, number, file);
+						movs(e, jog1, jog2, contadorJogadas, file);
 						free(file);
 						if(obter_numero_de_jogadas(e) == 1){
 							coord2 = criar_Coordenada(3,4);
@@ -444,8 +429,8 @@ int interpretador(ESTADO *e) { //EXPLICAR MUITO BEM
 							int i = 4;
 							file = nome_Ficheiro(linha, file, i);
 								e = inicializar_estado();
-								number = 0;
-								number = ler(file,e,jog1,jog2);
+								contadorJogadas = 0;
+								contadorJogadas = ler(file,e,jog1,jog2);
 								free(file);
 
 								if(obter_numero_de_jogadas(e) == 1){
@@ -455,7 +440,7 @@ int interpretador(ESTADO *e) { //EXPLICAR MUITO BEM
 						else
 							if (gravar[0] == 'm' && gravar[1] == 'o' && gravar[2] == 'v' && gravar[3] == 's') //SE O COMANDO FOR MOVS
 							{
-								movs_Consola(e, jog1, jog2, number);
+								movs_Consola(e, jog1, jog2, contadorJogadas);
 								if(obter_numero_de_jogadas(e) == 1){
 									coord2 = criar_Coordenada(3,4);
 								}
@@ -475,11 +460,11 @@ int interpretador(ESTADO *e) { //EXPLICAR MUITO BEM
 									if (posicao > 0 && posicao < guardarJogadaPos) {
 										e = inicializar_estado();
 										pos(posicao, jog1, jog2, e);
-										number = 0;
+										contadorJogadas = 0;
 									}
 									else if (posicao == 0){
 										e = inicializar_estado();
-										number = 0;
+										contadorJogadas = 0;
 										mostrar_tabuleiro(e);
 									}
 									if(obter_numero_de_jogadas(e) == 1){
@@ -489,19 +474,21 @@ int interpretador(ESTADO *e) { //EXPLICAR MUITO BEM
 								else
 									if (gravar[0] == 'j' && gravar[1] == 'o' && gravar[2] == 'g' && gravar[3] == '2'){ //SE O COMANDO FOR JOG
 										COORDENADA *proxJogada2;
-											proxJogada2 = bot_v2(e);
+											proxJogada2 = calcula_Distancia_Menor(e);
 											coord2 = *proxJogada2;
+
 											printf("\nJogada para: ");
 											imprime(coord2);
 											printf("\n");
 
 											if (verifica_Posicao_Jogada(e, coord2) && verifica_CASA(e, coord2)) {
+												
 												if (obter_jogador_atual(e) == 1)
 													jog1 [obter_numero_de_jogadas(e)] = coord2;
-												else{
+												else {
 													jog2 [obter_numero_de_jogadas(e)] = coord2;
 												}
-													number++;
+													contadorJogadas++;
 											}
 											jogar(e, coord2);
 											mostrar_tabuleiro(e);
@@ -510,8 +497,9 @@ int interpretador(ESTADO *e) { //EXPLICAR MUITO BEM
 
 										if (gravar[0] == 'j' && gravar[1] == 'o' && gravar[2] == 'g') {
 											LISTA jogadasPossiveis = criar_lista();
-											jogadasPossiveis = listaJogadasPossiveisLista(e);
+											jogadasPossiveis = listaJogadasPossiveis(e);
 											COORDENADA *proxJogada;
+
 											do {
 												proxJogada = escolha_jogada(jogadasPossiveis, escolher_aleatorio(qts_Espacos_Vazios(e)));
 											} while (verifica_Coordenada(*proxJogada) == 0);
@@ -524,10 +512,10 @@ int interpretador(ESTADO *e) { //EXPLICAR MUITO BEM
 											if (verifica_Posicao_Jogada(e, coord2) && verifica_CASA(e, coord2)) {
 												if (obter_jogador_atual(e) == 1)
 													jog1 [obter_numero_de_jogadas(e)] = coord2;
-												else{
+												else {
 													jog2 [obter_numero_de_jogadas(e)] = coord2;
 												}
-													number++;
+													contadorJogadas++;
 											}
 											jogar(e, coord2);
 											mostrar_tabuleiro(e);

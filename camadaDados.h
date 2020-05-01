@@ -5,7 +5,6 @@ Definição do estado e das unções que o manipulam.
 #ifndef DADOS_FILE
 #define DADOS_FILE
 
-
 /**
 \brief Inicializa o valor do estado
 Esta função inicializa o valor do estado. Isso implica o tabuleiro ser colocado na posição inicial e todos os campos do estado estarem com o valor por omissão.
@@ -111,31 +110,62 @@ int verifica_Inicio_Jogo (ESTADO *e);
 
 /**
 \brief Informa o jogador de que perdeu o jogo
+@param x Referente ao tipo de frase que deve apresentar
 */
 void perdeste(int x);
 
 
+/**
+\brief Transforma o inteiro da coordenada ligado a uma coluna à respetiva letra que lhe está associada
+@param c Coordenada a analisar
+*/
 char letra_Coordenada(COORDENADA c);
 
 
 /**
-\brief Transforma um char num int
-@param x Letra da coordenada para a qual se pretende jogar
-@returns Inteiro correspondente à letra
+\brief Imprime, na consola, uma coordenada
+@param c Coordeanda a imprimir
+*/
+void imprime (COORDENADA c);
+
+
+/**
+\brief Transforma um número na letra que lhe está associado, no tabuleiro
+@param x Inteiro a transformar
+@returns Letra correspondente ao inteiro
 */
 char numero_Letra(int x);
 
 
+/**
+\brief Transforma uma letra do tabuleiro num inteiro referente à matriz criada, por base
+@param x Letra a transformar
+@returns Letra transformada
+*/
 int letra_Numero(char x);
 
 
-void imprime (COORDENADA c);
-
-
+/**
+\brief Verifica se uma coordenada realmente está dentro da definição utilizada pelo tabuleiro
+@param c Coordenada a analisar
+@returns 1, caso seja uma coordenada na forma pretendida, 0 caso contrário
+*/
 int verifica_Coordenada (COORDENADA c);
 
-int coluna_Coord(COORDENADA c);
-int linha_Coord(COORDENADA c);
 
+/**
+\brief Devolve o inteiro associado à coluna de uma coordenada
+@param c Coordenada a analisar
+@returns Inteiro associado à coluna
+*/
+int coluna_Coord(COORDENADA c);
+
+
+/**
+\brief Devolve o inteiro associado à linha de uma coordenada
+@param c Coordenada a analisar
+@returns Inteiro associado à linha
+*/
+int linha_Coord(COORDENADA c);
 
 #endif

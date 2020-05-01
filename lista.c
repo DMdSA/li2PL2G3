@@ -21,6 +21,7 @@ int tamanhoLista (LISTA L){
     }
     return cont;
 }
+// -> Função que ao receber uma lista devolve um inteiro com o seu tamanho.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -30,6 +31,7 @@ void printCoordVoid(COORDENADA *c) {
 
 	printf("%c%d\n", numero_Letra(c -> coluna), (8 - c -> linha));
 }
+//-> Função que recebendo um apontador de coordenada, da print da mesma na consola.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -44,6 +46,7 @@ LISTA criar_lista() {
 	
 	return inicial;
 }
+//-> Função que cria uma lista vazia.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -55,7 +58,8 @@ LISTA insere_cabeca(LISTA L, void *valor) {
 		aux -> proximo = L;
 		aux -> valor = valor;
 		return aux;
-	} // -> Insere um valor na cabeça da lista
+	}
+// -> Insere um valor na cabeça da lista.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -64,7 +68,8 @@ LISTA insere_cabeca(LISTA L, void *valor) {
 void *devolve_cabeca(LISTA L) {
 
 	return L -> valor;
-} // -> Devolve a cabeça da lista
+} 
+// -> Devolve a cabeça da lista.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -74,6 +79,7 @@ LISTA proximo(LISTA L) {
 
 	return L -> proximo;
 }
+// -> Devolve a cauda da lista.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -95,7 +101,7 @@ LISTA remove_cabeca(LISTA L) {
         return aux;
 
     }
-} // -> Remove a cabeça da lista (libertando o espaço ocupado) e devolve a cauda
+} // -> Remove a cabeça da lista (libertando o espaço ocupado) e devolve a cauda.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -107,6 +113,7 @@ _Bool lista_esta_vazia(LISTA L) {
 		return 0;
 	return 1;
 }
+// -> Verifica se uma lista está vazia ou não.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -153,8 +160,9 @@ int qts_Espacos_Vazios(ESTADO *e) {
 	}
 	return nCoords;
 }
+// -> Função que, atravez do estado, calcula quantas casas vazias estão a volta da peça, ou seja, calcula quantas jogadas possíveis há a volta da peça.
 //------------------------------------------------------------------------------------------------------------------------------
-LISTA listaJogadasPossiveisLista (ESTADO *e){ // explicar bem
+LISTA listaJogadasPossiveis (ESTADO *e){ // 
 
 	LISTA final = criar_lista();
 	COORDENADA atual = obter_Ultima_Jogada(e);
@@ -174,65 +182,44 @@ LISTA listaJogadasPossiveisLista (ESTADO *e){ // explicar bem
 	}
 
 	*B = criar_Coordenada(atual.linha + 1, atual.coluna);
-	if (((obter_estado_casa(e, *B ) == VAZIA) || (obter_estado_casa(e, *B) == UM) || (obter_estado_casa(e, *B) == DOIS)) && verifica_Coordenada(*B)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *B ) == VAZIA) || (obter_estado_casa(e, *B) == UM) || (obter_estado_casa(e, *B) == DOIS)) && verifica_Coordenada(*B)) {
 		final = insere_cabeca(final, B);
 	}
 
 	*esq = criar_Coordenada(atual.linha, atual.coluna - 1);
-	if (((obter_estado_casa(e, *esq ) == VAZIA) || (obter_estado_casa(e, *esq) == UM) || (obter_estado_casa(e, *esq) == DOIS)) && verifica_Coordenada(*esq)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *esq ) == VAZIA) || (obter_estado_casa(e, *esq) == UM) || (obter_estado_casa(e, *esq) == DOIS)) && verifica_Coordenada(*esq)) {
 		final = insere_cabeca(final, esq);
 	}
 
 	*dir = criar_Coordenada(atual.linha, atual.coluna + 1);
-	if (((obter_estado_casa(e, *dir ) == VAZIA) || (obter_estado_casa(e, *dir) == UM) || (obter_estado_casa(e, *dir) == DOIS)) && verifica_Coordenada(*dir)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *dir ) == VAZIA) || (obter_estado_casa(e, *dir) == UM) || (obter_estado_casa(e, *dir) == DOIS)) && verifica_Coordenada(*dir)) {
 		final = insere_cabeca(final, dir);
 	}
 
 	*esqB = criar_Coordenada(atual.linha + 1, atual.coluna - 1);
-	if (((obter_estado_casa(e, *esqB ) == VAZIA) || (obter_estado_casa(e, *esqB) == UM) || (obter_estado_casa(e, *esqB) == DOIS)) && verifica_Coordenada(*esqB)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *esqB ) == VAZIA) || (obter_estado_casa(e, *esqB) == UM) || (obter_estado_casa(e, *esqB) == DOIS)) && verifica_Coordenada(*esqB)) {
 		final = insere_cabeca(final, esqB);
 	}
 
 	*esqC = criar_Coordenada(atual.linha - 1, atual.coluna - 1);
-	if (((obter_estado_casa(e, *esqC ) == VAZIA) || (obter_estado_casa(e, *esqC) == UM) || (obter_estado_casa(e, *esqC) == DOIS)) && verifica_Coordenada(*esqC)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *esqC ) == VAZIA) || (obter_estado_casa(e, *esqC) == UM) || (obter_estado_casa(e, *esqC) == DOIS)) && verifica_Coordenada(*esqC)) {
 		final = insere_cabeca(final, esqC);
 	}
 
 	*dirB = criar_Coordenada(atual.linha + 1, atual.coluna + 1);
-	if (((obter_estado_casa(e, *dirB ) == VAZIA) || (obter_estado_casa(e, *dirB) == UM) || (obter_estado_casa(e, *dirB) == DOIS)) && verifica_Coordenada(*dirB)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *dirB ) == VAZIA) || (obter_estado_casa(e, *dirB) == UM) || (obter_estado_casa(e, *dirB) == DOIS)) && verifica_Coordenada(*dirB)) {
 		final = insere_cabeca(final, dirB);
 	}
 
 	*dirC = criar_Coordenada(atual.linha - 1, atual.coluna + 1);
-	if (((obter_estado_casa(e, *dirC ) == VAZIA) || (obter_estado_casa(e, *dirC) == UM) || (obter_estado_casa(e, *dirC) == DOIS)) && verifica_Coordenada(*dirC)) { //Ao percorrer as casas, se forem vazias guarda as suas coordenadas no array de COORDENADAS
+	if (((obter_estado_casa(e, *dirC ) == VAZIA) || (obter_estado_casa(e, *dirC) == UM) || (obter_estado_casa(e, *dirC) == DOIS)) && verifica_Coordenada(*dirC)) {
 		final = insere_cabeca(final, dirC);
 	}
 
 	printf("\n");
 	return final;
 }
-//------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-//------------------------------------------------------------------------------------------------------------------------------
-void imprimeLista(LISTA L){
-	
-	LISTA aux;
-
-    if(lista_esta_vazia(L) == 0){
-    	printf("VAZIA\n");
-    }
-
-    aux = L;
-
-    for(int i = 0; i < tamanhoLista(L); i++){
-    		printf("L: ");
-            printCoordVoid( (COORDENADA *) aux -> valor);
-            aux = aux -> proximo;
-    }
-}
+// -> Função que cria uma lista e 8 coordenadas, associando-as as casas a volta da peça, e adiciona na lista as casas cuja jogada é possível, retornando a Lista.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -244,6 +231,7 @@ int escolher_aleatorio(int max) {
 
 	return escolha;
 }
+// -> Função que recebe a quantidade de casas vazias ao redor da peça e devolve um int.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -258,6 +246,7 @@ COORDENADA *escolha_jogada(LISTA listaCoords, int indice) {
 
 	return devolve_cabeca(listaCoords);
 }
+//-> Recebendo um índice aleatório, devolve a coordenada nesse índice da lista, coordenada que vai ser jogada.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -277,18 +266,19 @@ double distancia_Coords(COORDENADA c, int jogador) {
 
 	return distancia;
 }
+//-> Função que calcula a distancia euclidiana entre dois pontos.
 //------------------------------------------------------------------------------------------------------------------------------
 
 
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-COORDENADA *bot_v2(ESTADO *e) {
+COORDENADA *calcula_Distancia_Menor(ESTADO *e) {
 
 	LISTA listaOficial = criar_lista();
 	int jogador = obter_jogador_atual(e);
 	COORDENADA *final = malloc(sizeof(COORDENADA));
-	listaOficial = listaJogadasPossiveisLista(e);
+	listaOficial = listaJogadasPossiveis(e);
 
 	COORDENADA listaCoordenadas[qts_Espacos_Vazios(e)];
 
@@ -298,14 +288,12 @@ COORDENADA *bot_v2(ESTADO *e) {
 		listaOficial = remove_cabeca(listaOficial);
 	}
 
-	printf("\n");
-
-	double distanciaMenor = distancia_Coords(listaCoordenadas[0], jogador);
+	double distanciaMenor = distancia_Coords(listaCoordenadas[0], jogador);//primeira comparação, guardando a coordenada no apontador "final"
 	*final = listaCoordenadas[0];
 
-	for (int d = 1; d < qts_Espacos_Vazios(e); d++) {
+	for (int d = 1; d < qts_Espacos_Vazios(e); d++) { 
 
-		if (distancia_Coords(listaCoordenadas[d], jogador) < distanciaMenor) {
+		if (distancia_Coords(listaCoordenadas[d], jogador) < distanciaMenor) { //Compara a distancia entre os dois pontos e caso seja uma distancia menor do que a registada anteriormente
 			distanciaMenor = distancia_Coords(listaCoordenadas[d], jogador);
 			*final = listaCoordenadas[d];
 		}
@@ -316,5 +304,6 @@ COORDENADA *bot_v2(ESTADO *e) {
 	//printf("%d DISTANCIA MENOR\n", distanciaMenor);
 	free(listaOficial);
 	return final;
-}	
+}
+//-> Função que devolve, das coordenadas que é possivel jogar, aqula cuja distancia à casa pretendida é a menor.
 //------------------------------------------------------------------------------------------------------------------------------
