@@ -18,11 +18,11 @@ void prompt_INFO (ESTADO *e) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-void movs_Consola(ESTADO *e, COORDENADA jog1[], COORDENADA jog2[], int number){ // number -> Numero de jogadas totais (jog1 + jog2).
+void movs_Consola(ESTADO *e, COORDENADA jog1[], COORDENADA jog2[], int contadorJogadas){ 
 	int i;
 
 	printf("\n");
-	if (number%2 != 0){//loop para caso o numero de jogadas totais seja impar, isto é, numero de jogadas do jogador 1 é 1 a mais do que o numero de jogadas do jogador 2.
+	if (contadorJogadas%2 != 0){//loop para caso o numero de jogadas totais seja impar, isto é, numero de jogadas do jogador 1 é 1 a mais do que o numero de jogadas do jogador 2.
 		for (i = 1; i < obter_numero_de_jogadas(e); i ++){
 			printf("[%02d]: ",i);
 			imprime(jog1[i]);
@@ -77,14 +77,14 @@ void Q (){
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int number, char *file){ //number -> Numero de jogadas totais (jog1 + jog2).
+void movs(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int contadorJogadas, char *file){ 
 	int i;
 	FILE *gravaMovimentos;
 
 	gravaMovimentos = fopen (file, "a");
 	fprintf(gravaMovimentos, "\n");
 
-	if(number % 2 != 0){
+	if(contadorJogadas % 2 != 0){
 		for (i = 1; i < obter_numero_de_jogadas(e); i++){ //loop para caso o numero de jogadas totais seja impar, isto é, numero de jogadas do jogador 1 é 1 a mais do que o numero de jogadas do jogador 2.
 
 			fprintf(gravaMovimentos, "%02d: ",i);
@@ -199,9 +199,9 @@ int confirmaImpar (FILE *jogo) {
  void coords_para_array (FILE *jogo, int jogadastotais, char jog1_chars[], char jog2_chars[]){
 
  	int contador = 141; //-> Opção para Linux.
-	//int contador = 150; //-> ignora o desenho do tabuleiro e comeca na primeira coordenada!
+	//int contador = 150; //-> Opção para Windows 
+	// ^ ignora o desenho do tabuleiro e comeca na primeira coordenada!
 	int d = 0, e = 0, ajuda1 = 2, ajuda2 = 2;
-	int numerDeJogadas = 0;
 
 		fseek(jogo, contador, SEEK_SET);    
 		for (int a = 1; a <= jogadastotais; a++) {
@@ -225,15 +225,13 @@ int confirmaImpar (FILE *jogo) {
 
 					}
 					ajuda2 += 2;
-					contador += 7 // para linux
-					//contador += 8; 
+					contador += 7; // para linux
+					//contador += 8; // para windows
 					// ^ numero de espacos para mudar de linha!
 					fseek(jogo, contador, SEEK_SET);
 				}
 			}
 		}
-		numerDeJogadas = jogadastotais;
-		printf("%d\n", jogadastotais);
 }
  //------------------------------------------------------------------------------------------------------------------------------
 
@@ -324,7 +322,7 @@ void pos(int jogada, COORDENADA jog1[], COORDENADA jog2[], ESTADO *e) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
-int ler (char *file, ESTADO *e, COORDENADA *jog1, COORDENADA *jog2) { //explicar!
+int ler (char *file, ESTADO *e, COORDENADA *jog1, COORDENADA *jog2) {
 	char linha[40];
 	int jogadastotais = 0;
 	char jog1_chars[128];
@@ -472,7 +470,7 @@ int interpretador(ESTADO *e) {
 									}
 								}
 								else
-									if (gravar[0] == 'j' && gravar[1] == 'o' && gravar[2] == 'g' && gravar[3] == '2'){ //SE O COMANDO FOR JOG
+									if (gravar[0] == 'j' && gravar[1] == 'o' && gravar[2] == 'g' && gravar[3] == '2'){ //SE O COMANDO FOR JOG2
 										COORDENADA *proxJogada2;
 											proxJogada2 = calcula_Distancia_Menor(e);
 											coord2 = *proxJogada2;
@@ -495,7 +493,7 @@ int interpretador(ESTADO *e) {
 									}
 									else {
 
-										if (gravar[0] == 'j' && gravar[1] == 'o' && gravar[2] == 'g') {
+										if (gravar[0] == 'j' && gravar[1] == 'o' && gravar[2] == 'g') { //SE O COMANDO FOR JOG
 											LISTA jogadasPossiveis = criar_lista();
 											jogadasPossiveis = listaJogadasPossiveis(e);
 											COORDENADA *proxJogada;
@@ -529,8 +527,18 @@ int interpretador(ESTADO *e) {
 			}
 	} while (verifica_GANHOU(e) == 0 && verifica_PERDEU(e, coord2) == 0);
 
-	printf("Acabou\n");
-	felicitar(e);
+	if(verifica_PERDEU(e, coord2)){
+		if(obter_jogador_atual(e) == 1){
+			printf("Acabou, ganhou o jogador 1\n");
+		}
+		else{
+			printf("Acabou, ganhou o jogador 2\n");
+		}
+	}
+	else{
+		felicitar(e);
+	}
+
 	return 1;
 }
 //------------------------------------------------------------------------------------------------------------------------------
