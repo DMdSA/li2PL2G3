@@ -1,0 +1,834 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.18">
+  <compounddef id="interface_programa_8h" kind="file" language="C++">
+    <compoundname>interfacePrograma.h</compoundname>
+    <includedby refid="interface_programa_8c" local="yes">interfacePrograma.c</includedby>
+    <includedby refid="lista_8c" local="yes">lista.c</includedby>
+    <includedby refid="main_8c" local="yes">main.c</includedby>
+    <invincdepgraph>
+      <node id="4">
+        <label>main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="2">
+        <label>interfacePrograma.c</label>
+        <link refid="interface_programa_8c"/>
+      </node>
+      <node id="1">
+        <label>interfacePrograma.h</label>
+        <link refid="interface_programa_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>lista.c</label>
+        <link refid="lista_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="interface_programa_8h_1a1b41ced8b3c6acd622e94ddafd58fa36" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void prompt_INFO</definition>
+        <argsstring>(ESTADO *e)</argsstring>
+        <name>prompt_INFO</name>
+        <param>
+          <type><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+<para>Apresenta o nº da jogada atual e do jogador a efetuar jogada. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Estado atual do jogo </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="12" column="6" bodyfile="interfacePrograma.c" bodystart="11" bodyend="15" declfile="interfacePrograma.h" declline="12" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1afcc0b7d86c15ff54c3d205c780aecbac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void movs_Consola</definition>
+        <argsstring>(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int contadorJogadas)</argsstring>
+        <name>movs_Consola</name>
+        <param>
+          <type><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref></type>
+          <declname>jog1</declname>
+          <array>[65]</array>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref></type>
+          <declname>jog2</declname>
+          <array>[65]</array>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>contadorJogadas</declname>
+        </param>
+        <briefdescription>
+<para>Apresenta a lista de todas as jogadas efetuadas durante um jogo, na consola. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Estado atual do jogo </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Lista de coordenadas alcançadas pelo jogador 1 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Lista de coordenadas alcançadas pelo jogador 2 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>contadorJogadas</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Número total de jogadas efetuadas </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="22" column="6" declfile="interfacePrograma.h" declline="22" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1aa0b6c1689e60ac852a73d67e066c1df5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mostrar_tabuleiro</definition>
+        <argsstring>(ESTADO *e)</argsstring>
+        <name>mostrar_tabuleiro</name>
+        <param>
+          <type><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+<para>Apresenta o estado do tabuleiro impresso no ecrã. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Estado atual do jogo </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="29" column="6" bodyfile="interfacePrograma.c" bodystart="53" bodyend="65" declfile="interfacePrograma.h" declline="29" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1ae3d0352df25e2a45c10c8724e2ff4fa6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Q</definition>
+        <argsstring>()</argsstring>
+        <name>Q</name>
+        <briefdescription>
+<para>Termina o programa. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="35" column="6" bodyfile="interfacePrograma.c" bodystart="71" bodyend="74" declfile="interfacePrograma.h" declline="35" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1a0b684d77337e91973399276dff0bae35" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void movs</definition>
+        <argsstring>(ESTADO *e, COORDENADA jog1[65], COORDENADA jog2[65], int contadorJogadas, char *file)</argsstring>
+        <name>movs</name>
+        <param>
+          <type><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref></type>
+          <declname>jog1</declname>
+          <array>[65]</array>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref></type>
+          <declname>jog2</declname>
+          <array>[65]</array>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>contadorJogadas</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+<para>Escreve, num ficheiro, a lista de todas as jogadas efetuadas durante um jogo. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Estado atual do jogo </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Lista de coordenadas alcançadas pelo jogador 1 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Lista de coordenadas alcançadas pelo jogador 2 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>contadorJogadas</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Número total de jogadas efetuadas </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>file</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Nome do ficheiro onde se pretende gravar a informação </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="46" column="6" bodyfile="interfacePrograma.c" bodystart="80" bodyend="120" declfile="interfacePrograma.h" declline="46" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1a14ffe1bb72088f021e79e83016af4616" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* nome_Ficheiro</definition>
+        <argsstring>(char linha[], char *file, int i)</argsstring>
+        <name>nome_Ficheiro</name>
+        <param>
+          <type>char</type>
+          <declname>linha</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>file</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+<para>Cria uma string com o nome do ficheiro, com o tamanho exato desse nome. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>linha</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>String onde se encontra o nome do ficheiro </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>file</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Apontador para uma string onde se pretende guardar o nome do ficheiro </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>i</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>índice a partir do qual se encontrará o nome do ficheiro na string inicial, linha </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>char* Apontador para a string criada </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="56" column="6" bodyfile="interfacePrograma.c" bodystart="127" bodyend="147" declfile="interfacePrograma.h" declline="56" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1a96f2a7d4d6276db1f47f555a54e6145c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void gr</definition>
+        <argsstring>(ESTADO *e, char *file)</argsstring>
+        <name>gr</name>
+        <param>
+          <type><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+<para>Grava, num ficheiro .txt, o estado atual do jogo. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Estado atual do jogo </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>file</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Nome do ficheiro a guardar </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="64" column="6" bodyfile="interfacePrograma.c" bodystart="153" bodyend="170" declfile="interfacePrograma.h" declline="64" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1a72c631e49f49e332ff5adde2f669169a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int confirmaImpar</definition>
+        <argsstring>(FILE *jogo)</argsstring>
+        <name>confirmaImpar</name>
+        <param>
+          <type>FILE *</type>
+          <declname>jogo</declname>
+        </param>
+        <briefdescription>
+<para>A partir de um ficheiro de texto, verifica se o número de jogadas é par ou ímpar. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>jogo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Ficheiro a ser analizado </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>int 1 se for ímpar, 0 caso contrário </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="72" column="5" bodyfile="interfacePrograma.c" bodystart="176" bodyend="193" declfile="interfacePrograma.h" declline="72" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1a1d060d91f456a78f482402522a9a345e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void coords_para_array</definition>
+        <argsstring>(FILE *jogo, int jogadastotais, char jog1_chars[], char jog2_chars[])</argsstring>
+        <name>coords_para_array</name>
+        <param>
+          <type>FILE *</type>
+          <declname>jogo</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>jogadastotais</declname>
+        </param>
+        <param>
+          <type>char</type>
+          <declname>jog1_chars</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type>char</type>
+          <declname>jog2_chars</declname>
+          <array>[]</array>
+        </param>
+        <briefdescription>
+<para>Guarda, conforme o estado do jogo, as coordenadas efetuadas por ambos os jogadores. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>jogo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Ficheiro onde se encontram os dados sobre o estado do jogo </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jogadastotais</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Jogadas totais efetuadas por ambos os jogadores </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog1_chars</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Array de char&apos;s onde se encontram guardadas as coordenadas alcançadas pelo jogador 1 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog2_chars</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Array de char&apos;s onde se encontram guardadas as coordenadas alcançadas pelo jogador 2 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="82" column="6" bodyfile="interfacePrograma.c" bodystart="199" bodyend="235" declfile="interfacePrograma.h" declline="82" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1a67a2a864cfc7f4c1485c4195c3c16085" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ajuda</definition>
+        <argsstring>(ESTADO *e, FILE *jogo, COORDENADA *jog1, COORDENADA *jog2, int jogadastotais)</argsstring>
+        <name>ajuda</name>
+        <param>
+          <type><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type>FILE *</type>
+          <declname>jogo</declname>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref> *</type>
+          <declname>jog1</declname>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref> *</type>
+          <declname>jog2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>jogadastotais</declname>
+        </param>
+        <briefdescription>
+<para>De acordo com um estado de jogo atual e arrays com coordenadas para cada jogador, efetua todas as jogadas possíveis com as mesmas. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Estado atual do jogo </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jogo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Ficheiro a ser analisado </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Array de coordenadas alcançadas pelo jogador 1 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Array de coordenadas alcançadas pelo jogador 2 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jogadastotais</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Número total de jogadas efetuadas por ambos os jogadores </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="93" column="6" bodyfile="interfacePrograma.c" bodystart="241" bodyend="266" declfile="interfacePrograma.h" declline="93" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1ad9ffe852e8308a82dbf5630f68578475" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void coords_de_ficheiro_jog</definition>
+        <argsstring>(ESTADO *e, FILE *jogo, char jog1_chars[], char jog2_chars[], COORDENADA *jog1, COORDENADA *jog2, int jogadastotais)</argsstring>
+        <name>coords_de_ficheiro_jog</name>
+        <param>
+          <type><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type>FILE *</type>
+          <declname>jogo</declname>
+        </param>
+        <param>
+          <type>char</type>
+          <declname>jog1_chars</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type>char</type>
+          <declname>jog2_chars</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref> *</type>
+          <declname>jog1</declname>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref> *</type>
+          <declname>jog2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>jogadastotais</declname>
+        </param>
+        <briefdescription>
+<para>Transforma, a partir de arrays de char&apos;s, essa informação em dados do tipo <ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Estado atual do jogo </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jogo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Ficheiro onde se encontram os dados sobre o estado do jogo em questão </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog1_chars</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Array de char&apos;s com as coordenadas alcançadas pelo jogador 1 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog2_chars</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Array de char&apos;s com as coordenadas alcançadas pelo jogador 2 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Apontador para array de coordenadas alcançadas pelo jogador 1 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Apontador para array de coordenadas alcançadas pelo jogador 2 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jogadastotais</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Número total de jogadas efetuadas por ambos os jogadores </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="106" column="6" bodyfile="interfacePrograma.c" bodystart="272" bodyend="298" declfile="interfacePrograma.h" declline="106" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1aef96681536403b8b72d7309b942f3b13" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void pos</definition>
+        <argsstring>(int jogada, COORDENADA jog1[], COORDENADA jog2[], ESTADO *e)</argsstring>
+        <name>pos</name>
+        <param>
+          <type>int</type>
+          <declname>jogada</declname>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref></type>
+          <declname>jog1</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref></type>
+          <declname>jog2</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+<para>Retorna o jogo atual para a jogada anterior pretendida, conforme input do utilizador. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>jogada</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Jogada anterior que se pretende alcançar </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Lista de coordenadas alcançadas pelo jogador 1 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Lista de coordenadas alcançadas pelo jogador 2 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Estado atual do jogo </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="116" column="6" bodyfile="interfacePrograma.c" bodystart="304" bodyend="319" declfile="interfacePrograma.h" declline="116" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1a0efabdf72c5b5a785f255b11843e9838" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ler</definition>
+        <argsstring>(char *file, ESTADO *e, COORDENADA *jog1, COORDENADA *jog2)</argsstring>
+        <name>ler</name>
+        <param>
+          <type>char *</type>
+          <declname>file</declname>
+        </param>
+        <param>
+          <type><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref> *</type>
+          <declname>jog1</declname>
+        </param>
+        <param>
+          <type><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref> *</type>
+          <declname>jog2</declname>
+        </param>
+        <briefdescription>
+<para>Lê um ficheiro de texto e imprime-o no ecrã. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>file</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Nome do ficheiro a ler </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Estado atual do jogo </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Apontador para array de coordenadas alcançadas pelo jogador 1 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>jog2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Apontador para array de coordenadas alcançadas pelo jogador 2 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>int referente ao número de jogadas totais efetuadas no jogo (jog1 + jog2) </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="127" column="5" bodyfile="interfacePrograma.c" bodystart="325" bodyend="363" declfile="interfacePrograma.h" declline="127" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_programa_8h_1a24da95ebeede4a540e37790ce8be359b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int interpretador</definition>
+        <argsstring>(ESTADO *e)</argsstring>
+        <name>interpretador</name>
+        <param>
+          <type><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref> *</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+<para>Recebe um comando do utilizador e orienta-o para a sua realização. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>e</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Estado atual do jogo </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>int referente à boa execução da função (1) </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="interfacePrograma.h" line="135" column="5" bodyfile="interfacePrograma.c" bodystart="369" bodyend="543" declfile="interfacePrograma.h" declline="135" declcolumn="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Mecânica por trás do jogo, interface visual e orientação do jogo por comandos. </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="5"><highlight class="preprocessor">#ifndef<sp/>INTERFACE_FILE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>INTERFACE_FILE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1a1b41ced8b3c6acd622e94ddafd58fa36" kindref="member">prompt_INFO</ref><sp/>(<ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref><sp/>*e);</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22" refid="interface_programa_8h_1afcc0b7d86c15ff54c3d205c780aecbac" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1afcc0b7d86c15ff54c3d205c780aecbac" kindref="member">movs_Consola</ref>(<ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref><sp/>*e,<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>jog1[65],<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>jog2[65],<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>contadorJogadas);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1aa0b6c1689e60ac852a73d67e066c1df5" kindref="member">mostrar_tabuleiro</ref>(<ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref><sp/>*e);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1ae3d0352df25e2a45c10c8724e2ff4fa6" kindref="member">Q</ref><sp/>();</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1a0b684d77337e91973399276dff0bae35" kindref="member">movs</ref>(<ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref><sp/>*e,<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>jog1[65],<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>jog2[65],<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>contadorJogadas,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*file);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="interface_programa_8h_1a14ffe1bb72088f021e79e83016af4616" kindref="member">nome_Ficheiro</ref><sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>linha[],<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*file,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1a96f2a7d4d6276db1f47f555a54e6145c" kindref="member">gr</ref><sp/>(<ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref><sp/>*e,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*file);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1a72c631e49f49e332ff5adde2f669169a" kindref="member">confirmaImpar</ref><sp/>(FILE<sp/>*jogo);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1a1d060d91f456a78f482402522a9a345e" kindref="member">coords_para_array</ref><sp/>(FILE<sp/>*jogo,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>jogadastotais,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>jog1_chars[],<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>jog2_chars[]);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1a67a2a864cfc7f4c1485c4195c3c16085" kindref="member">ajuda</ref><sp/>(<ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref><sp/>*e,<sp/>FILE<sp/>*jogo,<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>*jog1,<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>*jog2,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>jogadastotais);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1ad9ffe852e8308a82dbf5630f68578475" kindref="member">coords_de_ficheiro_jog</ref><sp/>(<ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref><sp/>*e,<sp/>FILE<sp/>*jogo,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>jog1_chars[],<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>jog2_chars[],<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>*jog1,<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>*jog2,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>jogadastotais);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1aef96681536403b8b72d7309b942f3b13" kindref="member">pos</ref><sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>jogada,<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>jog1[],<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>jog2[],<sp/><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref><sp/>*e);</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1a0efabdf72c5b5a785f255b11843e9838" kindref="member">ler</ref><sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*file,<sp/><ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref><sp/>*e,<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>*jog1,<sp/><ref refid="struct_c_o_o_r_d_e_n_a_d_a" kindref="compound">COORDENADA</ref><sp/>*jog2);</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="interface_programa_8h_1a24da95ebeede4a540e37790ce8be359b" kindref="member">interpretador</ref>(<ref refid="struct_e_s_t_a_d_o" kindref="compound">ESTADO</ref><sp/>*e);</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="interfacePrograma.h"/>
+  </compounddef>
+</doxygen>
